@@ -1,0 +1,77 @@
+type CallLog implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  id: String
+  from: String
+  to: String
+  call_received_by: Employee
+  call_received_by__name: String
+  employee_user_id: User
+  employee_user_id__name: String
+  medium: String
+  start_time: String
+  end_time: String
+  type: CallLogTypeSelectOptions
+  customer: Customer
+  customer__name: String
+  status: CallLogStatusSelectOptions
+  duration: String
+  recording_url: String
+  type_of_call: TelephonyCallType
+  type_of_call__name: String
+  summary: String
+  links: [DynamicLink!]!
+}
+
+enum CallLogTypeSelectOptions {
+  INCOMING
+  OUTGOING
+}
+
+enum CallLogStatusSelectOptions {
+  RINGING
+  IN_PROGRESS
+  COMPLETED
+  FAILED
+  BUSY
+  NO_ANSWER
+  QUEUED
+  CANCELED
+}
+
+enum CallLogSortField {
+  NAME
+  CREATION
+  MODIFIED
+  ID
+}
+
+input CallLogSortingInput {
+  direction: SortDirection!
+  field: CallLogSortField!
+}
+
+type CallLogCountableEdge {
+  cursor: String!
+  node: CallLog!
+}
+
+type CallLogCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [CallLogCountableEdge!]!
+}
+
+extend type Query {
+  CallLog(name: String!): CallLog!
+  CallLogs(filter: [DBFilterInput], sortBy: CallLogSortingInput, before: String, after: String, first: Int, last: Int): CallLogCountableConnection!
+}

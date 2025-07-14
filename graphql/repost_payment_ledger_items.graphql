@@ -1,0 +1,17 @@
+type RepostPaymentLedgerItems implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  voucher_type: DocType
+  voucher_type__name: String
+  voucher_no: BaseDocType
+  voucher_no__name: String
+}

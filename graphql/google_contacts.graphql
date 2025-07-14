@@ -1,0 +1,48 @@
+type GoogleContacts implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  enable: Int
+  email_id: String!
+  last_sync_on: String
+  authorization_code: Password
+  refresh_token: Password
+  next_sync_token: Password
+  pull_from_google_contacts: Int
+  push_to_google_contacts: Int
+}
+
+enum GoogleContactsSortField {
+  NAME
+  CREATION
+  MODIFIED
+}
+
+input GoogleContactsSortingInput {
+  direction: SortDirection!
+  field: GoogleContactsSortField!
+}
+
+type GoogleContactsCountableEdge {
+  cursor: String!
+  node: GoogleContacts!
+}
+
+type GoogleContactsCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [GoogleContactsCountableEdge!]!
+}
+
+extend type Query {
+  GoogleContacts(name: String!): GoogleContacts!
+  GoogleContactss(filter: [DBFilterInput], sortBy: GoogleContactsSortingInput, before: String, after: String, first: Int, last: Int): GoogleContactsCountableConnection!
+}

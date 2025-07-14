@@ -1,0 +1,52 @@
+type FormTourStep implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  ui_tour: Int
+  is_table_field: Int
+  title: String!
+  parent_fieldname: String
+  fieldname: String
+  element_selector: String
+  parent_element_selector: String
+  description: String!
+  ondemand_description: String
+  position: FormTourStepPositionSelectOptions
+  hide_buttons: Int
+  popover_element: Int
+  modal_trigger: Int
+  offset_x: Int
+  offset_y: Int
+  next_on_click: Int
+  label: String
+  fieldtype: String
+  has_next_condition: Int
+  next_step_condition: String
+  next_form_tour: FormTour
+  next_form_tour__name: String
+  child_doctype: String
+}
+
+enum FormTourStepPositionSelectOptions {
+  LEFT
+  LEFT_CENTER
+  LEFT_BOTTOM
+  TOP
+  TOP_CENTER
+  TOP_RIGHT
+  RIGHT
+  RIGHT_CENTER
+  RIGHT_BOTTOM
+  BOTTOM
+  BOTTOM_CENTER
+  BOTTOM_RIGHT
+  MID_CENTER
+}

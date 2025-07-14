@@ -1,0 +1,55 @@
+type LowerDeductionCertificate implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  tax_withholding_category: TaxWithholdingCategory!
+  tax_withholding_category__name: String
+  fiscal_year: FiscalYear!
+  fiscal_year__name: String
+  company: Company!
+  company__name: String
+  certificate_no: String!
+  supplier: Supplier!
+  supplier__name: String
+  pan_no: String!
+  valid_from: String!
+  valid_upto: String!
+  rate: Float!
+  certificate_limit: Float!
+}
+
+enum LowerDeductionCertificateSortField {
+  NAME
+  CREATION
+  MODIFIED
+  CERTIFICATE_NO
+}
+
+input LowerDeductionCertificateSortingInput {
+  direction: SortDirection!
+  field: LowerDeductionCertificateSortField!
+}
+
+type LowerDeductionCertificateCountableEdge {
+  cursor: String!
+  node: LowerDeductionCertificate!
+}
+
+type LowerDeductionCertificateCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [LowerDeductionCertificateCountableEdge!]!
+}
+
+extend type Query {
+  LowerDeductionCertificate(name: String!): LowerDeductionCertificate!
+  LowerDeductionCertificates(filter: [DBFilterInput], sortBy: LowerDeductionCertificateSortingInput, before: String, after: String, first: Int, last: Int): LowerDeductionCertificateCountableConnection!
+}

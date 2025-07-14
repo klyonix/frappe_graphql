@@ -1,0 +1,63 @@
+type TransactionDeletionRecord implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  company: Company!
+  company__name: String
+  status: TransactionDeletionRecordStatusSelectOptions
+  error_log: String
+  delete_bin_data: Int
+  delete_leads_and_addresses: Int
+  reset_company_default_values: Int
+  clear_notifications: Int
+  initialize_doctypes_table: Int
+  delete_transactions: Int
+  doctypes: [TransactionDeletionRecordDetails!]!
+  doctypes_to_be_ignored: [TransactionDeletionRecordItem!]!
+  amended_from: TransactionDeletionRecord
+  amended_from__name: String
+  process_in_single_transaction: Int
+}
+
+enum TransactionDeletionRecordStatusSelectOptions {
+  QUEUED
+  RUNNING
+  FAILED
+  COMPLETED
+  CANCELLED
+}
+
+enum TransactionDeletionRecordSortField {
+  NAME
+  CREATION
+  MODIFIED
+}
+
+input TransactionDeletionRecordSortingInput {
+  direction: SortDirection!
+  field: TransactionDeletionRecordSortField!
+}
+
+type TransactionDeletionRecordCountableEdge {
+  cursor: String!
+  node: TransactionDeletionRecord!
+}
+
+type TransactionDeletionRecordCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [TransactionDeletionRecordCountableEdge!]!
+}
+
+extend type Query {
+  TransactionDeletionRecord(name: String!): TransactionDeletionRecord!
+  TransactionDeletionRecords(filter: [DBFilterInput], sortBy: TransactionDeletionRecordSortingInput, before: String, after: String, first: Int, last: Int): TransactionDeletionRecordCountableConnection!
+}

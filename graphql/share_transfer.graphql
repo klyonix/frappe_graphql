@@ -1,0 +1,70 @@
+type ShareTransfer implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  transfer_type: ShareTransferTransferTypeSelectOptions!
+  date: String!
+  from_shareholder: Shareholder
+  from_shareholder__name: String
+  from_folio_no: String
+  to_shareholder: Shareholder
+  to_shareholder__name: String
+  to_folio_no: String
+  equity_or_liability_account: Account!
+  equity_or_liability_account__name: String
+  asset_account: Account
+  asset_account__name: String
+  share_type: ShareType!
+  share_type__name: String
+  from_no: Int!
+  rate: Float!
+  no_of_shares: Int!
+  to_no: Int!
+  amount: Float
+  company: Company!
+  company__name: String
+  remarks: String
+  amended_from: ShareTransfer
+  amended_from__name: String
+}
+
+enum ShareTransferTransferTypeSelectOptions {
+  ISSUE
+  PURCHASE
+  TRANSFER
+}
+
+enum ShareTransferSortField {
+  NAME
+  CREATION
+  MODIFIED
+}
+
+input ShareTransferSortingInput {
+  direction: SortDirection!
+  field: ShareTransferSortField!
+}
+
+type ShareTransferCountableEdge {
+  cursor: String!
+  node: ShareTransfer!
+}
+
+type ShareTransferCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [ShareTransferCountableEdge!]!
+}
+
+extend type Query {
+  ShareTransfer(name: String!): ShareTransfer!
+  ShareTransfers(filter: [DBFilterInput], sortBy: ShareTransferSortingInput, before: String, after: String, first: Int, last: Int): ShareTransferCountableConnection!
+}

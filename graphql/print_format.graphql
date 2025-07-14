@@ -1,0 +1,107 @@
+type PrintFormat implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  doc_type: DocType!
+  doc_type__name: String
+  module: ModuleDef
+  module__name: String
+  default_print_language: Language
+  default_print_language__name: String
+  standard: PrintFormatStandardSelectOptions!
+  custom_format: Int
+  disabled: Int
+  pdf_generator: PrintFormatPdfGeneratorSelectOptions
+  print_format_type: PrintFormatPrintFormatTypeSelectOptions
+  raw_printing: Int
+  html: String
+  raw_commands: String
+  margin_top: Float
+  margin_bottom: Float
+  margin_left: Float
+  margin_right: Float
+  align_labels_right: Int
+  show_section_headings: Int
+  line_breaks: Int
+  absolute_value: Int
+  font_size: Int
+  font: String
+  page_number: PrintFormatPageNumberSelectOptions
+  css: String
+  format_data: String
+  print_format_builder: Int
+  print_format_builder_beta: Int
+}
+
+extend type PrintFormat {
+  print_designer_print_format: String
+  print_designer_preview_img: String
+  print_designer_after_table: String
+  print_designer_settings: String
+  print_designer_header: String
+  print_designer_footer: String
+  print_designer_body: String
+  print_designer: Int
+  print_designer_template_app: String
+}
+
+enum PrintFormatStandardSelectOptions {
+  NO
+  YES
+}
+
+enum PrintFormatPdfGeneratorSelectOptions {
+  WKHTMLTOPDF
+  CHROME
+}
+
+enum PrintFormatPrintFormatTypeSelectOptions {
+  JINJA
+  JS
+}
+
+enum PrintFormatPageNumberSelectOptions {
+  HIDE
+  TOP_LEFT
+  TOP_CENTER
+  TOP_RIGHT
+  BOTTOM_LEFT
+  BOTTOM_CENTER
+  BOTTOM_RIGHT
+}
+
+enum PrintFormatSortField {
+  NAME
+  CREATION
+  MODIFIED
+  STANDARD
+}
+
+input PrintFormatSortingInput {
+  direction: SortDirection!
+  field: PrintFormatSortField!
+}
+
+type PrintFormatCountableEdge {
+  cursor: String!
+  node: PrintFormat!
+}
+
+type PrintFormatCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [PrintFormatCountableEdge!]!
+}
+
+extend type Query {
+  PrintFormat(name: String!): PrintFormat!
+  PrintFormats(filter: [DBFilterInput], sortBy: PrintFormatSortingInput, before: String, after: String, first: Int, last: Int): PrintFormatCountableConnection!
+}

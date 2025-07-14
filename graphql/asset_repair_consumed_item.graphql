@@ -1,0 +1,23 @@
+type AssetRepairConsumedItem implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  item_code: Item!
+  item_code__name: String
+  warehouse: Warehouse!
+  warehouse__name: String
+  valuation_rate: Float
+  consumed_quantity: String
+  total_value: Float
+  serial_no: String
+  serial_and_batch_bundle: SerialandBatchBundle
+  serial_and_batch_bundle__name: String
+}

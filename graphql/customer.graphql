@@ -1,0 +1,146 @@
+type Customer implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  naming_series: String
+  salutation: Salutation
+  salutation__name: String
+  customer_name: String!
+  customer_type: CustomerCustomerTypeSelectOptions!
+  customer_group: CustomerGroup
+  customer_group__name: String
+  territory: Territory
+  territory__name: String
+  gender: Gender
+  gender__name: String
+  lead_name: Lead
+  lead_name__name: String
+  opportunity_name: Opportunity
+  opportunity_name__name: String
+  prospect_name: Prospect
+  prospect_name__name: String
+  account_manager: User
+  account_manager__name: String
+  image: String
+  default_currency: Currency
+  default_currency__name: String
+  default_bank_account: BankAccount
+  default_bank_account__name: String
+  default_price_list: PriceList
+  default_price_list__name: String
+  is_internal_customer: Int
+  represents_company: Company
+  represents_company__name: String
+  companies: [AllowedToTransactWith!]!
+  market_segment: MarketSegment
+  market_segment__name: String
+  industry: IndustryType
+  industry__name: String
+  customer_pos_id: String
+  website: String
+  language: Language
+  language__name: String
+  customer_details: String
+  customer_primary_address: Address
+  customer_primary_address__name: String
+  primary_address: String
+  customer_primary_contact: Contact
+  customer_primary_contact__name: String
+  mobile_no: String
+  email_id: String
+  tax_id: String
+  tax_category: TaxCategory
+  tax_category__name: String
+  tax_withholding_category: TaxWithholdingCategory
+  tax_withholding_category__name: String
+  payment_terms: PaymentTermsTemplate
+  payment_terms__name: String
+  credit_limits: [CustomerCreditLimit!]!
+  accounts: [PartyAccount!]!
+  loyalty_program: LoyaltyProgram
+  loyalty_program__name: String
+  loyalty_program_tier: String
+  sales_team: [SalesTeam!]!
+  default_sales_partner: SalesPartner
+  default_sales_partner__name: String
+  default_commission_rate: Float
+  so_required: Int
+  dn_required: Int
+  is_frozen: Int
+  disabled: Int
+  portal_users: [PortalUser!]!
+}
+
+extend type Customer {
+  whg_ebs_code: String!
+  whg_other_ebs_codes: String
+  fsl_batch_expiry: String
+  fsl_discount: Float
+  whg_billing_limit: Float
+  fsl_dl_details: [DrugLicenseDetails!]!
+  fsl_fssai_details: [FSSAIDetails!]!
+  fsl_other_attachments: [Attachment!]!
+  fsl_stockist_agreement: String
+  fsl_security_cheque: String
+  fsl_remarks: String
+  gstin: String
+  pan: String
+  gst_category: CustomerGstCategorySelectOptions!
+}
+
+enum CustomerCustomerTypeSelectOptions {
+  COMPANY
+  INDIVIDUAL
+  PARTNERSHIP
+}
+
+enum CustomerGstCategorySelectOptions {
+  REGISTERED_REGULAR
+  REGISTERED_COMPOSITION
+  UNREGISTERED
+  SEZ
+  OVERSEAS
+  DEEMED_EXPORT
+  UIN_HOLDERS
+  TAX_DEDUCTOR
+  TAX_COLLECTOR
+  INPUT_SERVICE_DISTRIBUTOR
+}
+
+enum CustomerSortField {
+  NAME
+  CREATION
+  MODIFIED
+  CUSTOMER_NAME
+  CUSTOMER_GROUP
+  REPRESENTS_COMPANY
+}
+
+input CustomerSortingInput {
+  direction: SortDirection!
+  field: CustomerSortField!
+}
+
+type CustomerCountableEdge {
+  cursor: String!
+  node: Customer!
+}
+
+type CustomerCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [CustomerCountableEdge!]!
+}
+
+extend type Query {
+  Customer(name: String!): Customer!
+  Customers(filter: [DBFilterInput], sortBy: CustomerSortingInput, before: String, after: String, first: Int, last: Int): CustomerCountableConnection!
+}

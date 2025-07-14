@@ -1,0 +1,27 @@
+type QuickStockBalance implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  warehouse: Warehouse!
+  warehouse__name: String
+  date: String!
+  item_barcode: String
+  item: Item!
+  item__name: String
+  item_name: String
+  item_description: String
+  qty: Float
+  value: Float
+}
+
+extend type Query {
+  QuickStockBalance: QuickStockBalance!
+}

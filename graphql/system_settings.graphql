@@ -1,0 +1,104 @@
+type SystemSettings implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  app_name: String
+  country: Country
+  country__name: String
+  language: Language!
+  language__name: String
+  time_zone: String!
+  currency: Currency
+  currency__name: String
+  enable_onboarding: Int
+  setup_complete: Int
+  disable_document_sharing: Int
+  date_format: String!
+  time_format: String!
+  number_format: String!
+  use_number_format_from_currency: Int
+  first_day_of_the_week: SystemSettingsFirstDayOfTheWeekSelectOptions
+  float_precision: String
+  currency_precision: String
+  rounding_method: String
+  apply_strict_user_permissions: Int
+  allow_older_web_view_links: Int
+  session_expiry: String
+  document_share_key_expiry: Int
+  deny_multiple_sessions: Int
+  disable_user_pass_login: Int
+  allow_login_using_mobile_number: Int
+  allow_login_using_user_name: Int
+  login_with_email_link: Int
+  login_with_email_link_expiry: Int
+  rate_limit_email_link_login: Int
+  allow_consecutive_login_attempts: Int
+  allow_login_after_fail: Int
+  enable_two_factor_auth: Int
+  bypass_2fa_for_retricted_ip_users: Int
+  bypass_restrict_ip_check_if_2fa_enabled: Int
+  two_factor_method: SystemSettingsTwoFactorAuthenticationMethodSelectOptions
+  lifespan_qrcode_image: Int
+  otp_issuer_name: String
+  logout_on_password_reset: Int
+  force_user_to_reset_password: Int
+  reset_password_link_expiry_duration: String
+  password_reset_limit: Int
+  enable_password_policy: Int
+  minimum_password_score: String
+  email_footer_address: String
+  email_retry_limit: Int
+  disable_standard_email_footer: Int
+  hide_footer_in_auto_email_reports: Int
+  attach_view_link: Int
+  store_attached_pdf_document: Int
+  welcome_email_template: EmailTemplate
+  welcome_email_template__name: String
+  reset_password_template: EmailTemplate
+  reset_password_template__name: String
+  max_file_size: Int
+  allow_guests_to_upload_files: Int
+  force_web_capture_mode_for_uploads: Int
+  strip_exif_metadata_from_uploaded_images: Int
+  allowed_file_extensions: String
+  default_app: String
+  disable_system_update_notification: Int
+  disable_change_log_notification: Int
+  backup_limit: Int
+  encrypt_backup: Int
+  max_auto_email_report_per_user: Int
+  max_report_rows: Int
+  enable_scheduler: Int
+  dormant_days: Int
+  allow_error_traceback: Int
+  enable_telemetry: Int
+  link_field_results_limit: Int
+}
+
+enum SystemSettingsFirstDayOfTheWeekSelectOptions {
+  SUNDAY
+  MONDAY
+  TUESDAY
+  WEDNESDAY
+  THURSDAY
+  FRIDAY
+  SATURDAY
+}
+
+enum SystemSettingsTwoFactorAuthenticationMethodSelectOptions {
+  OTP_APP
+  SMS
+  EMAIL
+}
+
+extend type Query {
+  SystemSettings: SystemSettings!
+}

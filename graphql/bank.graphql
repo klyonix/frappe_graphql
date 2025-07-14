@@ -1,0 +1,48 @@
+type Bank implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  bank_name: String!
+  swift_number: String
+  website: String
+  bank_transaction_mapping: [BankTransactionMapping!]!
+  plaid_access_token: String
+}
+
+enum BankSortField {
+  NAME
+  CREATION
+  MODIFIED
+  BANK_NAME
+  SWIFT_NUMBER
+  COLUMN_BREAK_1
+}
+
+input BankSortingInput {
+  direction: SortDirection!
+  field: BankSortField!
+}
+
+type BankCountableEdge {
+  cursor: String!
+  node: Bank!
+}
+
+type BankCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [BankCountableEdge!]!
+}
+
+extend type Query {
+  Bank(name: String!): Bank!
+  Banks(filter: [DBFilterInput], sortBy: BankSortingInput, before: String, after: String, first: Int, last: Int): BankCountableConnection!
+}

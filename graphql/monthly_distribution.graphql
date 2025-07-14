@@ -1,0 +1,46 @@
+type MonthlyDistribution implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  distribution_id: String!
+  fiscal_year: FiscalYear
+  fiscal_year__name: String
+  percentages: [MonthlyDistributionPercentage!]!
+}
+
+enum MonthlyDistributionSortField {
+  NAME
+  CREATION
+  MODIFIED
+  DISTRIBUTION_ID
+  FISCAL_YEAR
+}
+
+input MonthlyDistributionSortingInput {
+  direction: SortDirection!
+  field: MonthlyDistributionSortField!
+}
+
+type MonthlyDistributionCountableEdge {
+  cursor: String!
+  node: MonthlyDistribution!
+}
+
+type MonthlyDistributionCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [MonthlyDistributionCountableEdge!]!
+}
+
+extend type Query {
+  MonthlyDistribution(name: String!): MonthlyDistribution!
+  MonthlyDistributions(filter: [DBFilterInput], sortBy: MonthlyDistributionSortingInput, before: String, after: String, first: Int, last: Int): MonthlyDistributionCountableConnection!
+}

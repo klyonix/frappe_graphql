@@ -1,0 +1,240 @@
+type POSInvoice implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  title: String
+  naming_series: String!
+  customer: Customer
+  customer__name: String
+  customer_name: String
+  tax_id: String
+  pos_profile: POSProfile
+  pos_profile__name: String
+  consolidated_invoice: SalesInvoice
+  consolidated_invoice__name: String
+  is_pos: Int!
+  is_return: Int
+  update_billed_amount_in_sales_order: Int
+  update_billed_amount_in_delivery_note: Int
+  company: Company!
+  company__name: String
+  posting_date: String!
+  posting_time: String
+  set_posting_time: Int
+  due_date: String
+  amended_from: POSInvoice
+  amended_from__name: String
+  return_against: POSInvoice
+  return_against__name: String
+  project: Project
+  project__name: String
+  cost_center: CostCenter
+  cost_center__name: String
+  po_no: String
+  po_date: String
+  customer_address: Address
+  customer_address__name: String
+  address_display: String
+  contact_person: Contact
+  contact_person__name: String
+  contact_display: String
+  contact_mobile: String
+  contact_email: String
+  territory: Territory
+  territory__name: String
+  shipping_address_name: Address
+  shipping_address_name__name: String
+  shipping_address: String
+  company_address: Address
+  company_address__name: String
+  company_address_display: String
+  company_contact_person: Contact
+  company_contact_person__name: String
+  currency: Currency!
+  currency__name: String
+  conversion_rate: Float!
+  selling_price_list: PriceList!
+  selling_price_list__name: String
+  price_list_currency: Currency!
+  price_list_currency__name: String
+  plc_conversion_rate: Float!
+  ignore_pricing_rule: Int
+  set_warehouse: Warehouse
+  set_warehouse__name: String
+  update_stock: Int
+  scan_barcode: String
+  items: [POSInvoiceItem!]!
+  pricing_rules: [PricingRuleDetail!]!
+  packed_items: [PackedItem!]!
+  timesheets: [SalesInvoiceTimesheet!]!
+  total_billing_amount: Float
+  total_qty: Float
+  base_total: Float
+  base_net_total: Float!
+  total: Float
+  net_total: Float
+  total_net_weight: Float
+  taxes_and_charges: SalesTaxesandChargesTemplate
+  taxes_and_charges__name: String
+  shipping_rule: ShippingRule
+  shipping_rule__name: String
+  tax_category: TaxCategory
+  tax_category__name: String
+  taxes: [SalesTaxesandCharges!]!
+  other_charges_calculation: String
+  base_total_taxes_and_charges: Float
+  total_taxes_and_charges: Float
+  loyalty_points: Int
+  loyalty_amount: Float
+  redeem_loyalty_points: Int
+  loyalty_program: LoyaltyProgram
+  loyalty_program__name: String
+  loyalty_redemption_account: Account
+  loyalty_redemption_account__name: String
+  loyalty_redemption_cost_center: CostCenter
+  loyalty_redemption_cost_center__name: String
+  coupon_code: CouponCode
+  coupon_code__name: String
+  apply_discount_on: POSInvoiceApplyAdditionalDiscountOnSelectOptions
+  base_discount_amount: Float
+  additional_discount_percentage: Float
+  discount_amount: Float
+  base_grand_total: Float!
+  base_rounding_adjustment: Float
+  base_rounded_total: Float
+  base_in_words: String
+  grand_total: Float!
+  rounding_adjustment: Float
+  rounded_total: Float
+  in_words: String
+  total_advance: Float
+  outstanding_amount: Float
+  allocate_advances_automatically: Int
+  advances: [SalesInvoiceAdvance!]!
+  payment_terms_template: PaymentTermsTemplate
+  payment_terms_template__name: String
+  payment_schedule: [PaymentSchedule!]!
+  cash_bank_account: Account
+  cash_bank_account__name: String
+  payments: [SalesInvoicePayment!]!
+  base_paid_amount: Float
+  paid_amount: Float
+  base_change_amount: Float
+  change_amount: Float
+  account_for_change_amount: Account
+  account_for_change_amount__name: String
+  write_off_amount: Float
+  base_write_off_amount: Float
+  write_off_outstanding_amount_automatically: Int
+  write_off_account: Account
+  write_off_account__name: String
+  write_off_cost_center: CostCenter
+  write_off_cost_center__name: String
+  tc_name: TermsandConditions
+  tc_name__name: String
+  terms: String
+  letter_head: LetterHead
+  letter_head__name: String
+  group_same_items: Int
+  language: String
+  select_print_heading: PrintHeading
+  select_print_heading__name: String
+  inter_company_invoice_reference: PurchaseInvoice
+  inter_company_invoice_reference__name: String
+  customer_group: CustomerGroup
+  customer_group__name: String
+  campaign: Campaign
+  campaign__name: String
+  is_discounted: Int
+  status: POSInvoiceStatusSelectOptions
+  source: LeadSource
+  source__name: String
+  debit_to: Account!
+  debit_to__name: String
+  party_account_currency: Currency
+  party_account_currency__name: String
+  is_opening: POSInvoiceIsOpeningEntrySelectOptions
+  remarks: String
+  sales_partner: SalesPartner
+  sales_partner__name: String
+  amount_eligible_for_commission: Float
+  commission_rate: Float
+  total_commission: Float
+  sales_team: [SalesTeam!]!
+  from_date: String
+  to_date: String
+  auto_repeat: AutoRepeat
+  auto_repeat__name: String
+  against_income_account: String
+}
+
+extend type POSInvoice {
+  billing_address_gstin: String
+  gst_category: String
+  place_of_supply: String
+  company_gstin: String
+  gst_breakup_table: String
+}
+
+enum POSInvoiceApplyAdditionalDiscountOnSelectOptions {
+  GRAND_TOTAL
+  NET_TOTAL
+}
+
+enum POSInvoiceStatusSelectOptions {
+  DRAFT
+  RETURN
+  CREDIT_NOTE_ISSUED
+  CONSOLIDATED
+  SUBMITTED
+  PAID
+  UNPAID
+  UNPAID_AND_DISCOUNTED
+  OVERDUE_AND_DISCOUNTED
+  OVERDUE
+  CANCELLED
+}
+
+enum POSInvoiceIsOpeningEntrySelectOptions {
+  NO
+  YES
+}
+
+enum POSInvoiceSortField {
+  NAME
+  CREATION
+  MODIFIED
+  CUSTOMER
+  POSTING_DATE
+  RETURN_AGAINST
+  DEBIT_TO
+}
+
+input POSInvoiceSortingInput {
+  direction: SortDirection!
+  field: POSInvoiceSortField!
+}
+
+type POSInvoiceCountableEdge {
+  cursor: String!
+  node: POSInvoice!
+}
+
+type POSInvoiceCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [POSInvoiceCountableEdge!]!
+}
+
+extend type Query {
+  POSInvoice(name: String!): POSInvoice!
+  POSInvoices(filter: [DBFilterInput], sortBy: POSInvoiceSortingInput, before: String, after: String, first: Int, last: Int): POSInvoiceCountableConnection!
+}

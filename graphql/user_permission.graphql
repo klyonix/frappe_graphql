@@ -1,0 +1,52 @@
+type UserPermission implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  user: User!
+  user__name: String
+  allow: DocType!
+  allow__name: String
+  for_value: BaseDocType!
+  for_value__name: String
+  is_default: Int
+  apply_to_all_doctypes: Int
+  applicable_for: DocType
+  applicable_for__name: String
+  hide_descendants: Int
+}
+
+enum UserPermissionSortField {
+  NAME
+  CREATION
+  MODIFIED
+  USER
+}
+
+input UserPermissionSortingInput {
+  direction: SortDirection!
+  field: UserPermissionSortField!
+}
+
+type UserPermissionCountableEdge {
+  cursor: String!
+  node: UserPermission!
+}
+
+type UserPermissionCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [UserPermissionCountableEdge!]!
+}
+
+extend type Query {
+  UserPermission(name: String!): UserPermission!
+  UserPermissions(filter: [DBFilterInput], sortBy: UserPermissionSortingInput, before: String, after: String, first: Int, last: Int): UserPermissionCountableConnection!
+}

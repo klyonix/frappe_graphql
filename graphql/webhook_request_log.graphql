@@ -1,0 +1,50 @@
+type WebhookRequestLog implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  webhook: Webhook
+  webhook__name: String
+  reference_document: String
+  headers: String
+  data: String
+  user: User
+  user__name: String
+  url: String
+  response: String
+  error: String
+}
+
+enum WebhookRequestLogSortField {
+  NAME
+  CREATION
+  MODIFIED
+}
+
+input WebhookRequestLogSortingInput {
+  direction: SortDirection!
+  field: WebhookRequestLogSortField!
+}
+
+type WebhookRequestLogCountableEdge {
+  cursor: String!
+  node: WebhookRequestLog!
+}
+
+type WebhookRequestLogCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [WebhookRequestLogCountableEdge!]!
+}
+
+extend type Query {
+  WebhookRequestLog(name: String!): WebhookRequestLog!
+  WebhookRequestLogs(filter: [DBFilterInput], sortBy: WebhookRequestLogSortingInput, before: String, after: String, first: Int, last: Int): WebhookRequestLogCountableConnection!
+}

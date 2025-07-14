@@ -1,0 +1,65 @@
+type DataImport implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  reference_doctype: DocType!
+  reference_doctype__name: String
+  import_type: DataImportImportTypeSelectOptions!
+  import_file: String
+  payload_count: Int
+  google_sheets_url: String
+  status: DataImportStatusSelectOptions
+  submit_after_import: Int
+  mute_emails: Int
+  template_options: String
+  template_warnings: String
+  show_failed_logs: Int
+}
+
+enum DataImportImportTypeSelectOptions {
+  INSERT_NEW_RECORDS
+  UPDATE_EXISTING_RECORDS
+}
+
+enum DataImportStatusSelectOptions {
+  PENDING
+  SUCCESS
+  PARTIAL_SUCCESS
+  ERROR
+  TIMED_OUT
+}
+
+enum DataImportSortField {
+  NAME
+  CREATION
+  MODIFIED
+}
+
+input DataImportSortingInput {
+  direction: SortDirection!
+  field: DataImportSortField!
+}
+
+type DataImportCountableEdge {
+  cursor: String!
+  node: DataImport!
+}
+
+type DataImportCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [DataImportCountableEdge!]!
+}
+
+extend type Query {
+  DataImport(name: String!): DataImport!
+  DataImports(filter: [DBFilterInput], sortBy: DataImportSortingInput, before: String, after: String, first: Int, last: Int): DataImportCountableConnection!
+}

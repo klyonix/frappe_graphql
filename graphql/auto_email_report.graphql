@@ -1,0 +1,95 @@
+type AutoEmailReport implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  report: Report!
+  report__name: String
+  user: User!
+  user__name: String
+  enabled: Int
+  report_type: String
+  reference_report: String
+  send_if_data: Int
+  data_modified_till: Int
+  no_of_rows: Int
+  filters: String
+  filter_meta: String
+  from_date_field: String
+  to_date_field: String
+  dynamic_date_period: AutoEmailReportPeriodSelectOptions
+  use_first_day_of_period: Int
+  email_to: String!
+  day_of_week: AutoEmailReportDayOfWeekSelectOptions
+  sender: EmailAccount
+  sender__name: String
+  frequency: AutoEmailReportFrequencySelectOptions!
+  format: AutoEmailReportFormatSelectOptions!
+  description: String
+}
+
+enum AutoEmailReportPeriodSelectOptions {
+  DAILY
+  WEEKLY
+  MONTHLY
+  QUARTERLY
+  HALF_YEARLY
+  YEARLY
+}
+
+enum AutoEmailReportDayOfWeekSelectOptions {
+  MONDAY
+  TUESDAY
+  WEDNESDAY
+  THURSDAY
+  FRIDAY
+  SATURDAY
+  SUNDAY
+}
+
+enum AutoEmailReportFrequencySelectOptions {
+  DAILY
+  WEEKDAYS
+  WEEKLY
+  MONTHLY
+}
+
+enum AutoEmailReportFormatSelectOptions {
+  HTML
+  XLSX
+  CSV
+}
+
+enum AutoEmailReportSortField {
+  NAME
+  CREATION
+  MODIFIED
+}
+
+input AutoEmailReportSortingInput {
+  direction: SortDirection!
+  field: AutoEmailReportSortField!
+}
+
+type AutoEmailReportCountableEdge {
+  cursor: String!
+  node: AutoEmailReport!
+}
+
+type AutoEmailReportCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [AutoEmailReportCountableEdge!]!
+}
+
+extend type Query {
+  AutoEmailReport(name: String!): AutoEmailReport!
+  AutoEmailReports(filter: [DBFilterInput], sortBy: AutoEmailReportSortingInput, before: String, after: String, first: Int, last: Int): AutoEmailReportCountableConnection!
+}

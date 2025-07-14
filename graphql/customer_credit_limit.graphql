@@ -1,0 +1,17 @@
+type CustomerCreditLimit implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  company: Company
+  company__name: String
+  credit_limit: Float
+  bypass_credit_limit_check: Int
+}

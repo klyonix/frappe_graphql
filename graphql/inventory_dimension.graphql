@@ -1,0 +1,63 @@
+type InventoryDimension implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  dimension_name: String!
+  reference_document: DocType!
+  reference_document__name: String
+  disabled: Int
+  source_fieldname: String
+  target_fieldname: String
+  apply_to_all_doctypes: Int
+  validate_negative_stock: Int
+  document_type: DocType
+  document_type__name: String
+  type_of_transaction: InventoryDimensionTypeOfTransactionSelectOptions
+  fetch_from_parent: String
+  istable: Int
+  condition: String
+  reqd: Int
+  mandatory_depends_on: String
+}
+
+enum InventoryDimensionTypeOfTransactionSelectOptions {
+  INWARD
+  OUTWARD
+  BOTH
+}
+
+enum InventoryDimensionSortField {
+  NAME
+  CREATION
+  MODIFIED
+  DIMENSION_NAME
+}
+
+input InventoryDimensionSortingInput {
+  direction: SortDirection!
+  field: InventoryDimensionSortField!
+}
+
+type InventoryDimensionCountableEdge {
+  cursor: String!
+  node: InventoryDimension!
+}
+
+type InventoryDimensionCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [InventoryDimensionCountableEdge!]!
+}
+
+extend type Query {
+  InventoryDimension(name: String!): InventoryDimension!
+  InventoryDimensions(filter: [DBFilterInput], sortBy: InventoryDimensionSortingInput, before: String, after: String, first: Int, last: Int): InventoryDimensionCountableConnection!
+}

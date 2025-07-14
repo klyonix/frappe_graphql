@@ -1,0 +1,23 @@
+type DeliverySettings implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  dispatch_template: EmailTemplate
+  dispatch_template__name: String
+  dispatch_attachment: PrintFormat
+  dispatch_attachment__name: String
+  send_with_attachment: Int
+  stop_delay: Int
+}
+
+extend type Query {
+  DeliverySettings: DeliverySettings!
+}

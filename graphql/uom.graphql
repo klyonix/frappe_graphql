@@ -1,0 +1,44 @@
+type UOM implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  enabled: Int
+  uom_name: String!
+  must_be_whole_number: Int
+}
+
+enum UOMSortField {
+  NAME
+  CREATION
+  MODIFIED
+  UOM_NAME
+}
+
+input UOMSortingInput {
+  direction: SortDirection!
+  field: UOMSortField!
+}
+
+type UOMCountableEdge {
+  cursor: String!
+  node: UOM!
+}
+
+type UOMCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [UOMCountableEdge!]!
+}
+
+extend type Query {
+  UOM(name: String!): UOM!
+  UOMS(filter: [DBFilterInput], sortBy: UOMSortingInput, before: String, after: String, first: Int, last: Int): UOMCountableConnection!
+}

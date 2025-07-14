@@ -1,0 +1,52 @@
+type SupplierScorecardPeriod implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  supplier: Supplier!
+  supplier__name: String
+  naming_series: String!
+  total_score: Float
+  start_date: String!
+  end_date: String!
+  criteria: [SupplierScorecardScoringCriteria!]!
+  variables: [SupplierScorecardScoringVariable!]!
+  scorecard: SupplierScorecard!
+  scorecard__name: String
+  amended_from: SupplierScorecardPeriod
+  amended_from__name: String
+}
+
+enum SupplierScorecardPeriodSortField {
+  NAME
+  CREATION
+  MODIFIED
+}
+
+input SupplierScorecardPeriodSortingInput {
+  direction: SortDirection!
+  field: SupplierScorecardPeriodSortField!
+}
+
+type SupplierScorecardPeriodCountableEdge {
+  cursor: String!
+  node: SupplierScorecardPeriod!
+}
+
+type SupplierScorecardPeriodCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [SupplierScorecardPeriodCountableEdge!]!
+}
+
+extend type Query {
+  SupplierScorecardPeriod(name: String!): SupplierScorecardPeriod!
+  SupplierScorecardPeriods(filter: [DBFilterInput], sortBy: SupplierScorecardPeriodSortingInput, before: String, after: String, first: Int, last: Int): SupplierScorecardPeriodCountableConnection!
+}

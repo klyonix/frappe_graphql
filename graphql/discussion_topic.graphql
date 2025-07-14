@@ -1,0 +1,45 @@
+type DiscussionTopic implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  title: String
+  reference_doctype: DocType
+  reference_doctype__name: String
+  reference_docname: BaseDocType
+  reference_docname__name: String
+}
+
+enum DiscussionTopicSortField {
+  NAME
+  CREATION
+  MODIFIED
+}
+
+input DiscussionTopicSortingInput {
+  direction: SortDirection!
+  field: DiscussionTopicSortField!
+}
+
+type DiscussionTopicCountableEdge {
+  cursor: String!
+  node: DiscussionTopic!
+}
+
+type DiscussionTopicCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [DiscussionTopicCountableEdge!]!
+}
+
+extend type Query {
+  DiscussionTopic(name: String!): DiscussionTopic!
+  DiscussionTopics(filter: [DBFilterInput], sortBy: DiscussionTopicSortingInput, before: String, after: String, first: Int, last: Int): DiscussionTopicCountableConnection!
+}

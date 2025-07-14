@@ -1,0 +1,41 @@
+type QualityInspectionReading implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  specification: QualityInspectionParameter!
+  specification__name: String
+  parameter_group: QualityInspectionParameterGroup
+  parameter_group__name: String
+  status: QualityInspectionReadingStatusSelectOptions
+  value: String
+  numeric: Int
+  manual_inspection: Int
+  min_value: Float
+  max_value: Float
+  formula_based_criteria: Int
+  acceptance_formula: String
+  reading_value: String
+  reading_1: String
+  reading_2: String
+  reading_3: String
+  reading_4: String
+  reading_5: String
+  reading_6: String
+  reading_7: String
+  reading_8: String
+  reading_9: String
+  reading_10: String
+}
+
+enum QualityInspectionReadingStatusSelectOptions {
+  ACCEPTED
+  REJECTED
+}

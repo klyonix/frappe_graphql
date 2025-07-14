@@ -1,0 +1,48 @@
+type Manufacturer implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  short_name: String!
+  full_name: String
+  website: String
+  country: Country
+  country__name: String
+  logo: String
+  notes: String
+}
+
+enum ManufacturerSortField {
+  NAME
+  CREATION
+  MODIFIED
+  SHORT_NAME
+}
+
+input ManufacturerSortingInput {
+  direction: SortDirection!
+  field: ManufacturerSortField!
+}
+
+type ManufacturerCountableEdge {
+  cursor: String!
+  node: Manufacturer!
+}
+
+type ManufacturerCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [ManufacturerCountableEdge!]!
+}
+
+extend type Query {
+  Manufacturer(name: String!): Manufacturer!
+  Manufacturers(filter: [DBFilterInput], sortBy: ManufacturerSortingInput, before: String, after: String, first: Int, last: Int): ManufacturerCountableConnection!
+}

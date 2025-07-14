@@ -1,0 +1,56 @@
+type Location implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  location_name: String!
+  parent_location: Location
+  parent_location__name: String
+  is_container: Int
+  is_group: Int
+  latitude: Float
+  longitude: Float
+  area: Float
+  area_uom: UOM
+  area_uom__name: String
+  location: String
+  lft: Int
+  rgt: Int
+  old_parent: String
+}
+
+enum LocationSortField {
+  NAME
+  CREATION
+  MODIFIED
+  LOCATION_NAME
+  PARENT_LOCATION
+}
+
+input LocationSortingInput {
+  direction: SortDirection!
+  field: LocationSortField!
+}
+
+type LocationCountableEdge {
+  cursor: String!
+  node: Location!
+}
+
+type LocationCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [LocationCountableEdge!]!
+}
+
+extend type Query {
+  Location(name: String!): Location!
+  Locations(filter: [DBFilterInput], sortBy: LocationSortingInput, before: String, after: String, first: Int, last: Int): LocationCountableConnection!
+}

@@ -1,0 +1,241 @@
+type SalesOrder implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  title: String
+  naming_series: String!
+  customer: Customer!
+  customer__name: String
+  customer_name: String
+  tax_id: String
+  order_type: SalesOrderOrderTypeSelectOptions!
+  transaction_date: String!
+  delivery_date: String
+  sales_partner: SalesPartner
+  sales_partner__name: String
+  po_no: String
+  po_date: String
+  company: Company!
+  company__name: String
+  skip_delivery_note: Int
+  has_unit_price_items: Int
+  amended_from: SalesOrder
+  amended_from__name: String
+  cost_center: CostCenter
+  cost_center__name: String
+  project: Project
+  project__name: String
+  currency: Currency!
+  currency__name: String
+  conversion_rate: Float!
+  selling_price_list: PriceList!
+  selling_price_list__name: String
+  price_list_currency: Currency!
+  price_list_currency__name: String
+  plc_conversion_rate: Float!
+  ignore_pricing_rule: Int
+  scan_barcode: String
+  set_warehouse: Warehouse
+  set_warehouse__name: String
+  reserve_stock: Int
+  items: [SalesOrderItem!]!
+  total_qty: Float
+  total_net_weight: Float
+  base_total: Float
+  base_net_total: Float
+  total: Float
+  net_total: Float
+  tax_category: TaxCategory
+  tax_category__name: String
+  taxes_and_charges: SalesTaxesandChargesTemplate
+  taxes_and_charges__name: String
+  shipping_rule: ShippingRule
+  shipping_rule__name: String
+  incoterm: Incoterm
+  incoterm__name: String
+  named_place: String
+  taxes: [SalesTaxesandCharges!]!
+  base_total_taxes_and_charges: Float
+  total_taxes_and_charges: Float
+  base_grand_total: Float
+  base_rounding_adjustment: Float
+  base_rounded_total: Float
+  base_in_words: String
+  grand_total: Float
+  rounding_adjustment: Float
+  rounded_total: Float
+  in_words: String
+  advance_paid: Float
+  disable_rounded_total: Int
+  apply_discount_on: SalesOrderApplyAdditionalDiscountOnSelectOptions
+  base_discount_amount: Float
+  coupon_code: CouponCode
+  coupon_code__name: String
+  additional_discount_percentage: Float
+  discount_amount: Float
+  other_charges_calculation: String
+  packed_items: [PackedItem!]!
+  pricing_rules: [PricingRuleDetail!]!
+  customer_address: Address
+  customer_address__name: String
+  address_display: String
+  customer_group: CustomerGroup
+  customer_group__name: String
+  territory: Territory
+  territory__name: String
+  contact_person: Contact
+  contact_person__name: String
+  contact_display: String
+  contact_phone: String
+  contact_mobile: String
+  contact_email: String
+  shipping_address_name: Address
+  shipping_address_name__name: String
+  shipping_address: String
+  dispatch_address_name: Address
+  dispatch_address_name__name: String
+  dispatch_address: String
+  company_address: Address
+  company_address__name: String
+  company_address_display: String
+  company_contact_person: Contact
+  company_contact_person__name: String
+  payment_terms_template: PaymentTermsTemplate
+  payment_terms_template__name: String
+  payment_schedule: [PaymentSchedule!]!
+  tc_name: TermsandConditions
+  tc_name__name: String
+  terms: String
+  status: SalesOrderStatusSelectOptions!
+  delivery_status: SalesOrderDeliveryStatusSelectOptions
+  per_delivered: Float
+  per_billed: Float
+  per_picked: Float
+  billing_status: SalesOrderBillingStatusSelectOptions
+  amount_eligible_for_commission: Float
+  commission_rate: Float
+  total_commission: Float
+  sales_team: [SalesTeam!]!
+  loyalty_points: Int
+  loyalty_amount: Float
+  from_date: String
+  to_date: String
+  auto_repeat: AutoRepeat
+  auto_repeat__name: String
+  letter_head: LetterHead
+  letter_head__name: String
+  group_same_items: Int
+  select_print_heading: PrintHeading
+  select_print_heading__name: String
+  language: String
+  is_internal_customer: Int
+  represents_company: Company
+  represents_company__name: String
+  source: LeadSource
+  source__name: String
+  inter_company_order_reference: PurchaseOrder
+  inter_company_order_reference__name: String
+  campaign: Campaign
+  campaign__name: String
+  party_account_currency: Currency
+  party_account_currency__name: String
+}
+
+extend type SalesOrder {
+  whg_ebs_code: String
+  fsl_sample: Int
+  fsl_claim: Int
+  fsl_esr: EmployeeSampleRequest
+  fsl_esr__name: String
+  fsl_dsr: DoctorSampleRequest
+  fsl_dsr__name: String
+  fsl_cr: ClaimRequest
+  fsl_cr__name: String
+  fsl_pharmacy: String
+  is_reverse_charge: Int
+  is_export_with_gst: Int
+  gst_breakup_table: String
+  billing_address_gstin: String
+  gst_category: String
+  place_of_supply: String
+  company_gstin: String
+  ecommerce_supply_type: String
+  ecommerce_gstin: String
+}
+
+enum SalesOrderOrderTypeSelectOptions {
+  SALES
+  MAINTENANCE
+  SHOPPING_CART
+}
+
+enum SalesOrderApplyAdditionalDiscountOnSelectOptions {
+  GRAND_TOTAL
+  NET_TOTAL
+}
+
+enum SalesOrderStatusSelectOptions {
+  DRAFT
+  ON_HOLD
+  TO_DELIVER_AND_BILL
+  TO_BILL
+  TO_DELIVER
+  COMPLETED
+  CANCELLED
+  CLOSED
+}
+
+enum SalesOrderDeliveryStatusSelectOptions {
+  NOT_DELIVERED
+  FULLY_DELIVERED
+  PARTLY_DELIVERED
+  CLOSED
+  NOT_APPLICABLE
+}
+
+enum SalesOrderBillingStatusSelectOptions {
+  NOT_BILLED
+  FULLY_BILLED
+  PARTLY_BILLED
+  CLOSED
+}
+
+enum SalesOrderSortField {
+  NAME
+  CREATION
+  MODIFIED
+  CUSTOMER
+  TRANSACTION_DATE
+  PROJECT
+  STATUS
+  INTER_COMPANY_ORDER_REFERENCE
+}
+
+input SalesOrderSortingInput {
+  direction: SortDirection!
+  field: SalesOrderSortField!
+}
+
+type SalesOrderCountableEdge {
+  cursor: String!
+  node: SalesOrder!
+}
+
+type SalesOrderCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [SalesOrderCountableEdge!]!
+}
+
+extend type Query {
+  SalesOrder(name: String!): SalesOrder!
+  SalesOrders(filter: [DBFilterInput], sortBy: SalesOrderSortingInput, before: String, after: String, first: Int, last: Int): SalesOrderCountableConnection!
+}

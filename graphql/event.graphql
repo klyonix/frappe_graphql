@@ -1,0 +1,90 @@
+type Event implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  subject: String!
+  event_category: String
+  event_type: EventEventTypeSelectOptions!
+  color: String
+  send_reminder: Int
+  repeat_this_event: Int
+  starts_on: String!
+  ends_on: String
+  status: EventStatusSelectOptions
+  sender: String
+  all_day: Int
+  sync_with_google_calendar: Int
+  add_video_conferencing: Int
+  google_calendar: GoogleCalendar
+  google_calendar__name: String
+  google_calendar_id: String
+  google_calendar_event_id: String
+  google_meet_link: String
+  pulled_from_google_calendar: Int
+  repeat_on: EventRepeatOnSelectOptions
+  repeat_till: String
+  monday: Int
+  tuesday: Int
+  wednesday: Int
+  thursday: Int
+  friday: Int
+  saturday: Int
+  sunday: Int
+  description: String
+  event_participants: [EventParticipants!]!
+}
+
+enum EventEventTypeSelectOptions {
+  PRIVATE
+  PUBLIC
+}
+
+enum EventStatusSelectOptions {
+  OPEN
+  COMPLETED
+  CLOSED
+  CANCELLED
+}
+
+enum EventRepeatOnSelectOptions {
+  DAILY
+  WEEKLY
+  MONTHLY
+  YEARLY
+}
+
+enum EventSortField {
+  NAME
+  CREATION
+  MODIFIED
+  EVENT_TYPE
+}
+
+input EventSortingInput {
+  direction: SortDirection!
+  field: EventSortField!
+}
+
+type EventCountableEdge {
+  cursor: String!
+  node: Event!
+}
+
+type EventCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [EventCountableEdge!]!
+}
+
+extend type Query {
+  Event(name: String!): Event!
+  Events(filter: [DBFilterInput], sortBy: EventSortingInput, before: String, after: String, first: Int, last: Int): EventCountableConnection!
+}

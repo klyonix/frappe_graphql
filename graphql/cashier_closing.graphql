@@ -1,0 +1,54 @@
+type CashierClosing implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  naming_series: String
+  user: User!
+  user__name: String
+  date: String
+  from_time: String!
+  time: String!
+  expense: Float
+  custody: Float
+  returns: Float
+  outstanding_amount: Float
+  payments: [CashierClosingPayments!]!
+  net_amount: Float
+  amended_from: CashierClosing
+  amended_from__name: String
+}
+
+enum CashierClosingSortField {
+  NAME
+  CREATION
+  MODIFIED
+}
+
+input CashierClosingSortingInput {
+  direction: SortDirection!
+  field: CashierClosingSortField!
+}
+
+type CashierClosingCountableEdge {
+  cursor: String!
+  node: CashierClosing!
+}
+
+type CashierClosingCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [CashierClosingCountableEdge!]!
+}
+
+extend type Query {
+  CashierClosing(name: String!): CashierClosing!
+  CashierClosings(filter: [DBFilterInput], sortBy: CashierClosingSortingInput, before: String, after: String, first: Int, last: Int): CashierClosingCountableConnection!
+}

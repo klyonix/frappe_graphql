@@ -1,0 +1,51 @@
+type TaxWithholdingCategory implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  category_name: String
+  round_off_tax_amount: Int
+  consider_party_ledger_amount: Int
+  tax_on_excess_amount: Int
+  rates: [TaxWithholdingRate!]!
+  accounts: [TaxWithholdingAccount!]!
+}
+
+extend type TaxWithholdingCategory {
+  tds_section: String
+  entity_type: String
+}
+
+enum TaxWithholdingCategorySortField {
+  NAME
+  CREATION
+  MODIFIED
+}
+
+input TaxWithholdingCategorySortingInput {
+  direction: SortDirection!
+  field: TaxWithholdingCategorySortField!
+}
+
+type TaxWithholdingCategoryCountableEdge {
+  cursor: String!
+  node: TaxWithholdingCategory!
+}
+
+type TaxWithholdingCategoryCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [TaxWithholdingCategoryCountableEdge!]!
+}
+
+extend type Query {
+  TaxWithholdingCategory(name: String!): TaxWithholdingCategory!
+  TaxWithholdingCategorys(filter: [DBFilterInput], sortBy: TaxWithholdingCategorySortingInput, before: String, after: String, first: Int, last: Int): TaxWithholdingCategoryCountableConnection!
+}

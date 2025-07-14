@@ -1,0 +1,130 @@
+type Lead implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  naming_series: String
+  salutation: Salutation
+  salutation__name: String
+  first_name: String
+  middle_name: String
+  last_name: String
+  lead_name: String
+  job_title: String
+  gender: Gender
+  gender__name: String
+  source: LeadSource
+  source__name: String
+  lead_owner: User
+  lead_owner__name: String
+  status: LeadStatusSelectOptions!
+  customer: Customer
+  customer__name: String
+  type: LeadLeadTypeSelectOptions
+  request_type: LeadRequestTypeSelectOptions
+  email_id: String
+  website: String
+  mobile_no: String
+  whatsapp_no: String
+  phone: String
+  phone_ext: String
+  company_name: String
+  no_of_employees: String
+  annual_revenue: Float
+  industry: IndustryType
+  industry__name: String
+  market_segment: MarketSegment
+  market_segment__name: String
+  territory: Territory
+  territory__name: String
+  fax: String
+  city: String
+  state: String
+  country: Country
+  country__name: String
+  qualification_status: LeadQualificationStatusSelectOptions
+  qualified_by: User
+  qualified_by__name: String
+  qualified_on: String
+  campaign_name: Campaign
+  campaign_name__name: String
+  company: Company
+  company__name: String
+  language: Language
+  language__name: String
+  image: String
+  title: String
+  disabled: Int
+  unsubscribed: Int
+  blog_subscriber: Int
+  notes: [CRMNote!]!
+}
+
+enum LeadStatusSelectOptions {
+  LEAD
+  OPEN
+  REPLIED
+  OPPORTUNITY
+  QUOTATION
+  LOST_QUOTATION
+  INTERESTED
+  CONVERTED
+  DO_NOT_CONTACT
+}
+
+enum LeadLeadTypeSelectOptions {
+  CLIENT
+  CHANNEL_PARTNER
+  CONSULTANT
+}
+
+enum LeadRequestTypeSelectOptions {
+  PRODUCT_ENQUIRY
+  REQUEST_FOR_INFORMATION
+  SUGGESTIONS
+  OTHER
+}
+
+enum LeadQualificationStatusSelectOptions {
+  UNQUALIFIED
+  IN_PROCESS
+  QUALIFIED
+}
+
+enum LeadSortField {
+  NAME
+  CREATION
+  MODIFIED
+  LEAD_NAME
+  LEAD_OWNER
+  STATUS
+  EMAIL_ID
+}
+
+input LeadSortingInput {
+  direction: SortDirection!
+  field: LeadSortField!
+}
+
+type LeadCountableEdge {
+  cursor: String!
+  node: Lead!
+}
+
+type LeadCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [LeadCountableEdge!]!
+}
+
+extend type Query {
+  Lead(name: String!): Lead!
+  Leads(filter: [DBFilterInput], sortBy: LeadSortingInput, before: String, after: String, first: Int, last: Int): LeadCountableConnection!
+}

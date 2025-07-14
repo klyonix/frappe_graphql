@@ -1,0 +1,48 @@
+type ErrorLog implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  seen: Int
+  reference_doctype: DocType
+  reference_doctype__name: String
+  reference_name: String
+  method: String
+  error: String
+  trace_id: String
+}
+
+enum ErrorLogSortField {
+  NAME
+  CREATION
+  MODIFIED
+  REFERENCE_DOCTYPE
+}
+
+input ErrorLogSortingInput {
+  direction: SortDirection!
+  field: ErrorLogSortField!
+}
+
+type ErrorLogCountableEdge {
+  cursor: String!
+  node: ErrorLog!
+}
+
+type ErrorLogCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [ErrorLogCountableEdge!]!
+}
+
+extend type Query {
+  ErrorLog(name: String!): ErrorLog!
+  ErrorLogs(filter: [DBFilterInput], sortBy: ErrorLogSortingInput, before: String, after: String, first: Int, last: Int): ErrorLogCountableConnection!
+}

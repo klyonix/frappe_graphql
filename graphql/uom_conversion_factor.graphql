@@ -1,0 +1,47 @@
+type UOMConversionFactor implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  category: UOMCategory!
+  category__name: String
+  from_uom: UOM!
+  from_uom__name: String
+  to_uom: UOM!
+  to_uom__name: String
+  value: Float!
+}
+
+enum UOMConversionFactorSortField {
+  NAME
+  CREATION
+  MODIFIED
+}
+
+input UOMConversionFactorSortingInput {
+  direction: SortDirection!
+  field: UOMConversionFactorSortField!
+}
+
+type UOMConversionFactorCountableEdge {
+  cursor: String!
+  node: UOMConversionFactor!
+}
+
+type UOMConversionFactorCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [UOMConversionFactorCountableEdge!]!
+}
+
+extend type Query {
+  UOMConversionFactor(name: String!): UOMConversionFactor!
+  UOMConversionFactors(filter: [DBFilterInput], sortBy: UOMConversionFactorSortingInput, before: String, after: String, first: Int, last: Int): UOMConversionFactorCountableConnection!
+}

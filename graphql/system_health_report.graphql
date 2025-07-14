@@ -1,0 +1,62 @@
+type SystemHealthReport implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  total_background_workers: Int
+  background_jobs_check: String
+  test_job_id: String
+  queue_status: [SystemHealthReportQueue!]!
+  background_workers: [SystemHealthReportWorkers!]!
+  scheduler_status: String
+  oldest_unscheduled_job: ScheduledJobType
+  oldest_unscheduled_job__name: String
+  failing_scheduled_jobs: [SystemHealthReportFailingJobs!]!
+  database: String
+  database_version: String
+  db_storage_usage: Float
+  top_db_tables: [SystemHealthReportTables!]!
+  bufferpool_size: String
+  binary_logging: String
+  cache_keys: Int
+  cache_memory_usage: String
+  socketio_ping_check: SystemHealthReportSocketioPingCheckSelectOptions
+  socketio_transport_mode: SystemHealthReportSocketioTransportModeSelectOptions
+  public_files_size: Float
+  private_files_size: Float
+  onsite_backups: Int
+  backups_size: Float
+  total_users: Int
+  new_users: Int
+  failed_logins: Int
+  active_sessions: Int
+  last_10_active_users: String
+  total_outgoing_emails: Int
+  pending_emails: Int
+  failed_emails: Int
+  handled_emails: Int
+  unhandled_emails: Int
+  total_errors: Int
+  top_errors: [SystemHealthReportErrors!]!
+}
+
+enum SystemHealthReportSocketioPingCheckSelectOptions {
+  FAIL
+  PASS
+}
+
+enum SystemHealthReportSocketioTransportModeSelectOptions {
+  POLLING
+  WEBSOCKET
+}
+
+extend type Query {
+  SystemHealthReport: SystemHealthReport!
+}

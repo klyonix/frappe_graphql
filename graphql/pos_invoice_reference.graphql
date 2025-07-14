@@ -1,0 +1,22 @@
+type POSInvoiceReference implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  pos_invoice: POSInvoice!
+  pos_invoice__name: String
+  posting_date: String!
+  customer: Customer!
+  customer__name: String
+  grand_total: Float!
+  is_return: Int
+  return_against: POSInvoice
+  return_against__name: String
+}

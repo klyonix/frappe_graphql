@@ -1,0 +1,47 @@
+type ItemAlternative implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  item_code: Item
+  item_code__name: String
+  alternative_item_code: Item
+  alternative_item_code__name: String
+  two_way: Int
+  item_name: String
+  alternative_item_name: String
+}
+
+enum ItemAlternativeSortField {
+  NAME
+  CREATION
+  MODIFIED
+}
+
+input ItemAlternativeSortingInput {
+  direction: SortDirection!
+  field: ItemAlternativeSortField!
+}
+
+type ItemAlternativeCountableEdge {
+  cursor: String!
+  node: ItemAlternative!
+}
+
+type ItemAlternativeCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [ItemAlternativeCountableEdge!]!
+}
+
+extend type Query {
+  ItemAlternative(name: String!): ItemAlternative!
+  ItemAlternatives(filter: [DBFilterInput], sortBy: ItemAlternativeSortingInput, before: String, after: String, first: Int, last: Int): ItemAlternativeCountableConnection!
+}

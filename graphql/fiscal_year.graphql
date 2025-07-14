@@ -1,0 +1,48 @@
+type FiscalYear implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  year: String!
+  disabled: Int
+  is_short_year: Int
+  year_start_date: String!
+  year_end_date: String!
+  companies: [FiscalYearCompany!]!
+  auto_created: Int
+}
+
+enum FiscalYearSortField {
+  NAME
+  CREATION
+  MODIFIED
+  YEAR
+}
+
+input FiscalYearSortingInput {
+  direction: SortDirection!
+  field: FiscalYearSortField!
+}
+
+type FiscalYearCountableEdge {
+  cursor: String!
+  node: FiscalYear!
+}
+
+type FiscalYearCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [FiscalYearCountableEdge!]!
+}
+
+extend type Query {
+  FiscalYear(name: String!): FiscalYear!
+  FiscalYears(filter: [DBFilterInput], sortBy: FiscalYearSortingInput, before: String, after: String, first: Int, last: Int): FiscalYearCountableConnection!
+}

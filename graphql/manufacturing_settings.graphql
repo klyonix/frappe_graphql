@@ -1,0 +1,45 @@
+type ManufacturingSettings implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  material_consumption: Int
+  get_rm_cost_from_consumption_entry: Int
+  backflush_raw_materials_based_on: ManufacturingSettingsBackflushRawMaterialsBasedOnSelectOptions
+  validate_components_quantities_per_bom: Int
+  update_bom_costs_automatically: Int
+  default_wip_warehouse: Warehouse
+  default_wip_warehouse__name: String
+  default_fg_warehouse: Warehouse
+  default_fg_warehouse__name: String
+  default_scrap_warehouse: Warehouse
+  default_scrap_warehouse__name: String
+  overproduction_percentage_for_sales_order: Float
+  overproduction_percentage_for_work_order: Float
+  add_corrective_operation_cost_in_finished_good_valuation: Int
+  enforce_time_logs: Int
+  job_card_excess_transfer: Int
+  disable_capacity_planning: Int
+  allow_overtime: Int
+  allow_production_on_holidays: Int
+  capacity_planning_for_days: Int
+  mins_between_operations: Int
+  set_op_cost_and_scrap_from_sub_assemblies: Int
+  make_serial_no_batch_from_work_order: Int
+}
+
+enum ManufacturingSettingsBackflushRawMaterialsBasedOnSelectOptions {
+  BOM
+  MATERIAL_TRANSFERRED_FOR_MANUFACTURE
+}
+
+extend type Query {
+  ManufacturingSettings: ManufacturingSettings!
+}

@@ -1,0 +1,53 @@
+type WebPageView implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  path: String
+  referrer: String
+  browser: String
+  browser_version: String
+  is_unique: String
+  time_zone: String
+  user_agent: String
+  source: String
+  campaign: String
+  medium: String
+  visitor_id: String
+}
+
+enum WebPageViewSortField {
+  NAME
+  CREATION
+  MODIFIED
+  PATH
+  VISITOR_ID
+}
+
+input WebPageViewSortingInput {
+  direction: SortDirection!
+  field: WebPageViewSortField!
+}
+
+type WebPageViewCountableEdge {
+  cursor: String!
+  node: WebPageView!
+}
+
+type WebPageViewCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [WebPageViewCountableEdge!]!
+}
+
+extend type Query {
+  WebPageView(name: String!): WebPageView!
+  WebPageViews(filter: [DBFilterInput], sortBy: WebPageViewSortingInput, before: String, after: String, first: Int, last: Int): WebPageViewCountableConnection!
+}

@@ -1,0 +1,45 @@
+type LedgerHealth implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  voucher_type: String
+  voucher_no: String
+  checked_on: String
+  debit_credit_mismatch: Int
+  general_and_payment_ledger_mismatch: Int
+}
+
+enum LedgerHealthSortField {
+  NAME
+  CREATION
+  MODIFIED
+}
+
+input LedgerHealthSortingInput {
+  direction: SortDirection!
+  field: LedgerHealthSortField!
+}
+
+type LedgerHealthCountableEdge {
+  cursor: String!
+  node: LedgerHealth!
+}
+
+type LedgerHealthCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [LedgerHealthCountableEdge!]!
+}
+
+extend type Query {
+  LedgerHealth(name: String!): LedgerHealth!
+  LedgerHealths(filter: [DBFilterInput], sortBy: LedgerHealthSortingInput, before: String, after: String, first: Int, last: Int): LedgerHealthCountableConnection!
+}

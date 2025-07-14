@@ -1,0 +1,48 @@
+type CostCenterAllocation implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  main_cost_center: CostCenter!
+  main_cost_center__name: String
+  company: Company!
+  company__name: String
+  valid_from: String!
+  allocation_percentages: [CostCenterAllocationPercentage!]!
+  amended_from: CostCenterAllocation
+  amended_from__name: String
+}
+
+enum CostCenterAllocationSortField {
+  NAME
+  CREATION
+  MODIFIED
+}
+
+input CostCenterAllocationSortingInput {
+  direction: SortDirection!
+  field: CostCenterAllocationSortField!
+}
+
+type CostCenterAllocationCountableEdge {
+  cursor: String!
+  node: CostCenterAllocation!
+}
+
+type CostCenterAllocationCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [CostCenterAllocationCountableEdge!]!
+}
+
+extend type Query {
+  CostCenterAllocation(name: String!): CostCenterAllocation!
+  CostCenterAllocations(filter: [DBFilterInput], sortBy: CostCenterAllocationSortingInput, before: String, after: String, first: Int, last: Int): CostCenterAllocationCountableConnection!
+}

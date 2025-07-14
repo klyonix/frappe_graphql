@@ -1,0 +1,51 @@
+type TransactionLog implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  row_index: String
+  reference_doctype: String
+  document_name: String
+  timestamp: String
+  checksum_version: String
+  previous_hash: String
+  transaction_hash: String
+  chaining_hash: String
+  data: String
+  amended_from: TransactionLog
+  amended_from__name: String
+}
+
+enum TransactionLogSortField {
+  NAME
+  CREATION
+  MODIFIED
+}
+
+input TransactionLogSortingInput {
+  direction: SortDirection!
+  field: TransactionLogSortField!
+}
+
+type TransactionLogCountableEdge {
+  cursor: String!
+  node: TransactionLog!
+}
+
+type TransactionLogCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [TransactionLogCountableEdge!]!
+}
+
+extend type Query {
+  TransactionLog(name: String!): TransactionLog!
+  TransactionLogs(filter: [DBFilterInput], sortBy: TransactionLogSortingInput, before: String, after: String, first: Int, last: Int): TransactionLogCountableConnection!
+}

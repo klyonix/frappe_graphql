@@ -1,0 +1,43 @@
+type DiscussionReply implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  topic: DiscussionTopic
+  topic__name: String
+  reply: String
+}
+
+enum DiscussionReplySortField {
+  NAME
+  CREATION
+  MODIFIED
+}
+
+input DiscussionReplySortingInput {
+  direction: SortDirection!
+  field: DiscussionReplySortField!
+}
+
+type DiscussionReplyCountableEdge {
+  cursor: String!
+  node: DiscussionReply!
+}
+
+type DiscussionReplyCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [DiscussionReplyCountableEdge!]!
+}
+
+extend type Query {
+  DiscussionReply(name: String!): DiscussionReply!
+  DiscussionReplys(filter: [DBFilterInput], sortBy: DiscussionReplySortingInput, before: String, after: String, first: Int, last: Int): DiscussionReplyCountableConnection!
+}

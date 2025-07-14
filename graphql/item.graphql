@@ -1,0 +1,176 @@
+type Item implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  naming_series: String
+  item_code: String!
+  item_name: String
+  item_group: ItemGroup!
+  item_group__name: String
+  stock_uom: UOM!
+  stock_uom__name: String
+  brand: Brand
+  brand__name: String
+  disabled: Int
+  allow_alternative_item: Int
+  is_stock_item: Int
+  has_batch_no: Int
+  has_variants: Int
+  opening_stock: Float
+  valuation_rate: Float
+  standard_rate: Float
+  is_fixed_asset: Int
+  auto_create_assets: Int
+  is_grouped_asset: Int
+  asset_category: AssetCategory
+  asset_category__name: String
+  asset_naming_series: String
+  over_delivery_receipt_allowance: Float
+  over_billing_allowance: Float
+  image: String
+  description: String
+  uoms: [UOMConversionDetail!]!
+  shelf_life_in_days: Int
+  end_of_life: String
+  default_material_request_type: ItemDefaultMaterialRequestTypeSelectOptions
+  valuation_method: ItemValuationMethodSelectOptions
+  warranty_period: String
+  weight_per_unit: Float
+  weight_uom: UOM
+  weight_uom__name: String
+  allow_negative_stock: Int
+  barcodes: [ItemBarcode!]!
+  reorder_levels: [ItemReorder!]!
+  create_new_batch: Int
+  batch_number_series: String
+  has_expiry_date: Int
+  retain_sample: Int
+  sample_quantity: Int
+  has_serial_no: Int
+  serial_no_series: String
+  variant_of: Item
+  variant_of__name: String
+  variant_based_on: ItemVariantBasedOnSelectOptions
+  attributes: [ItemVariantAttribute!]!
+  enable_deferred_expense: Int
+  no_of_months_exp: Int
+  enable_deferred_revenue: Int
+  no_of_months: Int
+  item_defaults: [ItemDefault!]!
+  purchase_uom: UOM
+  purchase_uom__name: String
+  min_order_qty: Float
+  safety_stock: Float
+  is_purchase_item: Int
+  lead_time_days: Int
+  last_purchase_rate: Float
+  is_customer_provided_item: Int
+  customer: Customer
+  customer__name: String
+  delivered_by_supplier: Int
+  supplier_items: [ItemSupplier!]!
+  country_of_origin: Country
+  country_of_origin__name: String
+  customs_tariff_number: CustomsTariffNumber
+  customs_tariff_number__name: String
+  sales_uom: UOM
+  sales_uom__name: String
+  grant_commission: Int
+  is_sales_item: Int
+  max_discount: Float
+  customer_items: [ItemCustomerDetail!]!
+  taxes: [ItemTax!]!
+  inspection_required_before_purchase: Int
+  quality_inspection_template: QualityInspectionTemplate
+  quality_inspection_template__name: String
+  inspection_required_before_delivery: Int
+  include_item_in_manufacturing: Int
+  is_sub_contracted_item: Int
+  default_bom: BOM
+  default_bom__name: String
+  customer_code: String
+  default_item_manufacturer: Manufacturer
+  default_item_manufacturer__name: String
+  default_manufacturer_part_no: String
+  total_projected_qty: Float
+}
+
+extend type Item {
+  gst_hsn_code: GSTHSNCode
+  gst_hsn_code__name: String
+  fsl_packing: Float
+  fsl_box: Float
+  whg_composition: String
+  whg_label_claim: String
+  whg_product_box: String
+  whg_product_strip: String
+  whg_lead_time_to_manufacture: Float
+  whg_preferred_manufacturer: Manufacturer
+  whg_preferred_manufacturer__name: String
+  whg_standard_moq: Float
+  fsl_manufacturer: Manufacturer
+  fsl_manufacturer__name: String
+  fsl_manufacturer_name: String
+  is_ineligible_for_itc: Int
+  whg_days_to_manufacture: Int
+  whg_min_days_manufacture: Int
+}
+
+enum ItemDefaultMaterialRequestTypeSelectOptions {
+  PURCHASE
+  MATERIAL_TRANSFER
+  MATERIAL_ISSUE
+  MANUFACTURE
+  CUSTOMER_PROVIDED
+}
+
+enum ItemValuationMethodSelectOptions {
+  FIFO
+  MOVING_AVERAGE
+  LIFO
+}
+
+enum ItemVariantBasedOnSelectOptions {
+  ITEM_ATTRIBUTE
+  MANUFACTURER
+}
+
+enum ItemSortField {
+  NAME
+  CREATION
+  MODIFIED
+  ITEM_CODE
+  ITEM_NAME
+  ITEM_GROUP
+  DISABLED
+  VARIANT_OF
+}
+
+input ItemSortingInput {
+  direction: SortDirection!
+  field: ItemSortField!
+}
+
+type ItemCountableEdge {
+  cursor: String!
+  node: Item!
+}
+
+type ItemCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [ItemCountableEdge!]!
+}
+
+extend type Query {
+  Item(name: String!): Item!
+  Items(filter: [DBFilterInput], sortBy: ItemSortingInput, before: String, after: String, first: Int, last: Int): ItemCountableConnection!
+}

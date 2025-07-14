@@ -1,0 +1,63 @@
+type EmailCampaign implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  campaign_name: Campaign!
+  campaign_name__name: String
+  email_campaign_for: EmailCampaignEmailCampaignForSelectOptions!
+  recipient: BaseDocType!
+  recipient__name: String
+  sender: User
+  sender__name: String
+  start_date: String!
+  end_date: String
+  status: EmailCampaignStatusSelectOptions
+}
+
+enum EmailCampaignEmailCampaignForSelectOptions {
+  LEAD
+  CONTACT
+  EMAIL_GROUP
+}
+
+enum EmailCampaignStatusSelectOptions {
+  SCHEDULED
+  IN_PROGRESS
+  COMPLETED
+  UNSUBSCRIBED
+}
+
+enum EmailCampaignSortField {
+  NAME
+  CREATION
+  MODIFIED
+}
+
+input EmailCampaignSortingInput {
+  direction: SortDirection!
+  field: EmailCampaignSortField!
+}
+
+type EmailCampaignCountableEdge {
+  cursor: String!
+  node: EmailCampaign!
+}
+
+type EmailCampaignCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [EmailCampaignCountableEdge!]!
+}
+
+extend type Query {
+  EmailCampaign(name: String!): EmailCampaign!
+  EmailCampaigns(filter: [DBFilterInput], sortBy: EmailCampaignSortingInput, before: String, after: String, first: Int, last: Int): EmailCampaignCountableConnection!
+}

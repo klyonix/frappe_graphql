@@ -1,0 +1,165 @@
+type PaymentEntry implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  payment_type: PaymentEntryPaymentTypeSelectOptions!
+  naming_series: String!
+  payment_order_status: PaymentEntryPaymentOrderStatusSelectOptions
+  posting_date: String!
+  company: Company!
+  company__name: String
+  mode_of_payment: ModeofPayment
+  mode_of_payment__name: String
+  party_type: DocType
+  party_type__name: String
+  party: BaseDocType
+  party__name: String
+  party_name: String
+  book_advance_payments_in_separate_party_account: Int
+  reconcile_on_advance_payment_date: Int
+  bank_account: BankAccount
+  bank_account__name: String
+  party_bank_account: BankAccount
+  party_bank_account__name: String
+  contact_person: Contact
+  contact_person__name: String
+  contact_email: String
+  party_balance: Float
+  paid_from: Account!
+  paid_from__name: String
+  paid_from_account_type: String
+  paid_from_account_currency: Currency!
+  paid_from_account_currency__name: String
+  paid_from_account_balance: Float
+  paid_to: Account!
+  paid_to__name: String
+  paid_to_account_type: String
+  paid_to_account_currency: Currency!
+  paid_to_account_currency__name: String
+  paid_to_account_balance: Float
+  paid_amount: Float!
+  paid_amount_after_tax: Float
+  source_exchange_rate: Float!
+  base_paid_amount: Float!
+  base_paid_amount_after_tax: Float
+  received_amount: Float!
+  received_amount_after_tax: Float
+  target_exchange_rate: Float!
+  base_received_amount: Float!
+  base_received_amount_after_tax: Float
+  references: [PaymentEntryReference!]!
+  total_allocated_amount: Float
+  base_total_allocated_amount: Float
+  unallocated_amount: Float
+  difference_amount: Float
+  purchase_taxes_and_charges_template: PurchaseTaxesandChargesTemplate
+  purchase_taxes_and_charges_template__name: String
+  sales_taxes_and_charges_template: SalesTaxesandChargesTemplate
+  sales_taxes_and_charges_template__name: String
+  apply_tax_withholding_amount: Int
+  tax_withholding_category: TaxWithholdingCategory
+  tax_withholding_category__name: String
+  taxes: [AdvanceTaxesandCharges!]!
+  base_total_taxes_and_charges: Float
+  total_taxes_and_charges: Float
+  deductions: [PaymentEntryDeduction!]!
+  reference_no: String
+  reference_date: String
+  clearance_date: String
+  project: Project
+  project__name: String
+  cost_center: CostCenter
+  cost_center__name: String
+  status: PaymentEntryStatusSelectOptions
+  custom_remarks: Int
+  remarks: String
+  base_in_words: String
+  is_opening: PaymentEntryIsOpeningSelectOptions
+  letter_head: LetterHead
+  letter_head__name: String
+  print_heading: PrintHeading
+  print_heading__name: String
+  bank: String
+  bank_account_no: String
+  payment_order: PaymentOrder
+  payment_order__name: String
+  in_words: String
+  auto_repeat: AutoRepeat
+  auto_repeat__name: String
+  amended_from: PaymentEntry
+  amended_from__name: String
+  title: String
+}
+
+extend type PaymentEntry {
+  fsl_customer_group: CustomerGroup
+  fsl_customer_group__name: String
+  company_address: Address
+  company_address__name: String
+  company_gstin: String
+  place_of_supply: String
+  customer_address: Address
+  customer_address__name: String
+  billing_address_gstin: String
+  gst_category: String
+}
+
+enum PaymentEntryPaymentTypeSelectOptions {
+  RECEIVE
+  PAY
+  INTERNAL_TRANSFER
+}
+
+enum PaymentEntryPaymentOrderStatusSelectOptions {
+  INITIATED
+  PAYMENT_ORDERED
+}
+
+enum PaymentEntryStatusSelectOptions {
+  DRAFT
+  SUBMITTED
+  CANCELLED
+}
+
+enum PaymentEntryIsOpeningSelectOptions {
+  NO
+  YES
+}
+
+enum PaymentEntrySortField {
+  NAME
+  CREATION
+  MODIFIED
+  PARTY_TYPE
+  REFERENCE_DATE
+  IS_OPENING
+}
+
+input PaymentEntrySortingInput {
+  direction: SortDirection!
+  field: PaymentEntrySortField!
+}
+
+type PaymentEntryCountableEdge {
+  cursor: String!
+  node: PaymentEntry!
+}
+
+type PaymentEntryCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [PaymentEntryCountableEdge!]!
+}
+
+extend type Query {
+  PaymentEntry(name: String!): PaymentEntry!
+  PaymentEntrys(filter: [DBFilterInput], sortBy: PaymentEntrySortingInput, before: String, after: String, first: Int, last: Int): PaymentEntryCountableConnection!
+}

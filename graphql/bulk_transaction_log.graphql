@@ -1,0 +1,44 @@
+type BulkTransactionLog implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  date: String
+  log_entries: Int
+  succeeded: Int
+  failed: Int
+}
+
+enum BulkTransactionLogSortField {
+  NAME
+  CREATION
+  MODIFIED
+}
+
+input BulkTransactionLogSortingInput {
+  direction: SortDirection!
+  field: BulkTransactionLogSortField!
+}
+
+type BulkTransactionLogCountableEdge {
+  cursor: String!
+  node: BulkTransactionLog!
+}
+
+type BulkTransactionLogCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [BulkTransactionLogCountableEdge!]!
+}
+
+extend type Query {
+  BulkTransactionLog(name: String!): BulkTransactionLog!
+  BulkTransactionLogs(filter: [DBFilterInput], sortBy: BulkTransactionLogSortingInput, before: String, after: String, first: Int, last: Int): BulkTransactionLogCountableConnection!
+}

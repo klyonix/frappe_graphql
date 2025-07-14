@@ -1,0 +1,35 @@
+type ReportFilter implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  label: String!
+  fieldtype: ReportFilterFieldtypeSelectOptions!
+  fieldname: String!
+  mandatory: Int
+  wildcard_filter: Int
+  options: String
+  default: String
+}
+
+enum ReportFilterFieldtypeSelectOptions {
+  CHECK
+  CURRENCY
+  DATA
+  DATE
+  DATETIME
+  DYNAMIC_LINK
+  FLOAT
+  FOLD
+  INT
+  LINK
+  SELECT
+  TIME
+}

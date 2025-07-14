@@ -1,0 +1,75 @@
+type OnboardingStep implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  title: String!
+  is_complete: Int
+  is_skipped: Int
+  description: String
+  intro_video_url: String
+  action: OnboardingStepActionSelectOptions!
+  action_label: String
+  reference_document: DocType
+  reference_document__name: String
+  show_full_form: Int
+  show_form_tour: Int
+  form_tour: FormTour
+  form_tour__name: String
+  is_single: Int
+  reference_report: Report
+  reference_report__name: String
+  report_reference_doctype: String
+  report_type: String
+  report_description: String
+  path: String
+  callback_title: String
+  callback_message: String
+  validate_action: Int
+  field: String
+  value_to_validate: String
+  video_url: String
+}
+
+enum OnboardingStepActionSelectOptions {
+  CREATE_ENTRY
+  UPDATE_SETTINGS
+  SHOW_FORM_TOUR
+  VIEW_REPORT
+  GO_TO_PAGE
+  WATCH_VIDEO
+}
+
+enum OnboardingStepSortField {
+  NAME
+  CREATION
+  MODIFIED
+}
+
+input OnboardingStepSortingInput {
+  direction: SortDirection!
+  field: OnboardingStepSortField!
+}
+
+type OnboardingStepCountableEdge {
+  cursor: String!
+  node: OnboardingStep!
+}
+
+type OnboardingStepCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [OnboardingStepCountableEdge!]!
+}
+
+extend type Query {
+  OnboardingStep(name: String!): OnboardingStep!
+  OnboardingSteps(filter: [DBFilterInput], sortBy: OnboardingStepSortingInput, before: String, after: String, first: Int, last: Int): OnboardingStepCountableConnection!
+}

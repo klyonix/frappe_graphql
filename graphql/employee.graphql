@@ -1,0 +1,209 @@
+type Employee implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  employee: String
+  naming_series: String!
+  first_name: String!
+  middle_name: String
+  last_name: String
+  employee_name: String
+  gender: Gender!
+  gender__name: String
+  date_of_birth: String!
+  salutation: Salutation
+  salutation__name: String
+  date_of_joining: String!
+  image: String
+  status: EmployeeStatusSelectOptions!
+  user_id: User
+  user_id__name: String
+  create_user_permission: Int
+  company: Company!
+  company__name: String
+  department: Department
+  department__name: String
+  employee_number: String
+  designation: Designation
+  designation__name: String
+  reports_to: Employee
+  reports_to__name: String
+  branch: Branch
+  branch__name: String
+  scheduled_confirmation_date: String
+  final_confirmation_date: String
+  contract_end_date: String
+  notice_number_of_days: Int
+  date_of_retirement: String
+  cell_number: String
+  personal_email: String
+  company_email: String
+  prefered_contact_email: EmployeePreferedContactEmailSelectOptions
+  prefered_email: String
+  unsubscribed: Int
+  current_address: String
+  current_accommodation_type: EmployeeCurrentAddressIsSelectOptions
+  permanent_address: String
+  permanent_accommodation_type: EmployeePermanentAddressIsSelectOptions
+  person_to_be_contacted: String
+  emergency_phone_number: String
+  relation: String
+  attendance_device_id: String
+  holiday_list: HolidayList
+  holiday_list__name: String
+  ctc: Float
+  salary_currency: Currency
+  salary_currency__name: String
+  salary_mode: EmployeeSalaryModeSelectOptions
+  bank_name: String
+  bank_ac_no: String
+  iban: String
+  marital_status: EmployeeMaritalStatusSelectOptions
+  family_background: String
+  blood_group: String
+  health_details: String
+  passport_number: String
+  valid_upto: String
+  date_of_issue: String
+  place_of_issue: String
+  bio: String
+  education: [EmployeeEducation!]!
+  external_work_history: [EmployeeExternalWorkHistory!]!
+  internal_work_history: [EmployeeInternalWorkHistory!]!
+  resignation_letter_date: String
+  relieving_date: String
+  held_on: String
+  new_workplace: String
+  leave_encashed: EmployeeLeaveEncashedSelectOptions
+  encashment_date: String
+  reason_for_leaving: String
+  feedback: String
+  lft: Int
+  rgt: Int
+  old_parent: String
+}
+
+extend type Employee {
+  employment_type: EmploymentType
+  employment_type__name: String
+  fsl_hq: Territory
+  fsl_hq__name: String
+  grade: EmployeeGrade
+  grade__name: String
+  fsl_sfc: SFC
+  fsl_sfc__name: String
+  job_applicant: JobApplicant
+  job_applicant__name: String
+  fsl_whatsapp_number: String
+  fsl_current_address_line1: String
+  fsl_current_address_line2: String
+  fsl_current_city: String
+  fsl_current_state: String
+  fsl_current_country: Country
+  fsl_current_country__name: String
+  fsl_current_pincode: String
+  fsl_permanent_address_line1: String
+  fsl_permanent_address_line2: String
+  fsl_permanent_city: String
+  fsl_permanent_state: String
+  fsl_permanent_country: Country
+  fsl_permanent_country__name: String
+  fsl_permanent_pincode: String
+  default_shift: ShiftType
+  default_shift__name: String
+  expense_approver: User
+  expense_approver__name: String
+  leave_approver: User
+  leave_approver__name: String
+  shift_request_approver: User
+  shift_request_approver__name: String
+  payroll_cost_center: CostCenter
+  payroll_cost_center__name: String
+  pan_number: String
+  fsl_epf_acc: String
+  provident_fund_account: String
+  ifsc_code: String
+  micr_code: String
+  health_insurance_provider: EmployeeHealthInsurance
+  health_insurance_provider__name: String
+  health_insurance_no: String
+}
+
+enum EmployeeStatusSelectOptions {
+  ACTIVE
+  INACTIVE
+  SUSPENDED
+  LEFT
+}
+
+enum EmployeePreferedContactEmailSelectOptions {
+  COMPANY_EMAIL
+  PERSONAL_EMAIL
+  USER_ID
+}
+
+enum EmployeeCurrentAddressIsSelectOptions {
+  RENTED
+  OWNED
+}
+
+enum EmployeePermanentAddressIsSelectOptions {
+  RENTED
+  OWNED
+}
+
+enum EmployeeSalaryModeSelectOptions {
+  BANK
+  CASH
+  CHEQUE
+}
+
+enum EmployeeMaritalStatusSelectOptions {
+  SINGLE
+  MARRIED
+  DIVORCED
+  WIDOWED
+}
+
+enum EmployeeLeaveEncashedSelectOptions {
+  YES
+  NO
+}
+
+enum EmployeeSortField {
+  NAME
+  CREATION
+  MODIFIED
+  STATUS
+  DESIGNATION
+  ATTENDANCE_DEVICE_ID
+}
+
+input EmployeeSortingInput {
+  direction: SortDirection!
+  field: EmployeeSortField!
+}
+
+type EmployeeCountableEdge {
+  cursor: String!
+  node: Employee!
+}
+
+type EmployeeCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [EmployeeCountableEdge!]!
+}
+
+extend type Query {
+  Employee(name: String!): Employee!
+  Employees(filter: [DBFilterInput], sortBy: EmployeeSortingInput, before: String, after: String, first: Int, last: Int): EmployeeCountableConnection!
+}

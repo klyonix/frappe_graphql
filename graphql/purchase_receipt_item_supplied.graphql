@@ -1,0 +1,34 @@
+type PurchaseReceiptItemSupplied implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  main_item_code: Item
+  main_item_code__name: String
+  rm_item_code: Item
+  rm_item_code__name: String
+  item_name: String
+  bom_detail_no: String
+  description: String
+  stock_uom: UOM
+  stock_uom__name: String
+  conversion_factor: Float
+  reference_name: String
+  rate: Float
+  amount: Float
+  required_qty: Float
+  consumed_qty: Float!
+  current_stock: Float
+  batch_no: Batch
+  batch_no__name: String
+  serial_no: String
+  purchase_order: PurchaseOrder
+  purchase_order__name: String
+}

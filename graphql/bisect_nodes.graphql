@@ -1,0 +1,52 @@
+type BisectNodes implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  root: BisectNodes
+  root__name: String
+  left_child: BisectNodes
+  left_child__name: String
+  right_child: BisectNodes
+  right_child__name: String
+  period_from_date: String
+  period_to_date: String
+  difference: Float
+  balance_sheet_summary: Float
+  profit_loss_summary: Float
+  generated: Int
+}
+
+enum BisectNodesSortField {
+  NAME
+  CREATION
+  MODIFIED
+}
+
+input BisectNodesSortingInput {
+  direction: SortDirection!
+  field: BisectNodesSortField!
+}
+
+type BisectNodesCountableEdge {
+  cursor: String!
+  node: BisectNodes!
+}
+
+type BisectNodesCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [BisectNodesCountableEdge!]!
+}
+
+extend type Query {
+  BisectNodes(name: String!): BisectNodes!
+  BisectNodeses(filter: [DBFilterInput], sortBy: BisectNodesSortingInput, before: String, after: String, first: Int, last: Int): BisectNodesCountableConnection!
+}

@@ -1,0 +1,45 @@
+type DeletedDocument implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  deleted_name: String
+  deleted_doctype: String
+  restored: Int
+  new_name: String
+  data: String
+}
+
+enum DeletedDocumentSortField {
+  NAME
+  CREATION
+  MODIFIED
+}
+
+input DeletedDocumentSortingInput {
+  direction: SortDirection!
+  field: DeletedDocumentSortField!
+}
+
+type DeletedDocumentCountableEdge {
+  cursor: String!
+  node: DeletedDocument!
+}
+
+type DeletedDocumentCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [DeletedDocumentCountableEdge!]!
+}
+
+extend type Query {
+  DeletedDocument(name: String!): DeletedDocument!
+  DeletedDocuments(filter: [DBFilterInput], sortBy: DeletedDocumentSortingInput, before: String, after: String, first: Int, last: Int): DeletedDocumentCountableConnection!
+}

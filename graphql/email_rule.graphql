@@ -1,0 +1,43 @@
+type EmailRule implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  email_id: String
+  is_spam: Int
+}
+
+enum EmailRuleSortField {
+  NAME
+  CREATION
+  MODIFIED
+  EMAIL_ID
+}
+
+input EmailRuleSortingInput {
+  direction: SortDirection!
+  field: EmailRuleSortField!
+}
+
+type EmailRuleCountableEdge {
+  cursor: String!
+  node: EmailRule!
+}
+
+type EmailRuleCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [EmailRuleCountableEdge!]!
+}
+
+extend type Query {
+  EmailRule(name: String!): EmailRule!
+  EmailRules(filter: [DBFilterInput], sortBy: EmailRuleSortingInput, before: String, after: String, first: Int, last: Int): EmailRuleCountableConnection!
+}

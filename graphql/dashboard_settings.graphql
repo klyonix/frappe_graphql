@@ -1,0 +1,43 @@
+type DashboardSettings implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  user: User
+  user__name: String
+  chart_config: String
+}
+
+enum DashboardSettingsSortField {
+  NAME
+  CREATION
+  MODIFIED
+}
+
+input DashboardSettingsSortingInput {
+  direction: SortDirection!
+  field: DashboardSettingsSortField!
+}
+
+type DashboardSettingsCountableEdge {
+  cursor: String!
+  node: DashboardSettings!
+}
+
+type DashboardSettingsCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [DashboardSettingsCountableEdge!]!
+}
+
+extend type Query {
+  DashboardSettings(name: String!): DashboardSettings!
+  DashboardSettingss(filter: [DBFilterInput], sortBy: DashboardSettingsSortingInput, before: String, after: String, first: Int, last: Int): DashboardSettingsCountableConnection!
+}

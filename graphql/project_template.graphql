@@ -1,0 +1,43 @@
+type ProjectTemplate implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  project_type: ProjectType
+  project_type__name: String
+  tasks: [ProjectTemplateTask!]!
+}
+
+enum ProjectTemplateSortField {
+  NAME
+  CREATION
+  MODIFIED
+}
+
+input ProjectTemplateSortingInput {
+  direction: SortDirection!
+  field: ProjectTemplateSortField!
+}
+
+type ProjectTemplateCountableEdge {
+  cursor: String!
+  node: ProjectTemplate!
+}
+
+type ProjectTemplateCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [ProjectTemplateCountableEdge!]!
+}
+
+extend type Query {
+  ProjectTemplate(name: String!): ProjectTemplate!
+  ProjectTemplates(filter: [DBFilterInput], sortBy: ProjectTemplateSortingInput, before: String, after: String, first: Int, last: Int): ProjectTemplateCountableConnection!
+}

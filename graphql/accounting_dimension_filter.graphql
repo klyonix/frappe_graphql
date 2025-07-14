@@ -1,0 +1,53 @@
+type AccountingDimensionFilter implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  accounting_dimension: String!
+  disabled: Int
+  company: Company!
+  company__name: String
+  apply_restriction_on_values: Int
+  allow_or_restrict: AccountingDimensionFilterAllowOrRestrictDimensionSelectOptions!
+  accounts: [ApplicableOnAccount!]!
+  dimensions: [AllowedDimension!]!
+}
+
+enum AccountingDimensionFilterAllowOrRestrictDimensionSelectOptions {
+  ALLOW
+  RESTRICT
+}
+
+enum AccountingDimensionFilterSortField {
+  NAME
+  CREATION
+  MODIFIED
+}
+
+input AccountingDimensionFilterSortingInput {
+  direction: SortDirection!
+  field: AccountingDimensionFilterSortField!
+}
+
+type AccountingDimensionFilterCountableEdge {
+  cursor: String!
+  node: AccountingDimensionFilter!
+}
+
+type AccountingDimensionFilterCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [AccountingDimensionFilterCountableEdge!]!
+}
+
+extend type Query {
+  AccountingDimensionFilter(name: String!): AccountingDimensionFilter!
+  AccountingDimensionFilters(filter: [DBFilterInput], sortBy: AccountingDimensionFilterSortingInput, before: String, after: String, first: Int, last: Int): AccountingDimensionFilterCountableConnection!
+}

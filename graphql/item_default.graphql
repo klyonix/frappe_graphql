@@ -1,0 +1,37 @@
+type ItemDefault implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  company: Company!
+  company__name: String
+  default_warehouse: Warehouse
+  default_warehouse__name: String
+  default_price_list: PriceList
+  default_price_list__name: String
+  default_discount_account: Account
+  default_discount_account__name: String
+  buying_cost_center: CostCenter
+  buying_cost_center__name: String
+  default_supplier: Supplier
+  default_supplier__name: String
+  expense_account: Account
+  expense_account__name: String
+  default_provisional_account: Account
+  default_provisional_account__name: String
+  selling_cost_center: CostCenter
+  selling_cost_center__name: String
+  income_account: Account
+  income_account__name: String
+  deferred_expense_account: Account
+  deferred_expense_account__name: String
+  deferred_revenue_account: Account
+  deferred_revenue_account__name: String
+}

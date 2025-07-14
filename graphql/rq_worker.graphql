@@ -1,0 +1,60 @@
+type RQWorker implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  queue: String
+  queue_type: RQWorkerQueueTypeSSelectOptions
+  worker_name: String
+  status: String
+  pid: String
+  current_job_id: RQJob
+  current_job_id__name: String
+  successful_job_count: Int
+  failed_job_count: Int
+  birth_date: String
+  last_heartbeat: String
+  total_working_time: String
+  utilization_percent: Float
+}
+
+enum RQWorkerQueueTypeSSelectOptions {
+  DEFAULT
+  LONG
+  SHORT
+}
+
+enum RQWorkerSortField {
+  NAME
+  CREATION
+  MODIFIED
+  WORKER_NAME
+}
+
+input RQWorkerSortingInput {
+  direction: SortDirection!
+  field: RQWorkerSortField!
+}
+
+type RQWorkerCountableEdge {
+  cursor: String!
+  node: RQWorker!
+}
+
+type RQWorkerCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [RQWorkerCountableEdge!]!
+}
+
+extend type Query {
+  RQWorker(name: String!): RQWorker!
+  RQWorkers(filter: [DBFilterInput], sortBy: RQWorkerSortingInput, before: String, after: String, first: Int, last: Int): RQWorkerCountableConnection!
+}

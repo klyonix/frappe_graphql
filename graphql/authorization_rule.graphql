@@ -1,0 +1,85 @@
+type AuthorizationRule implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  transaction: AuthorizationRuleTransactionSelectOptions!
+  based_on: AuthorizationRuleBasedOnSelectOptions!
+  customer_or_item: AuthorizationRuleCustomerOrItemSelectOptions
+  master_name: BaseDocType
+  master_name__name: String
+  company: Company
+  company__name: String
+  value: Float
+  system_role: Role
+  system_role__name: String
+  to_emp: Employee
+  to_emp__name: String
+  system_user: User
+  system_user__name: String
+  to_designation: Designation
+  to_designation__name: String
+  approving_role: Role
+  approving_role__name: String
+  approving_user: User
+  approving_user__name: String
+}
+
+enum AuthorizationRuleTransactionSelectOptions {
+  SALES_ORDER
+  PURCHASE_ORDER
+  QUOTATION
+  DELIVERY_NOTE
+  SALES_INVOICE
+  PURCHASE_INVOICE
+  PURCHASE_RECEIPT
+}
+
+enum AuthorizationRuleBasedOnSelectOptions {
+  GRAND_TOTAL
+  AVERAGE_DISCOUNT
+  CUSTOMERWISE_DISCOUNT
+  ITEMWISE_DISCOUNT
+  ITEM_GROUP_WISE_DISCOUNT
+  NOT_APPLICABLE
+}
+
+enum AuthorizationRuleCustomerOrItemSelectOptions {
+  CUSTOMER
+  ITEM
+  ITEM_GROUP
+}
+
+enum AuthorizationRuleSortField {
+  NAME
+  CREATION
+  MODIFIED
+}
+
+input AuthorizationRuleSortingInput {
+  direction: SortDirection!
+  field: AuthorizationRuleSortField!
+}
+
+type AuthorizationRuleCountableEdge {
+  cursor: String!
+  node: AuthorizationRule!
+}
+
+type AuthorizationRuleCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [AuthorizationRuleCountableEdge!]!
+}
+
+extend type Query {
+  AuthorizationRule(name: String!): AuthorizationRule!
+  AuthorizationRules(filter: [DBFilterInput], sortBy: AuthorizationRuleSortingInput, before: String, after: String, first: Int, last: Int): AuthorizationRuleCountableConnection!
+}

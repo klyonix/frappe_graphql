@@ -1,0 +1,32 @@
+type SupportSettings implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  track_service_level_agreement: Int
+  allow_resetting_service_level_agreement: Int
+  close_issue_after_days: Int
+  get_started_sections: String
+  show_latest_forum_posts: Int
+  forum_url: String
+  get_latest_query: String
+  response_key_list: String
+  post_title_key: String
+  post_description_key: String
+  post_route_key: String
+  post_route_string: String
+  greeting_title: String
+  greeting_subtitle: String
+  search_apis: [SupportSearchSource!]!
+}
+
+extend type Query {
+  SupportSettings: SupportSettings!
+}

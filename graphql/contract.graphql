@@ -1,0 +1,89 @@
+type Contract implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  party_type: ContractPartyTypeSelectOptions!
+  is_signed: Int
+  party_name: BaseDocType!
+  party_name__name: String
+  party_user: User
+  party_user__name: String
+  status: ContractStatusSelectOptions
+  fulfilment_status: String
+  party_full_name: String
+  start_date: String
+  end_date: String
+  signee: String
+  signed_on: String
+  ip_address: String
+  contract_template: ContractTemplate
+  contract_template__name: String
+  contract_terms: String!
+  requires_fulfilment: Int
+  fulfilment_deadline: String
+  fulfilment_terms: [ContractFulfilmentChecklist!]!
+  signee_company: String
+  signed_by_company: User
+  signed_by_company__name: String
+  document_type: ContractDocumentTypeSelectOptions
+  document_name: BaseDocType
+  document_name__name: String
+  amended_from: Contract
+  amended_from__name: String
+}
+
+enum ContractPartyTypeSelectOptions {
+  CUSTOMER
+  SUPPLIER
+  EMPLOYEE
+}
+
+enum ContractStatusSelectOptions {
+  UNSIGNED
+  ACTIVE
+  INACTIVE
+}
+
+enum ContractDocumentTypeSelectOptions {
+  QUOTATION
+  PROJECT
+  SALES_ORDER
+  PURCHASE_ORDER
+  SALES_INVOICE
+  PURCHASE_INVOICE
+}
+
+enum ContractSortField {
+  NAME
+  CREATION
+  MODIFIED
+}
+
+input ContractSortingInput {
+  direction: SortDirection!
+  field: ContractSortField!
+}
+
+type ContractCountableEdge {
+  cursor: String!
+  node: Contract!
+}
+
+type ContractCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [ContractCountableEdge!]!
+}
+
+extend type Query {
+  Contract(name: String!): Contract!
+  Contracts(filter: [DBFilterInput], sortBy: ContractSortingInput, before: String, after: String, first: Int, last: Int): ContractCountableConnection!
+}

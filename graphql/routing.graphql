@@ -1,0 +1,44 @@
+type Routing implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  routing_name: String
+  disabled: Int
+  operations: [BOMOperation!]!
+}
+
+enum RoutingSortField {
+  NAME
+  CREATION
+  MODIFIED
+  ROUTING_NAME
+}
+
+input RoutingSortingInput {
+  direction: SortDirection!
+  field: RoutingSortField!
+}
+
+type RoutingCountableEdge {
+  cursor: String!
+  node: Routing!
+}
+
+type RoutingCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [RoutingCountableEdge!]!
+}
+
+extend type Query {
+  Routing(name: String!): Routing!
+  Routings(filter: [DBFilterInput], sortBy: RoutingSortingInput, before: String, after: String, first: Int, last: Int): RoutingCountableConnection!
+}

@@ -1,0 +1,87 @@
+type WebPage implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  title: String!
+  route: String
+  dynamic_route: Int
+  published: Int
+  module: ModuleDef
+  module__name: String
+  content_type: WebPageContentTypeSelectOptions
+  slideshow: WebsiteSlideshow
+  slideshow__name: String
+  dynamic_template: Int
+  main_section: String
+  main_section_md: String
+  main_section_html: String
+  page_blocks: [WebPageBlock!]!
+  context_script: String
+  javascript: String
+  insert_style: Int
+  text_align: WebPageTextAlignSelectOptions
+  css: String
+  full_width: Int
+  show_title: Int
+  start_date: String
+  end_date: String
+  meta_title: String
+  meta_description: String
+  meta_image: String
+  show_sidebar: Int
+  website_sidebar: WebsiteSidebar
+  website_sidebar__name: String
+  enable_comments: Int
+  header: String
+  breadcrumbs: String
+}
+
+enum WebPageContentTypeSelectOptions {
+  RICH_TEXT
+  MARKDOWN
+  HTML
+  PAGE_BUILDER
+  SLIDESHOW
+}
+
+enum WebPageTextAlignSelectOptions {
+  LEFT
+  CENTER
+  RIGHT
+}
+
+enum WebPageSortField {
+  NAME
+  CREATION
+  MODIFIED
+  ROUTE
+}
+
+input WebPageSortingInput {
+  direction: SortDirection!
+  field: WebPageSortField!
+}
+
+type WebPageCountableEdge {
+  cursor: String!
+  node: WebPage!
+}
+
+type WebPageCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [WebPageCountableEdge!]!
+}
+
+extend type Query {
+  WebPage(name: String!): WebPage!
+  WebPages(filter: [DBFilterInput], sortBy: WebPageSortingInput, before: String, after: String, first: Int, last: Int): WebPageCountableConnection!
+}

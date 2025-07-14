@@ -1,0 +1,94 @@
+type NumberCard implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  is_standard: Int
+  module: ModuleDef
+  module__name: String
+  label: String!
+  type: NumberCardTypeSelectOptions
+  report_name: Report
+  report_name__name: String
+  method: String
+  function: NumberCardFunctionSelectOptions
+  aggregate_function_based_on: String
+  document_type: DocType
+  document_type__name: String
+  parent_document_type: DocType
+  parent_document_type__name: String
+  report_field: String
+  report_function: NumberCardReport_FunctionSelectOptions
+  is_public: Int
+  currency: Currency
+  currency__name: String
+  filters_config: String
+  show_percentage_stats: Int
+  stats_time_interval: NumberCardStatsTimeIntervalSelectOptions
+  filters_json: String
+  dynamic_filters_json: String
+  color: String
+  background_color: String
+}
+
+enum NumberCardTypeSelectOptions {
+  DOCUMENT_TYPE
+  REPORT
+  CUSTOM
+}
+
+enum NumberCardFunctionSelectOptions {
+  COUNT
+  SUM
+  AVERAGE
+  MINIMUM
+  MAXIMUM
+}
+
+enum NumberCardReport_FunctionSelectOptions {
+  SUM
+  AVERAGE
+  MINIMUM
+  MAXIMUM
+}
+
+enum NumberCardStatsTimeIntervalSelectOptions {
+  DAILY
+  WEEKLY
+  MONTHLY
+  YEARLY
+}
+
+enum NumberCardSortField {
+  NAME
+  CREATION
+  MODIFIED
+}
+
+input NumberCardSortingInput {
+  direction: SortDirection!
+  field: NumberCardSortField!
+}
+
+type NumberCardCountableEdge {
+  cursor: String!
+  node: NumberCard!
+}
+
+type NumberCardCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [NumberCardCountableEdge!]!
+}
+
+extend type Query {
+  NumberCard(name: String!): NumberCard!
+  NumberCards(filter: [DBFilterInput], sortBy: NumberCardSortingInput, before: String, after: String, first: Int, last: Int): NumberCardCountableConnection!
+}

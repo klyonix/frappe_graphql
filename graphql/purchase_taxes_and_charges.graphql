@@ -1,0 +1,58 @@
+type PurchaseTaxesandCharges implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  category: PurchaseTaxesandChargesConsiderTaxOrChargeForSelectOptions!
+  add_deduct_tax: PurchaseTaxesandChargesAddOrDeductSelectOptions!
+  charge_type: PurchaseTaxesandChargesTypeSelectOptions!
+  row_id: String
+  included_in_print_rate: Int
+  included_in_paid_amount: Int
+  account_head: Account!
+  account_head__name: String
+  description: String!
+  is_tax_withholding_account: Int
+  rate: Float
+  cost_center: CostCenter
+  cost_center__name: String
+  account_currency: Currency
+  account_currency__name: String
+  tax_amount: Float
+  tax_amount_after_discount_amount: Float
+  total: Float
+  base_tax_amount: Float
+  base_total: Float
+  base_tax_amount_after_discount_amount: Float
+  item_wise_tax_detail: String
+}
+
+extend type PurchaseTaxesandCharges {
+  gst_tax_type: String
+}
+
+enum PurchaseTaxesandChargesConsiderTaxOrChargeForSelectOptions {
+  VALUATION_AND_TOTAL
+  VALUATION
+  TOTAL
+}
+
+enum PurchaseTaxesandChargesAddOrDeductSelectOptions {
+  ADD
+  DEDUCT
+}
+
+enum PurchaseTaxesandChargesTypeSelectOptions {
+  ACTUAL
+  ON_NET_TOTAL
+  ON_PREVIOUS_ROW_AMOUNT
+  ON_PREVIOUS_ROW_TOTAL
+  ON_ITEM_QUANTITY
+}

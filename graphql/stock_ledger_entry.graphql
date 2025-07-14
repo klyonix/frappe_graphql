@@ -1,0 +1,84 @@
+type StockLedgerEntry implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  item_code: Item
+  item_code__name: String
+  warehouse: Warehouse
+  warehouse__name: String
+  posting_date: String
+  posting_time: String
+  posting_datetime: String
+  is_adjustment_entry: Int
+  auto_created_serial_and_batch_bundle: Int
+  voucher_type: DocType
+  voucher_type__name: String
+  voucher_no: BaseDocType
+  voucher_no__name: String
+  voucher_detail_no: String
+  serial_and_batch_bundle: SerialandBatchBundle
+  serial_and_batch_bundle__name: String
+  dependant_sle_voucher_detail_no: String
+  recalculate_rate: Int
+  actual_qty: Float
+  qty_after_transaction: Float
+  incoming_rate: Float
+  outgoing_rate: Float
+  valuation_rate: Float
+  stock_value: Float
+  stock_value_difference: Float
+  stock_queue: String
+  company: Company
+  company__name: String
+  stock_uom: UOM
+  stock_uom__name: String
+  project: Project
+  project__name: String
+  fiscal_year: String
+  has_batch_no: Int
+  has_serial_no: Int
+  is_cancelled: Int
+  to_rename: Int
+  serial_no: String
+  batch_no: String
+}
+
+enum StockLedgerEntrySortField {
+  NAME
+  CREATION
+  MODIFIED
+  POSTING_DATETIME
+  VOUCHER_TYPE
+  VOUCHER_DETAIL_NO
+  SERIAL_AND_BATCH_BUNDLE
+  TO_RENAME
+}
+
+input StockLedgerEntrySortingInput {
+  direction: SortDirection!
+  field: StockLedgerEntrySortField!
+}
+
+type StockLedgerEntryCountableEdge {
+  cursor: String!
+  node: StockLedgerEntry!
+}
+
+type StockLedgerEntryCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [StockLedgerEntryCountableEdge!]!
+}
+
+extend type Query {
+  StockLedgerEntry(name: String!): StockLedgerEntry!
+  StockLedgerEntrys(filter: [DBFilterInput], sortBy: StockLedgerEntrySortingInput, before: String, after: String, first: Int, last: Int): StockLedgerEntryCountableConnection!
+}

@@ -1,0 +1,22 @@
+type SMSSettings implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  sms_gateway_url: String!
+  message_parameter: String!
+  receiver_parameter: String!
+  parameters: [SMSParameter!]!
+  use_post: Int
+}
+
+extend type Query {
+  SMSSettings: SMSSettings!
+}

@@ -1,0 +1,49 @@
+type CodeList implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  title: String
+  canonical_uri: String
+  url: String
+  default_common_code: CommonCode
+  default_common_code__name: String
+  version: String
+  publisher: String
+  publisher_id: String
+  description: String
+}
+
+enum CodeListSortField {
+  NAME
+  CREATION
+  MODIFIED
+}
+
+input CodeListSortingInput {
+  direction: SortDirection!
+  field: CodeListSortField!
+}
+
+type CodeListCountableEdge {
+  cursor: String!
+  node: CodeList!
+}
+
+type CodeListCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [CodeListCountableEdge!]!
+}
+
+extend type Query {
+  CodeList(name: String!): CodeList!
+  CodeLists(filter: [DBFilterInput], sortBy: CodeListSortingInput, before: String, after: String, first: Int, last: Int): CodeListCountableConnection!
+}

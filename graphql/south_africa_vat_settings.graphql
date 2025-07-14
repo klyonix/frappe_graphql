@@ -1,0 +1,44 @@
+type SouthAfricaVATSettings implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  company: Company!
+  company__name: String
+  vat_accounts: [SouthAfricaVATAccount!]!
+}
+
+enum SouthAfricaVATSettingsSortField {
+  NAME
+  CREATION
+  MODIFIED
+  COMPANY
+}
+
+input SouthAfricaVATSettingsSortingInput {
+  direction: SortDirection!
+  field: SouthAfricaVATSettingsSortField!
+}
+
+type SouthAfricaVATSettingsCountableEdge {
+  cursor: String!
+  node: SouthAfricaVATSettings!
+}
+
+type SouthAfricaVATSettingsCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [SouthAfricaVATSettingsCountableEdge!]!
+}
+
+extend type Query {
+  SouthAfricaVATSettings(name: String!): SouthAfricaVATSettings!
+  SouthAfricaVATSettingss(filter: [DBFilterInput], sortBy: SouthAfricaVATSettingsSortingInput, before: String, after: String, first: Int, last: Int): SouthAfricaVATSettingsCountableConnection!
+}

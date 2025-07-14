@@ -1,0 +1,42 @@
+type WorkOrderOperation implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  operation: Operation!
+  operation__name: String
+  status: WorkOrderOperationStatusSelectOptions
+  completed_qty: Float
+  process_loss_qty: Float
+  bom: BOM
+  bom__name: String
+  workstation_type: WorkstationType
+  workstation_type__name: String
+  workstation: Workstation
+  workstation__name: String
+  sequence_id: Int
+  description: String
+  planned_start_time: String
+  hour_rate: Float
+  time_in_mins: Float!
+  planned_end_time: String
+  batch_size: Float
+  planned_operating_cost: Float
+  actual_start_time: String
+  actual_operation_time: Float
+  actual_end_time: String
+  actual_operating_cost: Float
+}
+
+enum WorkOrderOperationStatusSelectOptions {
+  PENDING
+  WORK_IN_PROGRESS
+  COMPLETED
+}

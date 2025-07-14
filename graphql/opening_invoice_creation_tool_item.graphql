@@ -1,0 +1,27 @@
+type OpeningInvoiceCreationToolItem implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  invoice_number: String
+  party_type: DocType
+  party_type__name: String
+  party: BaseDocType!
+  party__name: String
+  temporary_opening_account: Account
+  temporary_opening_account__name: String
+  posting_date: String
+  due_date: String
+  item_name: String
+  outstanding_amount: Float!
+  qty: String
+  cost_center: CostCenter
+  cost_center__name: String
+}

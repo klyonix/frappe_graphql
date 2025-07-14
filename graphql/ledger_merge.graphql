@@ -1,0 +1,64 @@
+type LedgerMerge implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  root_type: LedgerMergeRootTypeSelectOptions!
+  account: Account!
+  account__name: String
+  account_name: String!
+  company: Company!
+  company__name: String
+  status: LedgerMergeStatusSelectOptions
+  is_group: Int
+  merge_accounts: [LedgerMergeAccounts!]!
+}
+
+enum LedgerMergeRootTypeSelectOptions {
+  ASSET
+  LIABILITY
+  INCOME
+  EXPENSE
+  EQUITY
+}
+
+enum LedgerMergeStatusSelectOptions {
+  PENDING
+  SUCCESS
+  PARTIAL_SUCCESS
+  ERROR
+}
+
+enum LedgerMergeSortField {
+  NAME
+  CREATION
+  MODIFIED
+}
+
+input LedgerMergeSortingInput {
+  direction: SortDirection!
+  field: LedgerMergeSortField!
+}
+
+type LedgerMergeCountableEdge {
+  cursor: String!
+  node: LedgerMerge!
+}
+
+type LedgerMergeCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [LedgerMergeCountableEdge!]!
+}
+
+extend type Query {
+  LedgerMerge(name: String!): LedgerMerge!
+  LedgerMerges(filter: [DBFilterInput], sortBy: LedgerMergeSortingInput, before: String, after: String, first: Int, last: Int): LedgerMergeCountableConnection!
+}

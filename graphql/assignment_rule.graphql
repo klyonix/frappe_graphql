@@ -1,0 +1,61 @@
+type AssignmentRule implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  document_type: DocType!
+  document_type__name: String
+  due_date_based_on: String
+  priority: Int
+  disabled: Int
+  description: String!
+  assign_condition: String!
+  unassign_condition: String
+  close_condition: String
+  assignment_days: [AssignmentRuleDay!]!
+  rule: AssignmentRuleRuleSelectOptions!
+  field: String
+  users: [AssignmentRuleUser!]!
+  last_user: User
+  last_user__name: String
+}
+
+enum AssignmentRuleRuleSelectOptions {
+  ROUND_ROBIN
+  LOAD_BALANCING
+  BASED_ON_FIELD
+}
+
+enum AssignmentRuleSortField {
+  NAME
+  CREATION
+  MODIFIED
+}
+
+input AssignmentRuleSortingInput {
+  direction: SortDirection!
+  field: AssignmentRuleSortField!
+}
+
+type AssignmentRuleCountableEdge {
+  cursor: String!
+  node: AssignmentRule!
+}
+
+type AssignmentRuleCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [AssignmentRuleCountableEdge!]!
+}
+
+extend type Query {
+  AssignmentRule(name: String!): AssignmentRule!
+  AssignmentRules(filter: [DBFilterInput], sortBy: AssignmentRuleSortingInput, before: String, after: String, first: Int, last: Int): AssignmentRuleCountableConnection!
+}

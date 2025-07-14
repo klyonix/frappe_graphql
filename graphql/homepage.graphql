@@ -1,0 +1,34 @@
+type Homepage implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  company: Company!
+  company__name: String
+  hero_section_based_on: HomepageHeroSectionBasedOnSelectOptions
+  title: String
+  tag_line: String!
+  description: String!
+  hero_image: String
+  slideshow: WebsiteSlideshow
+  slideshow__name: String
+  hero_section: HomepageSection
+  hero_section__name: String
+}
+
+enum HomepageHeroSectionBasedOnSelectOptions {
+  DEFAULT
+  SLIDESHOW
+  HOMEPAGE_SECTION
+}
+
+extend type Query {
+  Homepage: Homepage!
+}

@@ -1,0 +1,59 @@
+type Appointment implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  scheduled_time: String!
+  status: AppointmentStatusSelectOptions!
+  customer_name: String!
+  customer_phone_number: String
+  customer_skype: String
+  customer_email: String!
+  customer_details: String
+  appointment_with: DocType
+  appointment_with__name: String
+  party: BaseDocType
+  party__name: String
+  calendar_event: Event
+  calendar_event__name: String
+}
+
+enum AppointmentStatusSelectOptions {
+  OPEN
+  UNVERIFIED
+  CLOSED
+}
+
+enum AppointmentSortField {
+  NAME
+  CREATION
+  MODIFIED
+}
+
+input AppointmentSortingInput {
+  direction: SortDirection!
+  field: AppointmentSortField!
+}
+
+type AppointmentCountableEdge {
+  cursor: String!
+  node: Appointment!
+}
+
+type AppointmentCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [AppointmentCountableEdge!]!
+}
+
+extend type Query {
+  Appointment(name: String!): Appointment!
+  Appointments(filter: [DBFilterInput], sortBy: AppointmentSortingInput, before: String, after: String, first: Int, last: Int): AppointmentCountableConnection!
+}

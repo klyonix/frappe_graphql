@@ -1,0 +1,65 @@
+type Workspace implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  label: String!
+  title: String!
+  sequence_id: Float
+  for_user: String
+  parent_page: String
+  module: ModuleDef
+  module__name: String
+  icon: String
+  indicator_color: String
+  restrict_to_domain: Domain
+  restrict_to_domain__name: String
+  hide_custom: Int
+  public: Int
+  is_hidden: Int
+  content: String
+  number_cards: [WorkspaceNumberCard!]!
+  charts: [WorkspaceChart!]!
+  shortcuts: [WorkspaceShortcut!]!
+  links: [WorkspaceLink!]!
+  quick_lists: [WorkspaceQuickList!]!
+  custom_blocks: [WorkspaceCustomBlock!]!
+  roles: [HasRole!]!
+}
+
+enum WorkspaceSortField {
+  NAME
+  CREATION
+  MODIFIED
+  LABEL
+  RESTRICT_TO_DOMAIN
+  PUBLIC
+}
+
+input WorkspaceSortingInput {
+  direction: SortDirection!
+  field: WorkspaceSortField!
+}
+
+type WorkspaceCountableEdge {
+  cursor: String!
+  node: Workspace!
+}
+
+type WorkspaceCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [WorkspaceCountableEdge!]!
+}
+
+extend type Query {
+  Workspace(name: String!): Workspace!
+  Workspaces(filter: [DBFilterInput], sortBy: WorkspaceSortingInput, before: String, after: String, first: Int, last: Int): WorkspaceCountableConnection!
+}

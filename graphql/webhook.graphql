@@ -1,0 +1,76 @@
+type Webhook implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  webhook_doctype: DocType!
+  webhook_doctype__name: String
+  webhook_docevent: WebhookDocEventSelectOptions
+  enabled: Int
+  condition: String
+  request_url: String!
+  is_dynamic_url: Int
+  timeout: Int
+  background_jobs_queue: String
+  request_method: WebhookRequestMethodSelectOptions!
+  request_structure: String
+  enable_security: Int
+  webhook_secret: Password
+  webhook_headers: [WebhookHeader!]!
+  webhook_data: [WebhookData!]!
+  webhook_json: String
+  preview_document: BaseDocType
+  preview_document__name: String
+  meets_condition: String
+  preview_request_body: String
+}
+
+enum WebhookDocEventSelectOptions {
+  AFTER_INSERT
+  ON_UPDATE
+  ON_SUBMIT
+  ON_CANCEL
+  ON_TRASH
+  ON_UPDATE_AFTER_SUBMIT
+  ON_CHANGE
+}
+
+enum WebhookRequestMethodSelectOptions {
+  POST
+  PUT
+  DELETE
+}
+
+enum WebhookSortField {
+  NAME
+  CREATION
+  MODIFIED
+}
+
+input WebhookSortingInput {
+  direction: SortDirection!
+  field: WebhookSortField!
+}
+
+type WebhookCountableEdge {
+  cursor: String!
+  node: Webhook!
+}
+
+type WebhookCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [WebhookCountableEdge!]!
+}
+
+extend type Query {
+  Webhook(name: String!): Webhook!
+  Webhooks(filter: [DBFilterInput], sortBy: WebhookSortingInput, before: String, after: String, first: Int, last: Int): WebhookCountableConnection!
+}

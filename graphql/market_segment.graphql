@@ -1,0 +1,42 @@
+type MarketSegment implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  market_segment: String
+}
+
+enum MarketSegmentSortField {
+  NAME
+  CREATION
+  MODIFIED
+  MARKET_SEGMENT
+}
+
+input MarketSegmentSortingInput {
+  direction: SortDirection!
+  field: MarketSegmentSortField!
+}
+
+type MarketSegmentCountableEdge {
+  cursor: String!
+  node: MarketSegment!
+}
+
+type MarketSegmentCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [MarketSegmentCountableEdge!]!
+}
+
+extend type Query {
+  MarketSegment(name: String!): MarketSegment!
+  MarketSegments(filter: [DBFilterInput], sortBy: MarketSegmentSortingInput, before: String, after: String, first: Int, last: Int): MarketSegmentCountableConnection!
+}

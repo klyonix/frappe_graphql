@@ -1,0 +1,66 @@
+type SalesPartner implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  partner_name: String!
+  partner_type: SalesPartnerType
+  partner_type__name: String
+  territory: Territory!
+  territory__name: String
+  commission_rate: Float!
+  targets: [TargetDetail!]!
+  show_in_website: Int
+  referral_code: String
+  route: String
+  logo: String
+  partner_website: String
+  introduction: String
+  description: String
+}
+
+extend type SalesPartner {
+  fsl_doctor: Doctor
+  fsl_doctor__name: String
+  fsl_pharmacy: String
+  fsl_distributor: Customer!
+  fsl_distributor__name: String
+  fsl_billing_limit: Float
+}
+
+enum SalesPartnerSortField {
+  NAME
+  CREATION
+  MODIFIED
+  PARTNER_NAME
+  REFERRAL_CODE
+  ROUTE
+}
+
+input SalesPartnerSortingInput {
+  direction: SortDirection!
+  field: SalesPartnerSortField!
+}
+
+type SalesPartnerCountableEdge {
+  cursor: String!
+  node: SalesPartner!
+}
+
+type SalesPartnerCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [SalesPartnerCountableEdge!]!
+}
+
+extend type Query {
+  SalesPartner(name: String!): SalesPartner!
+  SalesPartners(filter: [DBFilterInput], sortBy: SalesPartnerSortingInput, before: String, after: String, first: Int, last: Int): SalesPartnerCountableConnection!
+}

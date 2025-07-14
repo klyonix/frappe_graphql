@@ -1,0 +1,49 @@
+type UnreconcilePayment implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  company: Company
+  company__name: String
+  voucher_type: DocType
+  voucher_type__name: String
+  voucher_no: BaseDocType
+  voucher_no__name: String
+  allocations: [UnreconcilePaymentEntries!]!
+  amended_from: UnreconcilePayment
+  amended_from__name: String
+}
+
+enum UnreconcilePaymentSortField {
+  NAME
+  CREATION
+  MODIFIED
+}
+
+input UnreconcilePaymentSortingInput {
+  direction: SortDirection!
+  field: UnreconcilePaymentSortField!
+}
+
+type UnreconcilePaymentCountableEdge {
+  cursor: String!
+  node: UnreconcilePayment!
+}
+
+type UnreconcilePaymentCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [UnreconcilePaymentCountableEdge!]!
+}
+
+extend type Query {
+  UnreconcilePayment(name: String!): UnreconcilePayment!
+  UnreconcilePayments(filter: [DBFilterInput], sortBy: UnreconcilePaymentSortingInput, before: String, after: String, first: Int, last: Int): UnreconcilePaymentCountableConnection!
+}

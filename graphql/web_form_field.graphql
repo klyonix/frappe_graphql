@@ -1,0 +1,59 @@
+type WebFormField implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  fieldname: String
+  fieldtype: WebFormFieldFieldtypeSelectOptions
+  label: String
+  allow_read_on_all_link_options: Int
+  reqd: Int
+  read_only: Int
+  show_in_filter: Int
+  hidden: Int
+  options: String
+  max_length: Int
+  max_value: Int
+  precision: String
+  depends_on: String
+  mandatory_depends_on: String
+  read_only_depends_on: String
+  description: String
+  default: String
+}
+
+enum WebFormFieldFieldtypeSelectOptions {
+  ATTACH
+  ATTACH_IMAGE
+  CHECK
+  CURRENCY
+  COLOR
+  DATA
+  DATE
+  DATETIME
+  DURATION
+  FLOAT
+  HTML
+  INT
+  LINK
+  PASSWORD
+  PHONE
+  RATING
+  SELECT
+  SIGNATURE
+  SMALL_TEXT
+  TEXT
+  TEXT_EDITOR
+  TABLE
+  TIME
+  SECTION_BREAK
+  COLUMN_BREAK
+  PAGE_BREAK
+}

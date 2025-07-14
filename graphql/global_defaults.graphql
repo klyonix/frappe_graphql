@@ -1,0 +1,35 @@
+type GlobalDefaults implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  default_company: Company
+  default_company__name: String
+  country: Country
+  country__name: String
+  default_distance_unit: UOM
+  default_distance_unit__name: String
+  default_currency: Currency!
+  default_currency__name: String
+  hide_currency_symbol: GlobalDefaultsHideCurrencySymbolSelectOptions
+  disable_rounded_total: Int
+  disable_in_words: Int
+  demo_company: Company
+  demo_company__name: String
+}
+
+enum GlobalDefaultsHideCurrencySymbolSelectOptions {
+  NO
+  YES
+}
+
+extend type Query {
+  GlobalDefaults: GlobalDefaults!
+}

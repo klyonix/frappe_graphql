@@ -1,0 +1,57 @@
+type LoyaltyPointEntry implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  loyalty_program: LoyaltyProgram
+  loyalty_program__name: String
+  loyalty_program_tier: String
+  customer: Customer
+  customer__name: String
+  invoice_type: DocType
+  invoice_type__name: String
+  invoice: BaseDocType
+  invoice__name: String
+  redeem_against: LoyaltyPointEntry
+  redeem_against__name: String
+  loyalty_points: Int
+  purchase_amount: Float
+  expiry_date: String
+  posting_date: String
+  company: Company
+  company__name: String
+}
+
+enum LoyaltyPointEntrySortField {
+  NAME
+  CREATION
+  MODIFIED
+}
+
+input LoyaltyPointEntrySortingInput {
+  direction: SortDirection!
+  field: LoyaltyPointEntrySortField!
+}
+
+type LoyaltyPointEntryCountableEdge {
+  cursor: String!
+  node: LoyaltyPointEntry!
+}
+
+type LoyaltyPointEntryCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [LoyaltyPointEntryCountableEdge!]!
+}
+
+extend type Query {
+  LoyaltyPointEntry(name: String!): LoyaltyPointEntry!
+  LoyaltyPointEntrys(filter: [DBFilterInput], sortBy: LoyaltyPointEntrySortingInput, before: String, after: String, first: Int, last: Int): LoyaltyPointEntryCountableConnection!
+}

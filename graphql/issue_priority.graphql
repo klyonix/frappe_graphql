@@ -1,0 +1,41 @@
+type IssuePriority implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  description: String
+}
+
+enum IssuePrioritySortField {
+  NAME
+  CREATION
+  MODIFIED
+}
+
+input IssuePrioritySortingInput {
+  direction: SortDirection!
+  field: IssuePrioritySortField!
+}
+
+type IssuePriorityCountableEdge {
+  cursor: String!
+  node: IssuePriority!
+}
+
+type IssuePriorityCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [IssuePriorityCountableEdge!]!
+}
+
+extend type Query {
+  IssuePriority(name: String!): IssuePriority!
+  IssuePrioritys(filter: [DBFilterInput], sortBy: IssuePrioritySortingInput, before: String, after: String, first: Int, last: Int): IssuePriorityCountableConnection!
+}

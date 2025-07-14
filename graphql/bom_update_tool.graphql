@@ -1,0 +1,21 @@
+type BOMUpdateTool implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  current_bom: BOM!
+  current_bom__name: String
+  new_bom: BOM!
+  new_bom__name: String
+}
+
+extend type Query {
+  BOMUpdateTool: BOMUpdateTool!
+}

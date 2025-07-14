@@ -1,0 +1,29 @@
+type CRMSettings implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  campaign_naming_by: CRMSettingsCampaignNamingBySelectOptions
+  allow_lead_duplication_based_on_emails: Int
+  auto_creation_of_contact: Int
+  close_opportunity_after_days: Int
+  default_valid_till: String
+  carry_forward_communication_and_comments: Int
+  update_timestamp_on_new_communication: Int
+}
+
+enum CRMSettingsCampaignNamingBySelectOptions {
+  CAMPAIGN_NAME
+  NAMING_SERIES
+}
+
+extend type Query {
+  CRMSettings: CRMSettings!
+}

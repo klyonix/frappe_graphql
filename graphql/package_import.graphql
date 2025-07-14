@@ -1,0 +1,44 @@
+type PackageImport implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  attach_package: String
+  activate: Int
+  force: Int
+  log: String
+}
+
+enum PackageImportSortField {
+  NAME
+  CREATION
+  MODIFIED
+}
+
+input PackageImportSortingInput {
+  direction: SortDirection!
+  field: PackageImportSortField!
+}
+
+type PackageImportCountableEdge {
+  cursor: String!
+  node: PackageImport!
+}
+
+type PackageImportCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [PackageImportCountableEdge!]!
+}
+
+extend type Query {
+  PackageImport(name: String!): PackageImport!
+  PackageImports(filter: [DBFilterInput], sortBy: PackageImportSortingInput, before: String, after: String, first: Int, last: Int): PackageImportCountableConnection!
+}

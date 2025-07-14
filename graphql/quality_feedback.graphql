@@ -1,0 +1,51 @@
+type QualityFeedback implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  template: QualityFeedbackTemplate!
+  template__name: String
+  document_type: QualityFeedbackTypeSelectOptions!
+  document_name: BaseDocType!
+  document_name__name: String
+  parameters: [QualityFeedbackParameter!]!
+}
+
+enum QualityFeedbackTypeSelectOptions {
+  USER
+  CUSTOMER
+}
+
+enum QualityFeedbackSortField {
+  NAME
+  CREATION
+  MODIFIED
+}
+
+input QualityFeedbackSortingInput {
+  direction: SortDirection!
+  field: QualityFeedbackSortField!
+}
+
+type QualityFeedbackCountableEdge {
+  cursor: String!
+  node: QualityFeedback!
+}
+
+type QualityFeedbackCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [QualityFeedbackCountableEdge!]!
+}
+
+extend type Query {
+  QualityFeedback(name: String!): QualityFeedback!
+  QualityFeedbacks(filter: [DBFilterInput], sortBy: QualityFeedbackSortingInput, before: String, after: String, first: Int, last: Int): QualityFeedbackCountableConnection!
+}

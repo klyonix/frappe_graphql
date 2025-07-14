@@ -1,0 +1,58 @@
+type Video implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  title: String!
+  provider: VideoProviderSelectOptions!
+  url: String!
+  youtube_video_id: String
+  publish_date: String
+  duration: String
+  like_count: Float
+  view_count: Float
+  dislike_count: Float
+  comment_count: Float
+  description: String!
+  image: String
+}
+
+enum VideoProviderSelectOptions {
+  YOUTUBE
+  VIMEO
+}
+
+enum VideoSortField {
+  NAME
+  CREATION
+  MODIFIED
+  TITLE
+}
+
+input VideoSortingInput {
+  direction: SortDirection!
+  field: VideoSortField!
+}
+
+type VideoCountableEdge {
+  cursor: String!
+  node: Video!
+}
+
+type VideoCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [VideoCountableEdge!]!
+}
+
+extend type Query {
+  Video(name: String!): Video!
+  Videos(filter: [DBFilterInput], sortBy: VideoSortingInput, before: String, after: String, first: Int, last: Int): VideoCountableConnection!
+}

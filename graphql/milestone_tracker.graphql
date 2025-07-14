@@ -1,0 +1,45 @@
+type MilestoneTracker implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  document_type: DocType!
+  document_type__name: String
+  track_field: String!
+  disabled: Int
+}
+
+enum MilestoneTrackerSortField {
+  NAME
+  CREATION
+  MODIFIED
+  DOCUMENT_TYPE
+}
+
+input MilestoneTrackerSortingInput {
+  direction: SortDirection!
+  field: MilestoneTrackerSortField!
+}
+
+type MilestoneTrackerCountableEdge {
+  cursor: String!
+  node: MilestoneTracker!
+}
+
+type MilestoneTrackerCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [MilestoneTrackerCountableEdge!]!
+}
+
+extend type Query {
+  MilestoneTracker(name: String!): MilestoneTracker!
+  MilestoneTrackers(filter: [DBFilterInput], sortBy: MilestoneTrackerSortingInput, before: String, after: String, first: Int, last: Int): MilestoneTrackerCountableConnection!
+}

@@ -1,0 +1,47 @@
+type SMSLog implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  sender_name: String
+  sent_on: String
+  message: String
+  no_of_requested_sms: Int
+  requested_numbers: String
+  no_of_sent_sms: Int
+  sent_to: String
+}
+
+enum SMSLogSortField {
+  NAME
+  CREATION
+  MODIFIED
+}
+
+input SMSLogSortingInput {
+  direction: SortDirection!
+  field: SMSLogSortField!
+}
+
+type SMSLogCountableEdge {
+  cursor: String!
+  node: SMSLog!
+}
+
+type SMSLogCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [SMSLogCountableEdge!]!
+}
+
+extend type Query {
+  SMSLog(name: String!): SMSLog!
+  SMSLogs(filter: [DBFilterInput], sortBy: SMSLogSortingInput, before: String, after: String, first: Int, last: Int): SMSLogCountableConnection!
+}

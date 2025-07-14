@@ -1,0 +1,33 @@
+type AssetFinanceBook implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  finance_book: FinanceBook
+  finance_book__name: String
+  depreciation_method: AssetFinanceBookDepreciationMethodSelectOptions!
+  total_number_of_depreciations: Int!
+  total_number_of_booked_depreciations: Int
+  daily_prorata_based: Int
+  shift_based: Int
+  frequency_of_depreciation: Int!
+  depreciation_start_date: String
+  salvage_value_percentage: Float
+  expected_value_after_useful_life: Float
+  value_after_depreciation: Float
+  rate_of_depreciation: Float
+}
+
+enum AssetFinanceBookDepreciationMethodSelectOptions {
+  STRAIGHT_LINE
+  DOUBLE_DECLINING_BALANCE
+  WRITTEN_DOWN_VALUE
+  MANUAL
+}

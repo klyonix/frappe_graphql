@@ -1,0 +1,48 @@
+type ListViewSettings implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  disable_count: Int
+  disable_comment_count: Int
+  disable_sidebar_stats: Int
+  disable_auto_refresh: Int
+  allow_edit: Int
+  disable_automatic_recency_filters: Int
+  total_fields: String
+  fields: String
+}
+
+enum ListViewSettingsSortField {
+  NAME
+  CREATION
+  MODIFIED
+}
+
+input ListViewSettingsSortingInput {
+  direction: SortDirection!
+  field: ListViewSettingsSortField!
+}
+
+type ListViewSettingsCountableEdge {
+  cursor: String!
+  node: ListViewSettings!
+}
+
+type ListViewSettingsCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [ListViewSettingsCountableEdge!]!
+}
+
+extend type Query {
+  ListViewSettings(name: String!): ListViewSettings!
+  ListViewSettingss(filter: [DBFilterInput], sortBy: ListViewSettingsSortingInput, before: String, after: String, first: Int, last: Int): ListViewSettingsCountableConnection!
+}

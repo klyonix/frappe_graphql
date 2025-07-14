@@ -1,0 +1,36 @@
+type KanbanBoardColumn implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  column_name: String
+  status: KanbanBoardColumnStatusSelectOptions
+  indicator: KanbanBoardColumnIndicatorSelectOptions
+  order: String
+}
+
+enum KanbanBoardColumnStatusSelectOptions {
+  ACTIVE
+  ARCHIVED
+}
+
+enum KanbanBoardColumnIndicatorSelectOptions {
+  BLUE
+  CYAN
+  GRAY
+  GREEN
+  LIGHT_BLUE
+  ORANGE
+  PINK
+  PURPLE
+  RED
+  RED
+  YELLOW
+}

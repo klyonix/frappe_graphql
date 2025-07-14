@@ -1,0 +1,24 @@
+type AccountingDimensionDetail implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  company: Company
+  company__name: String
+  reference_document: DocType
+  reference_document__name: String
+  default_dimension: BaseDocType
+  default_dimension__name: String
+  mandatory_for_bs: Int
+  mandatory_for_pl: Int
+  automatically_post_balancing_accounting_entry: Int
+  offsetting_account: Account
+  offsetting_account__name: String
+}

@@ -1,0 +1,113 @@
+type BOM implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  item: Item!
+  item__name: String
+  company: Company!
+  company__name: String
+  uom: UOM
+  uom__name: String
+  quantity: Float!
+  is_active: Int
+  is_default: Int
+  allow_alternative_item: Int
+  set_rate_of_sub_assembly_item_based_on_bom: Int
+  project: Project
+  project__name: String
+  image: String
+  rm_cost_as_per: BOMRateOfMaterialsBasedOnSelectOptions
+  buying_price_list: PriceList
+  buying_price_list__name: String
+  price_list_currency: Currency
+  price_list_currency__name: String
+  plc_conversion_rate: Float
+  currency: Currency!
+  currency__name: String
+  conversion_rate: Float!
+  items: [BOMItem!]!
+  with_operations: Int
+  transfer_material_against: BOMTransferMaterialAgainstSelectOptions
+  routing: Routing
+  routing__name: String
+  fg_based_operating_cost: Int
+  operating_cost_per_bom_quantity: Float
+  operations: [BOMOperation!]!
+  scrap_items: [BOMScrapItem!]!
+  process_loss_percentage: Float
+  process_loss_qty: Float
+  operating_cost: Float
+  raw_material_cost: Float
+  scrap_material_cost: Float
+  base_operating_cost: Float
+  base_raw_material_cost: Float
+  base_scrap_material_cost: Float
+  total_cost: Float
+  base_total_cost: Float
+  item_name: String
+  description: String
+  has_variants: Int
+  inspection_required: Int
+  quality_inspection_template: QualityInspectionTemplate
+  quality_inspection_template__name: String
+  exploded_items: [BOMExplosionItem!]!
+  show_in_website: Int
+  route: String
+  website_image: String
+  thumbnail: String
+  show_items: Int
+  show_operations: Int
+  web_long_description: String
+  bom_creator: BOMCreator
+  bom_creator__name: String
+  bom_creator_item: String
+  amended_from: BOM
+  amended_from__name: String
+}
+
+enum BOMRateOfMaterialsBasedOnSelectOptions {
+  VALUATION_RATE
+  LAST_PURCHASE_RATE
+  PRICE_LIST
+}
+
+enum BOMTransferMaterialAgainstSelectOptions {
+  WORK_ORDER
+  JOB_CARD
+}
+
+enum BOMSortField {
+  NAME
+  CREATION
+  MODIFIED
+  ITEM
+}
+
+input BOMSortingInput {
+  direction: SortDirection!
+  field: BOMSortField!
+}
+
+type BOMCountableEdge {
+  cursor: String!
+  node: BOM!
+}
+
+type BOMCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [BOMCountableEdge!]!
+}
+
+extend type Query {
+  BOM(name: String!): BOM!
+  BOMS(filter: [DBFilterInput], sortBy: BOMSortingInput, before: String, after: String, first: Int, last: Int): BOMCountableConnection!
+}

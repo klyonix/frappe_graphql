@@ -1,0 +1,97 @@
+type QuotationItem implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  item_code: Item
+  item_code__name: String
+  customer_item_code: String
+  item_name: String!
+  description: String
+  item_group: ItemGroup
+  item_group__name: String
+  brand: Brand
+  brand__name: String
+  image: String
+  qty: Float!
+  stock_uom: UOM
+  stock_uom__name: String
+  uom: UOM!
+  uom__name: String
+  conversion_factor: Float!
+  stock_qty: Float
+  actual_qty: Float
+  company_total_stock: Float
+  price_list_rate: Float
+  base_price_list_rate: Float
+  margin_type: QuotationItemMarginTypeSelectOptions
+  margin_rate_or_amount: Float
+  rate_with_margin: Float
+  discount_percentage: Float
+  discount_amount: Float
+  distributed_discount_amount: Float
+  base_rate_with_margin: Float
+  rate: Float
+  net_rate: Float
+  amount: Float
+  net_amount: Float
+  item_tax_template: ItemTaxTemplate
+  item_tax_template__name: String
+  base_rate: Float
+  base_net_rate: Float
+  base_amount: Float
+  base_net_amount: Float
+  pricing_rules: String
+  stock_uom_rate: Float
+  is_free_item: Int
+  is_alternative: Int
+  has_alternative_item: Int
+  valuation_rate: Float
+  gross_profit: Float
+  weight_per_unit: Float
+  total_weight: Float
+  weight_uom: UOM
+  weight_uom__name: String
+  warehouse: Warehouse
+  warehouse__name: String
+  against_blanket_order: Int
+  blanket_order: BlanketOrder
+  blanket_order__name: String
+  blanket_order_rate: Float
+  prevdoc_doctype: DocType
+  prevdoc_doctype__name: String
+  prevdoc_docname: BaseDocType
+  prevdoc_docname__name: String
+  projected_qty: Float
+  item_tax_rate: String
+  additional_notes: String
+  page_break: Int
+}
+
+extend type QuotationItem {
+  gst_hsn_code: String
+  gst_treatment: String
+  taxable_value: Float
+  igst_rate: Float
+  cgst_rate: Float
+  sgst_rate: Float
+  cess_rate: Float
+  cess_non_advol_rate: Float
+  igst_amount: Float
+  cgst_amount: Float
+  sgst_amount: Float
+  cess_amount: Float
+  cess_non_advol_amount: Float
+}
+
+enum QuotationItemMarginTypeSelectOptions {
+  PERCENTAGE
+  AMOUNT
+}

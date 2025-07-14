@@ -1,0 +1,42 @@
+type QuotationLostReason implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  order_lost_reason: String!
+}
+
+enum QuotationLostReasonSortField {
+  NAME
+  CREATION
+  MODIFIED
+  ORDER_LOST_REASON
+}
+
+input QuotationLostReasonSortingInput {
+  direction: SortDirection!
+  field: QuotationLostReasonSortField!
+}
+
+type QuotationLostReasonCountableEdge {
+  cursor: String!
+  node: QuotationLostReason!
+}
+
+type QuotationLostReasonCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [QuotationLostReasonCountableEdge!]!
+}
+
+extend type Query {
+  QuotationLostReason(name: String!): QuotationLostReason!
+  QuotationLostReasons(filter: [DBFilterInput], sortBy: QuotationLostReasonSortingInput, before: String, after: String, first: Int, last: Int): QuotationLostReasonCountableConnection!
+}

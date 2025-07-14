@@ -1,0 +1,60 @@
+type Driver implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  naming_series: String
+  full_name: String!
+  status: DriverStatusSelectOptions!
+  transporter: Supplier
+  transporter__name: String
+  employee: Employee
+  employee__name: String
+  cell_number: String
+  address: Address
+  address__name: String
+  license_number: String
+  issuing_date: String
+  expiry_date: String
+  driving_license_category: [DrivingLicenseCategory!]!
+}
+
+enum DriverStatusSelectOptions {
+  ACTIVE
+  SUSPENDED
+  LEFT
+}
+
+enum DriverSortField {
+  NAME
+  CREATION
+  MODIFIED
+}
+
+input DriverSortingInput {
+  direction: SortDirection!
+  field: DriverSortField!
+}
+
+type DriverCountableEdge {
+  cursor: String!
+  node: Driver!
+}
+
+type DriverCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [DriverCountableEdge!]!
+}
+
+extend type Query {
+  Driver(name: String!): Driver!
+  Drivers(filter: [DBFilterInput], sortBy: DriverSortingInput, before: String, after: String, first: Int, last: Int): DriverCountableConnection!
+}

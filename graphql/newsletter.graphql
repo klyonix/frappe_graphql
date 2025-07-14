@@ -1,0 +1,69 @@
+type Newsletter implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  email_sent_at: String
+  total_recipients: Int
+  total_views: Int
+  email_sent: Int
+  sender_name: String
+  sender_email: String!
+  send_from: String
+  email_group: [NewsletterEmailGroup!]!
+  subject: String!
+  content_type: NewsletterContentTypeSelectOptions
+  message: String
+  message_md: String
+  message_html: String
+  campaign: MarketingCampaign
+  campaign__name: String
+  attachments: [NewsletterAttachment!]!
+  send_unsubscribe_link: Int
+  send_webview_link: Int
+  scheduled_to_send: Int
+  schedule_sending: Int
+  schedule_send: String
+  published: Int
+  route: String
+}
+
+enum NewsletterContentTypeSelectOptions {
+  RICH_TEXT
+  MARKDOWN
+  HTML
+}
+
+enum NewsletterSortField {
+  NAME
+  CREATION
+  MODIFIED
+}
+
+input NewsletterSortingInput {
+  direction: SortDirection!
+  field: NewsletterSortField!
+}
+
+type NewsletterCountableEdge {
+  cursor: String!
+  node: Newsletter!
+}
+
+type NewsletterCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [NewsletterCountableEdge!]!
+}
+
+extend type Query {
+  Newsletter(name: String!): Newsletter!
+  Newsletters(filter: [DBFilterInput], sortBy: NewsletterSortingInput, before: String, after: String, first: Int, last: Int): NewsletterCountableConnection!
+}

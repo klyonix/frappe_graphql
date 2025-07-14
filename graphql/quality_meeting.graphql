@@ -1,0 +1,48 @@
+type QualityMeeting implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  status: QualityMeetingStatusSelectOptions
+  agenda: [QualityMeetingAgenda!]!
+  minutes: [QualityMeetingMinutes!]!
+}
+
+enum QualityMeetingStatusSelectOptions {
+  OPEN
+  CLOSED
+}
+
+enum QualityMeetingSortField {
+  NAME
+  CREATION
+  MODIFIED
+}
+
+input QualityMeetingSortingInput {
+  direction: SortDirection!
+  field: QualityMeetingSortField!
+}
+
+type QualityMeetingCountableEdge {
+  cursor: String!
+  node: QualityMeeting!
+}
+
+type QualityMeetingCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [QualityMeetingCountableEdge!]!
+}
+
+extend type Query {
+  QualityMeeting(name: String!): QualityMeeting!
+  QualityMeetings(filter: [DBFilterInput], sortBy: QualityMeetingSortingInput, before: String, after: String, first: Int, last: Int): QualityMeetingCountableConnection!
+}

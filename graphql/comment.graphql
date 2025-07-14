@@ -1,0 +1,75 @@
+type Comment implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  comment_type: CommentCommentTypeSelectOptions!
+  comment_email: String
+  subject: String
+  comment_by: String
+  published: Int
+  seen: Int
+  reference_doctype: DocType
+  reference_doctype__name: String
+  reference_name: BaseDocType
+  reference_name__name: String
+  reference_owner: String
+  content: String
+  ip_address: String
+}
+
+enum CommentCommentTypeSelectOptions {
+  COMMENT
+  LIKE
+  INFO
+  LABEL
+  WORKFLOW
+  CREATED
+  SUBMITTED
+  CANCELLED
+  UPDATED
+  DELETED
+  ASSIGNED
+  ASSIGNMENT_COMPLETED
+  ATTACHMENT
+  ATTACHMENT_REMOVED
+  SHARED
+  UNSHARED
+  BOT
+  RELINKED
+  EDIT
+}
+
+enum CommentSortField {
+  NAME
+  CREATION
+  MODIFIED
+}
+
+input CommentSortingInput {
+  direction: SortDirection!
+  field: CommentSortField!
+}
+
+type CommentCountableEdge {
+  cursor: String!
+  node: Comment!
+}
+
+type CommentCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [CommentCountableEdge!]!
+}
+
+extend type Query {
+  Comment(name: String!): Comment!
+  Comments(filter: [DBFilterInput], sortBy: CommentSortingInput, before: String, after: String, first: Int, last: Int): CommentCountableConnection!
+}

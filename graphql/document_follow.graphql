@@ -1,0 +1,49 @@
+type DocumentFollow implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  ref_doctype: DocType!
+  ref_doctype__name: String
+  ref_docname: BaseDocType!
+  ref_docname__name: String
+  user: User!
+  user__name: String
+}
+
+enum DocumentFollowSortField {
+  NAME
+  CREATION
+  MODIFIED
+  REF_DOCTYPE
+  REF_DOCNAME
+  USER
+}
+
+input DocumentFollowSortingInput {
+  direction: SortDirection!
+  field: DocumentFollowSortField!
+}
+
+type DocumentFollowCountableEdge {
+  cursor: String!
+  node: DocumentFollow!
+}
+
+type DocumentFollowCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [DocumentFollowCountableEdge!]!
+}
+
+extend type Query {
+  DocumentFollow(name: String!): DocumentFollow!
+  DocumentFollows(filter: [DBFilterInput], sortBy: DocumentFollowSortingInput, before: String, after: String, first: Int, last: Int): DocumentFollowCountableConnection!
+}

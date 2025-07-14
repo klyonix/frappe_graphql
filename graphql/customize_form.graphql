@@ -1,0 +1,63 @@
+type CustomizeForm implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  doc_type: DocType
+  doc_type__name: String
+  label: String
+  search_fields: String
+  link_filters: String
+  istable: Int
+  is_calendar_and_gantt: Int
+  editable_grid: Int
+  quick_entry: Int
+  track_changes: Int
+  track_views: Int
+  allow_auto_repeat: Int
+  allow_import: Int
+  queue_in_background: Int
+  naming_rule: String
+  autoname: String
+  image_field: String
+  max_attachments: Int
+  allow_copy: Int
+  make_attachments_public: Int
+  protect_attached_files: Int
+  title_field: String
+  show_title_field_in_link: Int
+  translated_doctype: Int
+  default_print_format: PrintFormat
+  default_print_format__name: String
+  default_view: String
+  force_re_route_to_default_view: Int
+  show_preview_popup: Int
+  default_email_template: EmailTemplate
+  default_email_template__name: String
+  email_append_to: Int
+  sender_field: String
+  sender_name_field: String
+  subject_field: String
+  sort_field: String
+  sort_order: CustomizeFormSortOrderSelectOptions
+  actions: [DocTypeAction!]!
+  links: [DocTypeLink!]!
+  states: [DocTypeState!]!
+  fields: [CustomizeFormField!]!
+}
+
+enum CustomizeFormSortOrderSelectOptions {
+  ASC
+  DESC
+}
+
+extend type Query {
+  CustomizeForm: CustomizeForm!
+}

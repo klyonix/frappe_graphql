@@ -1,0 +1,29 @@
+type PaymentOrderReference implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  reference_doctype: DocType!
+  reference_doctype__name: String
+  reference_name: BaseDocType!
+  reference_name__name: String
+  amount: Float!
+  supplier: Supplier
+  supplier__name: String
+  payment_request: PaymentRequest
+  payment_request__name: String
+  mode_of_payment: ModeofPayment
+  mode_of_payment__name: String
+  bank_account: BankAccount!
+  bank_account__name: String
+  account: Account
+  account__name: String
+  payment_reference: String
+}

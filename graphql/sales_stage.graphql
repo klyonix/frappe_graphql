@@ -1,0 +1,42 @@
+type SalesStage implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  stage_name: String
+}
+
+enum SalesStageSortField {
+  NAME
+  CREATION
+  MODIFIED
+  STAGE_NAME
+}
+
+input SalesStageSortingInput {
+  direction: SortDirection!
+  field: SalesStageSortField!
+}
+
+type SalesStageCountableEdge {
+  cursor: String!
+  node: SalesStage!
+}
+
+type SalesStageCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [SalesStageCountableEdge!]!
+}
+
+extend type Query {
+  SalesStage(name: String!): SalesStage!
+  SalesStages(filter: [DBFilterInput], sortBy: SalesStageSortingInput, before: String, after: String, first: Int, last: Int): SalesStageCountableConnection!
+}

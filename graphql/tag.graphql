@@ -1,0 +1,41 @@
+type Tag implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  description: String
+}
+
+enum TagSortField {
+  NAME
+  CREATION
+  MODIFIED
+}
+
+input TagSortingInput {
+  direction: SortDirection!
+  field: TagSortField!
+}
+
+type TagCountableEdge {
+  cursor: String!
+  node: Tag!
+}
+
+type TagCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [TagCountableEdge!]!
+}
+
+extend type Query {
+  Tag(name: String!): Tag!
+  Tags(filter: [DBFilterInput], sortBy: TagSortingInput, before: String, after: String, first: Int, last: Int): TagCountableConnection!
+}

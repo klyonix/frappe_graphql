@@ -1,0 +1,54 @@
+type CostCenter implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  cost_center_name: String!
+  cost_center_number: String
+  parent_cost_center: CostCenter!
+  parent_cost_center__name: String
+  company: Company!
+  company__name: String
+  is_group: Int
+  disabled: Int
+  lft: Int
+  rgt: Int
+  old_parent: CostCenter
+  old_parent__name: String
+}
+
+enum CostCenterSortField {
+  NAME
+  CREATION
+  MODIFIED
+  LFT
+  RGT
+}
+
+input CostCenterSortingInput {
+  direction: SortDirection!
+  field: CostCenterSortField!
+}
+
+type CostCenterCountableEdge {
+  cursor: String!
+  node: CostCenter!
+}
+
+type CostCenterCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [CostCenterCountableEdge!]!
+}
+
+extend type Query {
+  CostCenter(name: String!): CostCenter!
+  CostCenters(filter: [DBFilterInput], sortBy: CostCenterSortingInput, before: String, after: String, first: Int, last: Int): CostCenterCountableConnection!
+}

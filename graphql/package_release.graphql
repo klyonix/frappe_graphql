@@ -1,0 +1,48 @@
+type PackageRelease implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  package: Package!
+  package__name: String
+  publish: Int
+  path: String
+  major: Int
+  minor: Int
+  patch: Int
+  release_notes: String
+}
+
+enum PackageReleaseSortField {
+  NAME
+  CREATION
+  MODIFIED
+}
+
+input PackageReleaseSortingInput {
+  direction: SortDirection!
+  field: PackageReleaseSortField!
+}
+
+type PackageReleaseCountableEdge {
+  cursor: String!
+  node: PackageRelease!
+}
+
+type PackageReleaseCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [PackageReleaseCountableEdge!]!
+}
+
+extend type Query {
+  PackageRelease(name: String!): PackageRelease!
+  PackageReleases(filter: [DBFilterInput], sortBy: PackageReleaseSortingInput, before: String, after: String, first: Int, last: Int): PackageReleaseCountableConnection!
+}

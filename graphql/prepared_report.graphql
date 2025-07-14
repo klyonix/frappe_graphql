@@ -1,0 +1,58 @@
+type PreparedReport implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  status: PreparedReportStatusSelectOptions
+  report_name: String!
+  queued_by: String
+  job_id: String
+  queued_at: String
+  report_end_time: String
+  peak_memory_usage: Int
+  error_message: String
+  filters: String
+}
+
+enum PreparedReportStatusSelectOptions {
+  ERROR
+  QUEUED
+  COMPLETED
+  STARTED
+}
+
+enum PreparedReportSortField {
+  NAME
+  CREATION
+  MODIFIED
+  STATUS
+  REPORT_NAME
+}
+
+input PreparedReportSortingInput {
+  direction: SortDirection!
+  field: PreparedReportSortField!
+}
+
+type PreparedReportCountableEdge {
+  cursor: String!
+  node: PreparedReport!
+}
+
+type PreparedReportCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [PreparedReportCountableEdge!]!
+}
+
+extend type Query {
+  PreparedReport(name: String!): PreparedReport!
+  PreparedReports(filter: [DBFilterInput], sortBy: PreparedReportSortingInput, before: String, after: String, first: Int, last: Int): PreparedReportCountableConnection!
+}

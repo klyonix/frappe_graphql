@@ -1,0 +1,55 @@
+type ProcessDeferredAccounting implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  company: Company!
+  company__name: String
+  type: ProcessDeferredAccountingTypeSelectOptions!
+  account: Account
+  account__name: String
+  posting_date: String!
+  start_date: String!
+  end_date: String!
+  amended_from: ProcessDeferredAccounting
+  amended_from__name: String
+}
+
+enum ProcessDeferredAccountingTypeSelectOptions {
+  INCOME
+  EXPENSE
+}
+
+enum ProcessDeferredAccountingSortField {
+  NAME
+  CREATION
+  MODIFIED
+}
+
+input ProcessDeferredAccountingSortingInput {
+  direction: SortDirection!
+  field: ProcessDeferredAccountingSortField!
+}
+
+type ProcessDeferredAccountingCountableEdge {
+  cursor: String!
+  node: ProcessDeferredAccounting!
+}
+
+type ProcessDeferredAccountingCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [ProcessDeferredAccountingCountableEdge!]!
+}
+
+extend type Query {
+  ProcessDeferredAccounting(name: String!): ProcessDeferredAccounting!
+  ProcessDeferredAccountings(filter: [DBFilterInput], sortBy: ProcessDeferredAccountingSortingInput, before: String, after: String, first: Int, last: Int): ProcessDeferredAccountingCountableConnection!
+}

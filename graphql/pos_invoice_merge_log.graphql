@@ -1,0 +1,61 @@
+type POSInvoiceMergeLog implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  posting_date: String!
+  posting_time: String!
+  merge_invoices_based_on: POSInvoiceMergeLogMergeInvoicesBasedOnSelectOptions!
+  pos_closing_entry: POSClosingEntry
+  pos_closing_entry__name: String
+  customer: Customer!
+  customer__name: String
+  customer_group: CustomerGroup
+  customer_group__name: String
+  pos_invoices: [POSInvoiceReference!]!
+  consolidated_invoice: SalesInvoice
+  consolidated_invoice__name: String
+  consolidated_credit_note: SalesInvoice
+  consolidated_credit_note__name: String
+  amended_from: POSInvoiceMergeLog
+  amended_from__name: String
+}
+
+enum POSInvoiceMergeLogMergeInvoicesBasedOnSelectOptions {
+  CUSTOMER
+  CUSTOMER_GROUP
+}
+
+enum POSInvoiceMergeLogSortField {
+  NAME
+  CREATION
+  MODIFIED
+}
+
+input POSInvoiceMergeLogSortingInput {
+  direction: SortDirection!
+  field: POSInvoiceMergeLogSortField!
+}
+
+type POSInvoiceMergeLogCountableEdge {
+  cursor: String!
+  node: POSInvoiceMergeLog!
+}
+
+type POSInvoiceMergeLogCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [POSInvoiceMergeLogCountableEdge!]!
+}
+
+extend type Query {
+  POSInvoiceMergeLog(name: String!): POSInvoiceMergeLog!
+  POSInvoiceMergeLogs(filter: [DBFilterInput], sortBy: POSInvoiceMergeLogSortingInput, before: String, after: String, first: Int, last: Int): POSInvoiceMergeLogCountableConnection!
+}

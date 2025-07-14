@@ -1,0 +1,27 @@
+type EnergyPointSettings implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  enabled: Int
+  review_levels: [ReviewLevel!]!
+  point_allocation_periodicity: EnergyPointSettingsPointAllocationPeriodicitySelectOptions
+  last_point_allocation_date: String
+}
+
+enum EnergyPointSettingsPointAllocationPeriodicitySelectOptions {
+  DAILY
+  WEEKLY
+  MONTHLY
+}
+
+extend type Query {
+  EnergyPointSettings: EnergyPointSettings!
+}

@@ -1,0 +1,81 @@
+type Contact implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  first_name: String
+  middle_name: String
+  last_name: String
+  full_name: String
+  email_id: String
+  user: User
+  user__name: String
+  address: Address
+  address__name: String
+  sync_with_google_contacts: Int
+  status: ContactStatusSelectOptions
+  salutation: Salutation
+  salutation__name: String
+  designation: String
+  gender: Gender
+  gender__name: String
+  phone: String
+  mobile_no: String
+  company_name: String
+  image: String
+  google_contacts: GoogleContacts
+  google_contacts__name: String
+  google_contacts_id: String
+  pulled_from_google_contacts: Int
+  email_ids: [ContactEmail!]!
+  phone_nos: [ContactPhone!]!
+  links: [DynamicLink!]!
+  is_primary_contact: Int
+  department: String
+  unsubscribed: Int
+}
+
+extend type Contact {
+  is_billing_contact: Int
+}
+
+enum ContactStatusSelectOptions {
+  PASSIVE
+  OPEN
+  REPLIED
+}
+
+enum ContactSortField {
+  NAME
+  CREATION
+  MODIFIED
+  EMAIL_ID
+}
+
+input ContactSortingInput {
+  direction: SortDirection!
+  field: ContactSortField!
+}
+
+type ContactCountableEdge {
+  cursor: String!
+  node: Contact!
+}
+
+type ContactCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [ContactCountableEdge!]!
+}
+
+extend type Query {
+  Contact(name: String!): Contact!
+  Contacts(filter: [DBFilterInput], sortBy: ContactSortingInput, before: String, after: String, first: Int, last: Int): ContactCountableConnection!
+}

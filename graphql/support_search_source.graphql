@@ -1,0 +1,33 @@
+type SupportSearchSource implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  source_name: String
+  source_type: SupportSearchSourceSourceTypeSelectOptions!
+  base_url: String
+  query_route: String
+  search_term_param_name: String
+  response_result_key_path: String
+  post_route: String
+  post_route_key_list: String
+  post_title_key: String
+  post_description_key: String
+  source_doctype: DocType
+  source_doctype__name: String
+  result_title_field: String
+  result_preview_field: String
+  result_route_field: String
+}
+
+enum SupportSearchSourceSourceTypeSelectOptions {
+  API
+  LINK
+}

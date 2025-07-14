@@ -1,0 +1,48 @@
+type Note implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  title: String!
+  public: Int
+  notify_on_login: Int
+  notify_on_every_login: Int
+  expire_notification_on: String
+  content: String
+  seen_by: [NoteSeenBy!]!
+}
+
+enum NoteSortField {
+  NAME
+  CREATION
+  MODIFIED
+  EXPIRE_NOTIFICATION_ON
+}
+
+input NoteSortingInput {
+  direction: SortDirection!
+  field: NoteSortField!
+}
+
+type NoteCountableEdge {
+  cursor: String!
+  node: Note!
+}
+
+type NoteCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [NoteCountableEdge!]!
+}
+
+extend type Query {
+  Note(name: String!): Note!
+  Notes(filter: [DBFilterInput], sortBy: NoteSortingInput, before: String, after: String, first: Int, last: Int): NoteCountableConnection!
+}

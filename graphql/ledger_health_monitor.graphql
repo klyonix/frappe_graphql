@@ -1,0 +1,22 @@
+type LedgerHealthMonitor implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  enable_health_monitor: Int
+  monitor_for_last_x_days: Int!
+  debit_credit_mismatch: Int
+  general_and_payment_ledger_mismatch: Int
+  companies: [LedgerHealthMonitorCompany!]!
+}
+
+extend type Query {
+  LedgerHealthMonitor: LedgerHealthMonitor!
+}

@@ -1,0 +1,188 @@
+type StockEntry implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  naming_series: String!
+  stock_entry_type: StockEntryType!
+  stock_entry_type__name: String
+  outgoing_stock_entry: StockEntry
+  outgoing_stock_entry__name: String
+  purpose: StockEntryPurposeSelectOptions
+  add_to_transit: Int
+  work_order: WorkOrder
+  work_order__name: String
+  purchase_order: PurchaseOrder
+  purchase_order__name: String
+  subcontracting_order: SubcontractingOrder
+  subcontracting_order__name: String
+  delivery_note_no: DeliveryNote
+  delivery_note_no__name: String
+  sales_invoice_no: SalesInvoice
+  sales_invoice_no__name: String
+  pick_list: PickList
+  pick_list__name: String
+  purchase_receipt_no: PurchaseReceipt
+  purchase_receipt_no__name: String
+  asset_repair: AssetRepair
+  asset_repair__name: String
+  company: Company!
+  company__name: String
+  posting_date: String
+  posting_time: String
+  set_posting_time: Int
+  inspection_required: Int
+  apply_putaway_rule: Int
+  from_bom: Int
+  use_multi_level_bom: Int
+  bom_no: BOM
+  bom_no__name: String
+  fg_completed_qty: Float
+  process_loss_percentage: Float
+  process_loss_qty: Float
+  from_warehouse: Warehouse
+  from_warehouse__name: String
+  source_warehouse_address: Address
+  source_warehouse_address__name: String
+  source_address_display: String
+  to_warehouse: Warehouse
+  to_warehouse__name: String
+  target_warehouse_address: Address
+  target_warehouse_address__name: String
+  target_address_display: String
+  scan_barcode: String
+  items: [StockEntryDetail!]!
+  total_outgoing_value: Float
+  total_incoming_value: Float
+  value_difference: Float
+  additional_costs: [LandedCostTaxesandCharges!]!
+  total_additional_costs: Float
+  supplier: Supplier
+  supplier__name: String
+  supplier_name: String
+  supplier_address: Address
+  supplier_address__name: String
+  address_display: String
+  project: Project
+  project__name: String
+  select_print_heading: PrintHeading
+  select_print_heading__name: String
+  letter_head: LetterHead
+  letter_head__name: String
+  is_opening: StockEntryIsOpeningSelectOptions
+  remarks: String
+  per_transferred: Float
+  total_amount: Float
+  job_card: JobCard
+  job_card__name: String
+  amended_from: StockEntry
+  amended_from__name: String
+  credit_note: JournalEntry
+  credit_note__name: String
+  is_return: Int
+}
+
+extend type StockEntry {
+  ewaybill: String
+  tax_category: TaxCategory
+  tax_category__name: String
+  taxes_and_charges: SalesTaxesandChargesTemplate
+  taxes_and_charges__name: String
+  taxes: [IndiaComplianceTaxesandCharges!]!
+  total_taxes: Float
+  base_grand_total: Float
+  doc_references: [DynamicLink!]!
+  bill_from_address: Address
+  bill_from_address__name: String
+  bill_from_address_display: String
+  bill_from_gstin: String
+  bill_from_gst_category: String
+  bill_to_address: Address
+  bill_to_address__name: String
+  bill_to_address_display: String
+  bill_to_gstin: String
+  bill_to_gst_category: String
+  place_of_supply: String
+  ship_from_address: Address
+  ship_from_address__name: String
+  ship_from_address_display: String
+  ship_to_address: Address
+  ship_to_address__name: String
+  ship_to_address_display: String
+  transporter: Supplier
+  transporter__name: String
+  gst_transporter_id: String
+  lr_no: String
+  vehicle_no: String
+  distance: Int
+  transporter_name: String
+  mode_of_transport: StockEntryModeOfTransportSelectOptions
+  lr_date: String
+  gst_vehicle_type: String
+}
+
+enum StockEntryPurposeSelectOptions {
+  MATERIAL_ISSUE
+  MATERIAL_RECEIPT
+  MATERIAL_TRANSFER
+  MATERIAL_TRANSFER_FOR_MANUFACTURE
+  MATERIAL_CONSUMPTION_FOR_MANUFACTURE
+  MANUFACTURE
+  REPACK
+  SEND_TO_SUBCONTRACTOR
+  DISASSEMBLE
+}
+
+enum StockEntryModeOfTransportSelectOptions {
+  ROAD
+  AIR
+  RAIL
+  SHIP
+}
+
+enum StockEntryIsOpeningSelectOptions {
+  NO
+  YES
+}
+
+enum StockEntrySortField {
+  NAME
+  CREATION
+  MODIFIED
+  STOCK_ENTRY_TYPE
+  PURPOSE
+  WORK_ORDER
+  DELIVERY_NOTE_NO
+  PICK_LIST
+  PURCHASE_RECEIPT_NO
+  POSTING_DATE
+  JOB_CARD
+}
+
+input StockEntrySortingInput {
+  direction: SortDirection!
+  field: StockEntrySortField!
+}
+
+type StockEntryCountableEdge {
+  cursor: String!
+  node: StockEntry!
+}
+
+type StockEntryCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [StockEntryCountableEdge!]!
+}
+
+extend type Query {
+  StockEntry(name: String!): StockEntry!
+  StockEntrys(filter: [DBFilterInput], sortBy: StockEntrySortingInput, before: String, after: String, first: Int, last: Int): StockEntryCountableConnection!
+}

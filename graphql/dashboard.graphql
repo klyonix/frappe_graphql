@@ -1,0 +1,49 @@
+type Dashboard implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  dashboard_name: String!
+  is_default: Int
+  is_standard: Int
+  module: ModuleDef
+  module__name: String
+  charts: [DashboardChartLink!]!
+  chart_options: String
+  cards: [NumberCardLink!]!
+}
+
+enum DashboardSortField {
+  NAME
+  CREATION
+  MODIFIED
+  DASHBOARD_NAME
+}
+
+input DashboardSortingInput {
+  direction: SortDirection!
+  field: DashboardSortField!
+}
+
+type DashboardCountableEdge {
+  cursor: String!
+  node: Dashboard!
+}
+
+type DashboardCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [DashboardCountableEdge!]!
+}
+
+extend type Query {
+  Dashboard(name: String!): Dashboard!
+  Dashboards(filter: [DBFilterInput], sortBy: DashboardSortingInput, before: String, after: String, first: Int, last: Int): DashboardCountableConnection!
+}

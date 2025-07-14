@@ -1,0 +1,335 @@
+type SalesInvoice implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  title: String
+  naming_series: String!
+  customer: Customer
+  customer__name: String
+  customer_name: String
+  tax_id: String
+  company: Company!
+  company__name: String
+  company_tax_id: String
+  posting_date: String!
+  posting_time: String
+  sales_partner: SalesPartner
+  sales_partner__name: String
+  set_posting_time: Int
+  due_date: String
+  is_pos: Int
+  pos_profile: POSProfile
+  pos_profile__name: String
+  is_consolidated: Int
+  is_return: Int
+  return_against: SalesInvoice
+  return_against__name: String
+  update_outstanding_for_self: Int
+  update_billed_amount_in_sales_order: Int
+  update_billed_amount_in_delivery_note: Int
+  is_debit_note: Int
+  amended_from: SalesInvoice
+  amended_from__name: String
+  cost_center: CostCenter
+  cost_center__name: String
+  project: Project
+  project__name: String
+  currency: Currency!
+  currency__name: String
+  conversion_rate: Float!
+  selling_price_list: PriceList!
+  selling_price_list__name: String
+  price_list_currency: Currency!
+  price_list_currency__name: String
+  plc_conversion_rate: Float!
+  ignore_pricing_rule: Int
+  scan_barcode: String
+  update_stock: Int
+  set_warehouse: Warehouse
+  set_warehouse__name: String
+  set_target_warehouse: Warehouse
+  set_target_warehouse__name: String
+  items: [SalesInvoiceItem!]!
+  total_qty: Float
+  total_net_weight: Float
+  base_total: Float
+  base_net_total: Float!
+  total: Float
+  net_total: Float
+  tax_category: TaxCategory
+  tax_category__name: String
+  taxes_and_charges: SalesTaxesandChargesTemplate
+  taxes_and_charges__name: String
+  shipping_rule: ShippingRule
+  shipping_rule__name: String
+  incoterm: Incoterm
+  incoterm__name: String
+  named_place: String
+  taxes: [SalesTaxesandCharges!]!
+  base_total_taxes_and_charges: Float
+  total_taxes_and_charges: Float
+  base_grand_total: Float!
+  base_rounding_adjustment: Float
+  base_rounded_total: Float
+  base_in_words: String
+  grand_total: Float!
+  rounding_adjustment: Float
+  use_company_roundoff_cost_center: Int
+  rounded_total: Float
+  in_words: String
+  total_advance: Float
+  outstanding_amount: Float
+  disable_rounded_total: Int
+  apply_discount_on: SalesInvoiceApplyAdditionalDiscountOnSelectOptions
+  base_discount_amount: Float
+  is_cash_or_non_trade_discount: Int
+  additional_discount_account: Account
+  additional_discount_account__name: String
+  additional_discount_percentage: Float
+  discount_amount: Float
+  other_charges_calculation: String
+  pricing_rules: [PricingRuleDetail!]!
+  packed_items: [PackedItem!]!
+  timesheets: [SalesInvoiceTimesheet!]!
+  total_billing_hours: Float
+  total_billing_amount: Float
+  cash_bank_account: Account
+  cash_bank_account__name: String
+  payments: [SalesInvoicePayment!]!
+  base_paid_amount: Float
+  paid_amount: Float
+  base_change_amount: Float
+  change_amount: Float
+  account_for_change_amount: Account
+  account_for_change_amount__name: String
+  allocate_advances_automatically: Int
+  only_include_allocated_payments: Int
+  advances: [SalesInvoiceAdvance!]!
+  write_off_amount: Float
+  base_write_off_amount: Float
+  write_off_outstanding_amount_automatically: Int
+  write_off_account: Account
+  write_off_account__name: String
+  write_off_cost_center: CostCenter
+  write_off_cost_center__name: String
+  redeem_loyalty_points: Int
+  loyalty_points: Int
+  loyalty_amount: Float
+  loyalty_program: LoyaltyProgram
+  loyalty_program__name: String
+  loyalty_redemption_account: Account
+  loyalty_redemption_account__name: String
+  loyalty_redemption_cost_center: CostCenter
+  loyalty_redemption_cost_center__name: String
+  customer_address: Address
+  customer_address__name: String
+  address_display: String
+  contact_person: Contact
+  contact_person__name: String
+  contact_display: String
+  contact_mobile: String
+  contact_email: String
+  territory: Territory
+  territory__name: String
+  shipping_address_name: Address
+  shipping_address_name__name: String
+  shipping_address: String
+  dispatch_address_name: Address
+  dispatch_address_name__name: String
+  dispatch_address: String
+  company_address: Address
+  company_address__name: String
+  company_address_display: String
+  company_contact_person: Contact
+  company_contact_person__name: String
+  ignore_default_payment_terms_template: Int
+  payment_terms_template: PaymentTermsTemplate
+  payment_terms_template__name: String
+  payment_schedule: [PaymentSchedule!]!
+  tc_name: TermsandConditions
+  tc_name__name: String
+  terms: String
+  po_no: String
+  po_date: String
+  debit_to: Account!
+  debit_to__name: String
+  party_account_currency: Currency
+  party_account_currency__name: String
+  is_opening: SalesInvoiceIsOpeningEntrySelectOptions
+  unrealized_profit_loss_account: Account
+  unrealized_profit_loss_account__name: String
+  against_income_account: String
+  amount_eligible_for_commission: Float
+  commission_rate: Float
+  total_commission: Float
+  sales_team: [SalesTeam!]!
+  letter_head: LetterHead
+  letter_head__name: String
+  group_same_items: Int
+  select_print_heading: PrintHeading
+  select_print_heading__name: String
+  language: String
+  subscription: Subscription
+  subscription__name: String
+  from_date: String
+  auto_repeat: AutoRepeat
+  auto_repeat__name: String
+  to_date: String
+  status: SalesInvoiceStatusSelectOptions
+  inter_company_invoice_reference: PurchaseInvoice
+  inter_company_invoice_reference__name: String
+  campaign: Campaign
+  campaign__name: String
+  represents_company: Company
+  represents_company__name: String
+  source: LeadSource
+  source__name: String
+  customer_group: CustomerGroup
+  customer_group__name: String
+  is_internal_customer: Int
+  is_discounted: Int
+  remarks: String
+}
+
+extend type SalesInvoice {
+  whg_ebs_code: String
+  irn: String
+  ewaybill: String
+  e_waybill_status: String
+  fsl_pharmacy: String
+  fsl_sample: Int
+  fsl_claim: Int
+  whg_ignore_invoice: Int
+  fsl_esr: EmployeeSampleRequest
+  fsl_esr__name: String
+  fsl_dsr: DoctorSampleRequest
+  fsl_dsr__name: String
+  fsl_cr: ClaimRequest
+  fsl_cr__name: String
+  fsl_old_sales: Int
+  fsl_lcn: LegacyCreditNote
+  fsl_lcn__name: String
+  fsl_cn: CreditNote
+  fsl_cn__name: String
+  fsl_purpose: SalesInvoicePurposeSelectOptions
+  fsl_abbr: String
+  is_reverse_charge: Int
+  is_export_with_gst: Int
+  fsl_debit_note_ref: String
+  fsl_fully_return: Int
+  gst_breakup_table: String
+  billing_address_gstin: String
+  gst_category: String
+  place_of_supply: String
+  port_address: Address
+  port_address__name: String
+  company_gstin: String
+  invoice_copy: SalesInvoiceInvoiceCopySelectOptions
+  transporter: Supplier
+  transporter__name: String
+  gst_transporter_id: String
+  driver: Driver
+  driver__name: String
+  lr_no: String
+  vehicle_no: String
+  distance: Int
+  transporter_name: String
+  mode_of_transport: SalesInvoiceModeOfTransportSelectOptions
+  driver_name: String
+  lr_date: String
+  gst_vehicle_type: String
+  ecommerce_gstin: String
+  port_code: String
+  shipping_bill_number: String
+  shipping_bill_date: String
+  ecommerce_supply_type: String
+  einvoice_status: String
+}
+
+enum SalesInvoicePurposeSelectOptions {
+  BREAKAGE
+  SALES_RETURN
+  EXPIRED
+  RATE_DIFFERENCE
+}
+
+enum SalesInvoiceApplyAdditionalDiscountOnSelectOptions {
+  GRAND_TOTAL
+  NET_TOTAL
+}
+
+enum SalesInvoiceIsOpeningEntrySelectOptions {
+  NO
+  YES
+}
+
+enum SalesInvoiceInvoiceCopySelectOptions {
+  ORIGINAL_FOR_RECIPIENT
+  DUPLICATE_FOR_TRANSPORTER
+  DUPLICATE_FOR_SUPPLIER
+  TRIPLICATE_FOR_SUPPLIER
+}
+
+enum SalesInvoiceModeOfTransportSelectOptions {
+  ROAD
+  AIR
+  RAIL
+  SHIP
+}
+
+enum SalesInvoiceStatusSelectOptions {
+  DRAFT
+  RETURN
+  CREDIT_NOTE_ISSUED
+  SUBMITTED
+  PAID
+  PARTLY_PAID
+  UNPAID
+  UNPAID_AND_DISCOUNTED
+  PARTLY_PAID_AND_DISCOUNTED
+  OVERDUE_AND_DISCOUNTED
+  OVERDUE
+  CANCELLED
+  INTERNAL_TRANSFER
+}
+
+enum SalesInvoiceSortField {
+  NAME
+  CREATION
+  MODIFIED
+  CUSTOMER
+  POSTING_DATE
+  RETURN_AGAINST
+  PROJECT
+  DEBIT_TO
+  INTER_COMPANY_INVOICE_REFERENCE
+}
+
+input SalesInvoiceSortingInput {
+  direction: SortDirection!
+  field: SalesInvoiceSortField!
+}
+
+type SalesInvoiceCountableEdge {
+  cursor: String!
+  node: SalesInvoice!
+}
+
+type SalesInvoiceCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [SalesInvoiceCountableEdge!]!
+}
+
+extend type Query {
+  SalesInvoice(name: String!): SalesInvoice!
+  SalesInvoices(filter: [DBFilterInput], sortBy: SalesInvoiceSortingInput, before: String, after: String, first: Int, last: Int): SalesInvoiceCountableConnection!
+}

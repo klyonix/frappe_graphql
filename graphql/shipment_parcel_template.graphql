@@ -1,0 +1,46 @@
+type ShipmentParcelTemplate implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  parcel_template_name: String!
+  length: Int!
+  width: Int!
+  height: Int!
+  weight: Float!
+}
+
+enum ShipmentParcelTemplateSortField {
+  NAME
+  CREATION
+  MODIFIED
+  PARCEL_TEMPLATE_NAME
+}
+
+input ShipmentParcelTemplateSortingInput {
+  direction: SortDirection!
+  field: ShipmentParcelTemplateSortField!
+}
+
+type ShipmentParcelTemplateCountableEdge {
+  cursor: String!
+  node: ShipmentParcelTemplate!
+}
+
+type ShipmentParcelTemplateCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [ShipmentParcelTemplateCountableEdge!]!
+}
+
+extend type Query {
+  ShipmentParcelTemplate(name: String!): ShipmentParcelTemplate!
+  ShipmentParcelTemplates(filter: [DBFilterInput], sortBy: ShipmentParcelTemplateSortingInput, before: String, after: String, first: Int, last: Int): ShipmentParcelTemplateCountableConnection!
+}

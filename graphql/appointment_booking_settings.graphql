@@ -1,0 +1,27 @@
+type AppointmentBookingSettings implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  enable_scheduling: Int!
+  availability_of_slots: [AppointmentBookingSlots!]!
+  number_of_agents: Int!
+  agent_list: [AssignmentRuleUser!]!
+  holiday_list: HolidayList!
+  holiday_list__name: String
+  appointment_duration: Int!
+  email_reminders: Int
+  advance_booking_days: Int!
+  success_redirect_url: String
+}
+
+extend type Query {
+  AppointmentBookingSettings: AppointmentBookingSettings!
+}

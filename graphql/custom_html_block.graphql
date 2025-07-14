@@ -1,0 +1,45 @@
+type CustomHTMLBlock implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  private: Int
+  html: String
+  script: String
+  style: String
+  roles: [HasRole!]!
+}
+
+enum CustomHTMLBlockSortField {
+  NAME
+  CREATION
+  MODIFIED
+}
+
+input CustomHTMLBlockSortingInput {
+  direction: SortDirection!
+  field: CustomHTMLBlockSortField!
+}
+
+type CustomHTMLBlockCountableEdge {
+  cursor: String!
+  node: CustomHTMLBlock!
+}
+
+type CustomHTMLBlockCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [CustomHTMLBlockCountableEdge!]!
+}
+
+extend type Query {
+  CustomHTMLBlock(name: String!): CustomHTMLBlock!
+  CustomHTMLBlocks(filter: [DBFilterInput], sortBy: CustomHTMLBlockSortingInput, before: String, after: String, first: Int, last: Int): CustomHTMLBlockCountableConnection!
+}

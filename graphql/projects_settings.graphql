@@ -1,0 +1,21 @@
+type ProjectsSettings implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  ignore_workstation_time_overlap: Int
+  ignore_user_time_overlap: Int
+  ignore_employee_time_overlap: Int
+  fetch_timesheet_in_sales_invoice: Int
+}
+
+extend type Query {
+  ProjectsSettings: ProjectsSettings!
+}

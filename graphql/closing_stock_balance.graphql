@@ -1,0 +1,67 @@
+type ClosingStockBalance implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  naming_series: String
+  company: Company
+  company__name: String
+  status: ClosingStockBalanceStatusSelectOptions
+  from_date: String
+  to_date: String
+  item_code: Item
+  item_code__name: String
+  item_group: ItemGroup
+  item_group__name: String
+  include_uom: UOM
+  include_uom__name: String
+  warehouse: Warehouse
+  warehouse__name: String
+  warehouse_type: WarehouseType
+  warehouse_type__name: String
+  amended_from: ClosingStockBalance
+  amended_from__name: String
+}
+
+enum ClosingStockBalanceStatusSelectOptions {
+  DRAFT
+  QUEUED
+  IN_PROGRESS
+  COMPLETED
+  FAILED
+  CANCELED
+}
+
+enum ClosingStockBalanceSortField {
+  NAME
+  CREATION
+  MODIFIED
+}
+
+input ClosingStockBalanceSortingInput {
+  direction: SortDirection!
+  field: ClosingStockBalanceSortField!
+}
+
+type ClosingStockBalanceCountableEdge {
+  cursor: String!
+  node: ClosingStockBalance!
+}
+
+type ClosingStockBalanceCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [ClosingStockBalanceCountableEdge!]!
+}
+
+extend type Query {
+  ClosingStockBalance(name: String!): ClosingStockBalance!
+  ClosingStockBalances(filter: [DBFilterInput], sortBy: ClosingStockBalanceSortingInput, before: String, after: String, first: Int, last: Int): ClosingStockBalanceCountableConnection!
+}

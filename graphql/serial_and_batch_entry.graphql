@@ -1,0 +1,26 @@
+type SerialandBatchEntry implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  serial_no: SerialNo
+  serial_no__name: String
+  batch_no: Batch
+  batch_no__name: String
+  qty: Float
+  warehouse: Warehouse
+  warehouse__name: String
+  delivered_qty: Float
+  incoming_rate: Float
+  outgoing_rate: Float
+  stock_value_difference: Float
+  is_outward: Int
+  stock_queue: String
+}

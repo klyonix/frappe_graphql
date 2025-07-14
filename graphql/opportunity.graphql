@@ -1,0 +1,119 @@
+type Opportunity implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  naming_series: String!
+  opportunity_from: DocType!
+  opportunity_from__name: String
+  party_name: BaseDocType!
+  party_name__name: String
+  customer_name: String
+  status: OpportunityStatusSelectOptions!
+  opportunity_type: OpportunityType
+  opportunity_type__name: String
+  source: LeadSource
+  source__name: String
+  opportunity_owner: User
+  opportunity_owner__name: String
+  sales_stage: SalesStage
+  sales_stage__name: String
+  expected_closing: String
+  probability: Float
+  no_of_employees: String
+  annual_revenue: Float
+  customer_group: CustomerGroup
+  customer_group__name: String
+  industry: IndustryType
+  industry__name: String
+  market_segment: MarketSegment
+  market_segment__name: String
+  website: String
+  city: String
+  state: String
+  country: Country
+  country__name: String
+  territory: Territory
+  territory__name: String
+  currency: Currency
+  currency__name: String
+  conversion_rate: Float
+  opportunity_amount: Float
+  base_opportunity_amount: Float
+  company: Company!
+  company__name: String
+  campaign: Campaign
+  campaign__name: String
+  transaction_date: String!
+  language: Language
+  language__name: String
+  amended_from: Opportunity
+  amended_from__name: String
+  title: String
+  first_response_time: String
+  lost_reasons: [OpportunityLostReasonDetail!]!
+  order_lost_reason: String
+  competitors: [CompetitorDetail!]!
+  contact_person: Contact
+  contact_person__name: String
+  job_title: String
+  contact_email: String
+  contact_mobile: String
+  whatsapp: String
+  phone: String
+  phone_ext: String
+  customer_address: Address
+  customer_address__name: String
+  address_display: String
+  contact_display: String
+  items: [OpportunityItem!]!
+  base_total: Float
+  total: Float
+  notes: [CRMNote!]!
+}
+
+enum OpportunityStatusSelectOptions {
+  OPEN
+  QUOTATION
+  CONVERTED
+  LOST
+  REPLIED
+  CLOSED
+}
+
+enum OpportunitySortField {
+  NAME
+  CREATION
+  MODIFIED
+  CUSTOMER_GROUP
+  TERRITORY
+  COMPANY
+}
+
+input OpportunitySortingInput {
+  direction: SortDirection!
+  field: OpportunitySortField!
+}
+
+type OpportunityCountableEdge {
+  cursor: String!
+  node: Opportunity!
+}
+
+type OpportunityCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [OpportunityCountableEdge!]!
+}
+
+extend type Query {
+  Opportunity(name: String!): Opportunity!
+  Opportunitys(filter: [DBFilterInput], sortBy: OpportunitySortingInput, before: String, after: String, first: Int, last: Int): OpportunityCountableConnection!
+}

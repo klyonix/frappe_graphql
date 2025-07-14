@@ -1,0 +1,51 @@
+type Reminder implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  user: User!
+  user__name: String
+  remind_at: String!
+  description: String!
+  reminder_doctype: DocType
+  reminder_doctype__name: String
+  reminder_docname: BaseDocType
+  reminder_docname__name: String
+  notified: Int
+}
+
+enum ReminderSortField {
+  NAME
+  CREATION
+  MODIFIED
+  USER
+  REMIND_AT
+}
+
+input ReminderSortingInput {
+  direction: SortDirection!
+  field: ReminderSortField!
+}
+
+type ReminderCountableEdge {
+  cursor: String!
+  node: Reminder!
+}
+
+type ReminderCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [ReminderCountableEdge!]!
+}
+
+extend type Query {
+  Reminder(name: String!): Reminder!
+  Reminders(filter: [DBFilterInput], sortBy: ReminderSortingInput, before: String, after: String, first: Int, last: Int): ReminderCountableConnection!
+}

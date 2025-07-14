@@ -1,0 +1,48 @@
+type AssetMaintenanceTeam implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  maintenance_team_name: String!
+  maintenance_manager: User
+  maintenance_manager__name: String
+  maintenance_manager_name: String
+  company: Company!
+  company__name: String
+  maintenance_team_members: [MaintenanceTeamMember!]!
+}
+
+enum AssetMaintenanceTeamSortField {
+  NAME
+  CREATION
+  MODIFIED
+  MAINTENANCE_TEAM_NAME
+}
+
+input AssetMaintenanceTeamSortingInput {
+  direction: SortDirection!
+  field: AssetMaintenanceTeamSortField!
+}
+
+type AssetMaintenanceTeamCountableEdge {
+  cursor: String!
+  node: AssetMaintenanceTeam!
+}
+
+type AssetMaintenanceTeamCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [AssetMaintenanceTeamCountableEdge!]!
+}
+
+extend type Query {
+  AssetMaintenanceTeam(name: String!): AssetMaintenanceTeam!
+  AssetMaintenanceTeams(filter: [DBFilterInput], sortBy: AssetMaintenanceTeamSortingInput, before: String, after: String, first: Int, last: Int): AssetMaintenanceTeamCountableConnection!
+}

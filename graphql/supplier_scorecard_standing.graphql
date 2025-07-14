@@ -1,0 +1,62 @@
+type SupplierScorecardStanding implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  standing_name: String
+  standing_color: SupplierScorecardStandingColorSelectOptions
+  min_grade: Float
+  max_grade: Float
+  warn_rfqs: Int
+  warn_pos: Int
+  prevent_rfqs: Int
+  prevent_pos: Int
+  notify_supplier: Int
+  notify_employee: Int
+  employee_link: Employee
+  employee_link__name: String
+}
+
+enum SupplierScorecardStandingColorSelectOptions {
+  BLUE
+  PURPLE
+  GREEN
+  YELLOW
+  ORANGE
+  RED
+}
+
+enum SupplierScorecardStandingSortField {
+  NAME
+  CREATION
+  MODIFIED
+  STANDING_NAME
+}
+
+input SupplierScorecardStandingSortingInput {
+  direction: SortDirection!
+  field: SupplierScorecardStandingSortField!
+}
+
+type SupplierScorecardStandingCountableEdge {
+  cursor: String!
+  node: SupplierScorecardStanding!
+}
+
+type SupplierScorecardStandingCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [SupplierScorecardStandingCountableEdge!]!
+}
+
+extend type Query {
+  SupplierScorecardStanding(name: String!): SupplierScorecardStanding!
+  SupplierScorecardStandings(filter: [DBFilterInput], sortBy: SupplierScorecardStandingSortingInput, before: String, after: String, first: Int, last: Int): SupplierScorecardStandingCountableConnection!
+}

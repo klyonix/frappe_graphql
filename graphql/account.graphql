@@ -1,0 +1,121 @@
+type Account implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  disabled: Int
+  account_name: String!
+  account_number: String
+  is_group: Int
+  company: Company!
+  company__name: String
+  root_type: AccountRootTypeSelectOptions
+  report_type: AccountReportTypeSelectOptions
+  account_currency: Currency
+  account_currency__name: String
+  parent_account: Account!
+  parent_account__name: String
+  account_type: AccountAccountTypeSelectOptions
+  tax_rate: Float
+  freeze_account: AccountFrozenSelectOptions
+  balance_must_be: AccountBalanceMustBeSelectOptions
+  lft: Int
+  rgt: Int
+  old_parent: String
+  include_in_gross: Int
+}
+
+enum AccountRootTypeSelectOptions {
+  ASSET
+  LIABILITY
+  INCOME
+  EXPENSE
+  EQUITY
+}
+
+enum AccountReportTypeSelectOptions {
+  BALANCE_SHEET
+  PROFIT_AND_LOSS
+}
+
+enum AccountAccountTypeSelectOptions {
+  ACCUMULATED_DEPRECIATION
+  ASSET_RECEIVED_BUT_NOT_BILLED
+  BANK
+  CASH
+  CHARGEABLE
+  CAPITAL_WORK_IN_PROGRESS
+  COST_OF_GOODS_SOLD
+  CURRENT_ASSET
+  CURRENT_LIABILITY
+  DEPRECIATION
+  DIRECT_EXPENSE
+  DIRECT_INCOME
+  EQUITY
+  EXPENSE_ACCOUNT
+  EXPENSES_INCLUDED_IN_ASSET_VALUATION
+  EXPENSES_INCLUDED_IN_VALUATION
+  FIXED_ASSET
+  INCOME_ACCOUNT
+  INDIRECT_EXPENSE
+  INDIRECT_INCOME
+  LIABILITY
+  PAYABLE
+  RECEIVABLE
+  ROUND_OFF
+  ROUND_OFF_FOR_OPENING
+  STOCK
+  STOCK_ADJUSTMENT
+  STOCK_RECEIVED_BUT_NOT_BILLED
+  SERVICE_RECEIVED_BUT_NOT_BILLED
+  TAX
+  TEMPORARY
+}
+
+enum AccountFrozenSelectOptions {
+  NO
+  YES
+}
+
+enum AccountBalanceMustBeSelectOptions {
+  DEBIT
+  CREDIT
+}
+
+enum AccountSortField {
+  NAME
+  CREATION
+  MODIFIED
+  PARENT_ACCOUNT
+  ACCOUNT_TYPE
+  LFT
+  RGT
+}
+
+input AccountSortingInput {
+  direction: SortDirection!
+  field: AccountSortField!
+}
+
+type AccountCountableEdge {
+  cursor: String!
+  node: Account!
+}
+
+type AccountCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [AccountCountableEdge!]!
+}
+
+extend type Query {
+  Account(name: String!): Account!
+  Accounts(filter: [DBFilterInput], sortBy: AccountSortingInput, before: String, after: String, first: Int, last: Int): AccountCountableConnection!
+}

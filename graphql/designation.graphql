@@ -1,0 +1,49 @@
+type Designation implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  designation_name: String!
+  description: String
+}
+
+extend type Designation {
+  appraisal_template: AppraisalTemplate
+  appraisal_template__name: String
+  skills: [DesignationSkill!]!
+}
+
+enum DesignationSortField {
+  NAME
+  CREATION
+  MODIFIED
+  DESIGNATION_NAME
+}
+
+input DesignationSortingInput {
+  direction: SortDirection!
+  field: DesignationSortField!
+}
+
+type DesignationCountableEdge {
+  cursor: String!
+  node: Designation!
+}
+
+type DesignationCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [DesignationCountableEdge!]!
+}
+
+extend type Query {
+  Designation(name: String!): Designation!
+  Designations(filter: [DBFilterInput], sortBy: DesignationSortingInput, before: String, after: String, first: Int, last: Int): DesignationCountableConnection!
+}

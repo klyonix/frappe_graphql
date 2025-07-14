@@ -1,0 +1,91 @@
+type Timesheet implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  title: String
+  naming_series: String!
+  company: Company
+  company__name: String
+  customer: Customer
+  customer__name: String
+  currency: Currency
+  currency__name: String
+  exchange_rate: Float
+  sales_invoice: SalesInvoice
+  sales_invoice__name: String
+  status: TimesheetStatusSelectOptions
+  parent_project: Project
+  parent_project__name: String
+  employee: Employee
+  employee__name: String
+  employee_name: String
+  department: Department
+  department__name: String
+  user: User
+  user__name: String
+  start_date: String
+  end_date: String
+  time_logs: [TimesheetDetail!]!
+  total_hours: Float
+  total_billable_hours: Float
+  base_total_billable_amount: Float
+  base_total_billed_amount: Float
+  base_total_costing_amount: Float
+  total_billed_hours: Float
+  total_billable_amount: Float
+  total_billed_amount: Float
+  total_costing_amount: Float
+  per_billed: Float
+  note: String
+  amended_from: Timesheet
+  amended_from__name: String
+}
+
+extend type Timesheet {
+  salary_slip: SalarySlip
+  salary_slip__name: String
+}
+
+enum TimesheetStatusSelectOptions {
+  DRAFT
+  SUBMITTED
+  BILLED
+  PAYSLIP
+  COMPLETED
+  CANCELLED
+}
+
+enum TimesheetSortField {
+  NAME
+  CREATION
+  MODIFIED
+}
+
+input TimesheetSortingInput {
+  direction: SortDirection!
+  field: TimesheetSortField!
+}
+
+type TimesheetCountableEdge {
+  cursor: String!
+  node: Timesheet!
+}
+
+type TimesheetCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [TimesheetCountableEdge!]!
+}
+
+extend type Query {
+  Timesheet(name: String!): Timesheet!
+  Timesheets(filter: [DBFilterInput], sortBy: TimesheetSortingInput, before: String, after: String, first: Int, last: Int): TimesheetCountableConnection!
+}

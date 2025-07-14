@@ -1,0 +1,46 @@
+type RepostAccountingLedger implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  company: Company
+  company__name: String
+  delete_cancelled_entries: Int
+  vouchers: [RepostAccountingLedgerItems!]!
+  amended_from: RepostAccountingLedger
+  amended_from__name: String
+}
+
+enum RepostAccountingLedgerSortField {
+  NAME
+  CREATION
+  MODIFIED
+}
+
+input RepostAccountingLedgerSortingInput {
+  direction: SortDirection!
+  field: RepostAccountingLedgerSortField!
+}
+
+type RepostAccountingLedgerCountableEdge {
+  cursor: String!
+  node: RepostAccountingLedger!
+}
+
+type RepostAccountingLedgerCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [RepostAccountingLedgerCountableEdge!]!
+}
+
+extend type Query {
+  RepostAccountingLedger(name: String!): RepostAccountingLedger!
+  RepostAccountingLedgers(filter: [DBFilterInput], sortBy: RepostAccountingLedgerSortingInput, before: String, after: String, first: Int, last: Int): RepostAccountingLedgerCountableConnection!
+}

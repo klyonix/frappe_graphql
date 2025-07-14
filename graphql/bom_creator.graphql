@@ -1,0 +1,86 @@
+type BOMCreator implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  item_code: Item!
+  item_code__name: String
+  item_name: String
+  item_group: ItemGroup
+  item_group__name: String
+  qty: Float!
+  project: Project
+  project__name: String
+  uom: UOM
+  uom__name: String
+  rm_cost_as_per: BOMCreatorRateOfMaterialsBasedOnSelectOptions!
+  set_rate_based_on_warehouse: Int
+  buying_price_list: PriceList
+  buying_price_list__name: String
+  price_list_currency: Currency
+  price_list_currency__name: String
+  plc_conversion_rate: Float
+  currency: Currency!
+  currency__name: String
+  conversion_rate: Float
+  default_warehouse: Warehouse
+  default_warehouse__name: String
+  company: Company!
+  company__name: String
+  items: [BOMCreatorItem!]!
+  raw_material_cost: Float
+  remarks: String
+  status: BOMCreatorStatusSelectOptions
+  error_log: String
+  amended_from: BOMCreator
+  amended_from__name: String
+}
+
+enum BOMCreatorRateOfMaterialsBasedOnSelectOptions {
+  VALUATION_RATE
+  LAST_PURCHASE_RATE
+  PRICE_LIST
+}
+
+enum BOMCreatorStatusSelectOptions {
+  DRAFT
+  SUBMITTED
+  IN_PROGRESS
+  COMPLETED
+  FAILED
+  CANCELLED
+}
+
+enum BOMCreatorSortField {
+  NAME
+  CREATION
+  MODIFIED
+}
+
+input BOMCreatorSortingInput {
+  direction: SortDirection!
+  field: BOMCreatorSortField!
+}
+
+type BOMCreatorCountableEdge {
+  cursor: String!
+  node: BOMCreator!
+}
+
+type BOMCreatorCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [BOMCreatorCountableEdge!]!
+}
+
+extend type Query {
+  BOMCreator(name: String!): BOMCreator!
+  BOMCreators(filter: [DBFilterInput], sortBy: BOMCreatorSortingInput, before: String, after: String, first: Int, last: Int): BOMCreatorCountableConnection!
+}

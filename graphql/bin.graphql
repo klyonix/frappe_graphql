@@ -1,0 +1,59 @@
+type Bin implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  item_code: Item!
+  item_code__name: String
+  warehouse: Warehouse!
+  warehouse__name: String
+  actual_qty: Float
+  planned_qty: Float
+  indented_qty: Float
+  ordered_qty: Float
+  projected_qty: Float
+  reserved_qty: Float
+  reserved_qty_for_production: Float
+  reserved_qty_for_sub_contract: Float
+  reserved_qty_for_production_plan: Float
+  reserved_stock: Float
+  stock_uom: UOM
+  stock_uom__name: String
+  valuation_rate: Float
+  stock_value: Float
+}
+
+enum BinSortField {
+  NAME
+  CREATION
+  MODIFIED
+  WAREHOUSE
+}
+
+input BinSortingInput {
+  direction: SortDirection!
+  field: BinSortField!
+}
+
+type BinCountableEdge {
+  cursor: String!
+  node: Bin!
+}
+
+type BinCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [BinCountableEdge!]!
+}
+
+extend type Query {
+  Bin(name: String!): Bin!
+  Bins(filter: [DBFilterInput], sortBy: BinSortingInput, before: String, after: String, first: Int, last: Int): BinCountableConnection!
+}

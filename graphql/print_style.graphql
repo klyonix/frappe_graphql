@@ -1,0 +1,46 @@
+type PrintStyle implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  print_style_name: String!
+  disabled: Int
+  standard: Int
+  css: String!
+  preview: String
+}
+
+enum PrintStyleSortField {
+  NAME
+  CREATION
+  MODIFIED
+  PRINT_STYLE_NAME
+}
+
+input PrintStyleSortingInput {
+  direction: SortDirection!
+  field: PrintStyleSortField!
+}
+
+type PrintStyleCountableEdge {
+  cursor: String!
+  node: PrintStyle!
+}
+
+type PrintStyleCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [PrintStyleCountableEdge!]!
+}
+
+extend type Query {
+  PrintStyle(name: String!): PrintStyle!
+  PrintStyles(filter: [DBFilterInput], sortBy: PrintStyleSortingInput, before: String, after: String, first: Int, last: Int): PrintStyleCountableConnection!
+}

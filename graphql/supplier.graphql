@@ -1,0 +1,123 @@
+type Supplier implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  naming_series: String
+  supplier_name: String!
+  country: Country
+  country__name: String
+  supplier_group: SupplierGroup
+  supplier_group__name: String
+  supplier_type: SupplierSupplierTypeSelectOptions!
+  is_transporter: Int
+  image: String
+  default_currency: Currency
+  default_currency__name: String
+  default_bank_account: BankAccount
+  default_bank_account__name: String
+  default_price_list: PriceList
+  default_price_list__name: String
+  is_internal_supplier: Int
+  represents_company: Company
+  represents_company__name: String
+  companies: [AllowedToTransactWith!]!
+  supplier_details: String
+  website: String
+  language: Language
+  language__name: String
+  tax_id: String
+  tax_category: TaxCategory
+  tax_category__name: String
+  tax_withholding_category: TaxWithholdingCategory
+  tax_withholding_category__name: String
+  supplier_primary_address: Address
+  supplier_primary_address__name: String
+  primary_address: String
+  supplier_primary_contact: Contact
+  supplier_primary_contact__name: String
+  mobile_no: String
+  email_id: String
+  payment_terms: PaymentTermsTemplate
+  payment_terms__name: String
+  accounts: [PartyAccount!]!
+  allow_purchase_invoice_creation_without_purchase_order: Int
+  allow_purchase_invoice_creation_without_purchase_receipt: Int
+  is_frozen: Int
+  disabled: Int
+  warn_rfqs: Int
+  warn_pos: Int
+  prevent_rfqs: Int
+  prevent_pos: Int
+  on_hold: Int
+  hold_type: SupplierHoldTypeSelectOptions
+  release_date: String
+  portal_users: [PortalUser!]!
+}
+
+extend type Supplier {
+  gstin: String
+  pan: String
+  gst_category: SupplierGstCategorySelectOptions!
+  gst_transporter_id: String
+  is_reverse_charge_applicable: Int
+}
+
+enum SupplierSupplierTypeSelectOptions {
+  COMPANY
+  INDIVIDUAL
+  PARTNERSHIP
+}
+
+enum SupplierGstCategorySelectOptions {
+  REGISTERED_REGULAR
+  REGISTERED_COMPOSITION
+  UNREGISTERED
+  SEZ
+  OVERSEAS
+  DEEMED_EXPORT
+  UIN_HOLDERS
+  TAX_DEDUCTOR
+  TAX_COLLECTOR
+  INPUT_SERVICE_DISTRIBUTOR
+}
+
+enum SupplierHoldTypeSelectOptions {
+  ALL
+  INVOICES
+  PAYMENTS
+}
+
+enum SupplierSortField {
+  NAME
+  CREATION
+  MODIFIED
+}
+
+input SupplierSortingInput {
+  direction: SortDirection!
+  field: SupplierSortField!
+}
+
+type SupplierCountableEdge {
+  cursor: String!
+  node: Supplier!
+}
+
+type SupplierCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [SupplierCountableEdge!]!
+}
+
+extend type Query {
+  Supplier(name: String!): Supplier!
+  Suppliers(filter: [DBFilterInput], sortBy: SupplierSortingInput, before: String, after: String, first: Int, last: Int): SupplierCountableConnection!
+}
