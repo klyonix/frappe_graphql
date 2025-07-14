@@ -1,0 +1,49 @@
+type Currency implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  currency_name: String!
+  enabled: Int
+  fraction: String
+  fraction_units: Int
+  smallest_currency_fraction_value: Float
+  symbol: String
+  symbol_on_right: Int
+  number_format: String
+}
+
+enum CurrencySortField {
+  NAME
+  CREATION
+  MODIFIED
+  CURRENCY_NAME
+}
+
+input CurrencySortingInput {
+  direction: SortDirection!
+  field: CurrencySortField!
+}
+
+type CurrencyCountableEdge {
+  cursor: String!
+  node: Currency!
+}
+
+type CurrencyCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [CurrencyCountableEdge!]!
+}
+
+extend type Query {
+  Currency(name: String!): Currency!
+  Currencys(filter: [DBFilterInput], sortBy: CurrencySortingInput, before: String, after: String, first: Int, last: Int): CurrencyCountableConnection!
+}

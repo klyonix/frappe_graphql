@@ -1,0 +1,60 @@
+type CustomDocPerm implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  parent: String
+  role: Role!
+  role__name: String
+  if_owner: Int
+  permlevel: Int
+  select: Int
+  read: Int
+  write: Int
+  create: Int
+  delete: Int
+  submit: Int
+  cancel: Int
+  amend: Int
+  report: Int
+  export: Int
+  import: Int
+  share: Int
+  print: Int
+  email: Int
+}
+
+enum CustomDocPermSortField {
+  NAME
+  CREATION
+  MODIFIED
+  PARENT
+}
+
+input CustomDocPermSortingInput {
+  direction: SortDirection!
+  field: CustomDocPermSortField!
+}
+
+type CustomDocPermCountableEdge {
+  cursor: String!
+  node: CustomDocPerm!
+}
+
+type CustomDocPermCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [CustomDocPermCountableEdge!]!
+}
+
+extend type Query {
+  CustomDocPerm(name: String!): CustomDocPerm!
+  CustomDocPerms(filter: [DBFilterInput], sortBy: CustomDocPermSortingInput, before: String, after: String, first: Int, last: Int): CustomDocPermCountableConnection!
+}

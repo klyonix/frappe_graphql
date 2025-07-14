@@ -1,0 +1,45 @@
+type ProcessSubscription implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  posting_date: String!
+  subscription: Subscription
+  subscription__name: String
+  amended_from: ProcessSubscription
+  amended_from__name: String
+}
+
+enum ProcessSubscriptionSortField {
+  NAME
+  CREATION
+  MODIFIED
+}
+
+input ProcessSubscriptionSortingInput {
+  direction: SortDirection!
+  field: ProcessSubscriptionSortField!
+}
+
+type ProcessSubscriptionCountableEdge {
+  cursor: String!
+  node: ProcessSubscription!
+}
+
+type ProcessSubscriptionCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [ProcessSubscriptionCountableEdge!]!
+}
+
+extend type Query {
+  ProcessSubscription(name: String!): ProcessSubscription!
+  ProcessSubscriptions(filter: [DBFilterInput], sortBy: ProcessSubscriptionSortingInput, before: String, after: String, first: Int, last: Int): ProcessSubscriptionCountableConnection!
+}

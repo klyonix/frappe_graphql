@@ -1,0 +1,43 @@
+type EmployeeGroup implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  employee_group_name: String!
+  employee_list: [EmployeeGroupTable!]!
+}
+
+enum EmployeeGroupSortField {
+  NAME
+  CREATION
+  MODIFIED
+  EMPLOYEE_GROUP_NAME
+}
+
+input EmployeeGroupSortingInput {
+  direction: SortDirection!
+  field: EmployeeGroupSortField!
+}
+
+type EmployeeGroupCountableEdge {
+  cursor: String!
+  node: EmployeeGroup!
+}
+
+type EmployeeGroupCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [EmployeeGroupCountableEdge!]!
+}
+
+extend type Query {
+  EmployeeGroup(name: String!): EmployeeGroup!
+  EmployeeGroups(filter: [DBFilterInput], sortBy: EmployeeGroupSortingInput, before: String, after: String, first: Int, last: Int): EmployeeGroupCountableConnection!
+}

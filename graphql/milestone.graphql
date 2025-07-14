@@ -1,0 +1,48 @@
+type Milestone implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  reference_type: DocType!
+  reference_type__name: String
+  reference_name: String!
+  track_field: String!
+  value: String!
+  milestone_tracker: MilestoneTracker
+  milestone_tracker__name: String
+}
+
+enum MilestoneSortField {
+  NAME
+  CREATION
+  MODIFIED
+  REFERENCE_TYPE
+}
+
+input MilestoneSortingInput {
+  direction: SortDirection!
+  field: MilestoneSortField!
+}
+
+type MilestoneCountableEdge {
+  cursor: String!
+  node: Milestone!
+}
+
+type MilestoneCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [MilestoneCountableEdge!]!
+}
+
+extend type Query {
+  Milestone(name: String!): Milestone!
+  Milestones(filter: [DBFilterInput], sortBy: MilestoneSortingInput, before: String, after: String, first: Int, last: Int): MilestoneCountableConnection!
+}

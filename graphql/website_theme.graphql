@@ -1,0 +1,67 @@
+type WebsiteTheme implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  theme: String!
+  module: ModuleDef!
+  module__name: String
+  custom: Int
+  google_font: String
+  font_size: String
+  font_properties: String
+  button_rounded_corners: Int
+  button_shadows: Int
+  button_gradients: Int
+  primary_color: Color
+  primary_color__name: String
+  text_color: Color
+  text_color__name: String
+  light_color: Color
+  light_color__name: String
+  dark_color: Color
+  dark_color__name: String
+  background_color: Color
+  background_color__name: String
+  custom_overrides: String
+  custom_scss: String
+  ignored_apps: [WebsiteThemeIgnoreApp!]!
+  theme_scss: String
+  theme_url: String
+  js: String
+}
+
+enum WebsiteThemeSortField {
+  NAME
+  CREATION
+  MODIFIED
+  THEME
+}
+
+input WebsiteThemeSortingInput {
+  direction: SortDirection!
+  field: WebsiteThemeSortField!
+}
+
+type WebsiteThemeCountableEdge {
+  cursor: String!
+  node: WebsiteTheme!
+}
+
+type WebsiteThemeCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [WebsiteThemeCountableEdge!]!
+}
+
+extend type Query {
+  WebsiteTheme(name: String!): WebsiteTheme!
+  WebsiteThemes(filter: [DBFilterInput], sortBy: WebsiteThemeSortingInput, before: String, after: String, first: Int, last: Int): WebsiteThemeCountableConnection!
+}

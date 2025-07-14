@@ -1,0 +1,45 @@
+type ContractTemplate implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  title: String
+  contract_terms: String
+  requires_fulfilment: Int
+  fulfilment_terms: [ContractTemplateFulfilmentTerms!]!
+}
+
+enum ContractTemplateSortField {
+  NAME
+  CREATION
+  MODIFIED
+  TITLE
+}
+
+input ContractTemplateSortingInput {
+  direction: SortDirection!
+  field: ContractTemplateSortField!
+}
+
+type ContractTemplateCountableEdge {
+  cursor: String!
+  node: ContractTemplate!
+}
+
+type ContractTemplateCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [ContractTemplateCountableEdge!]!
+}
+
+extend type Query {
+  ContractTemplate(name: String!): ContractTemplate!
+  ContractTemplates(filter: [DBFilterInput], sortBy: ContractTemplateSortingInput, before: String, after: String, first: Int, last: Int): ContractTemplateCountableConnection!
+}

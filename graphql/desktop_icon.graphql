@@ -1,0 +1,59 @@
+type DesktopIcon implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  module_name: String
+  label: String
+  standard: Int
+  custom: Int
+  app: String
+  description: String
+  category: String
+  hidden: Int
+  blocked: Int
+  force_show: Int
+  type: String
+  _doctype: DocType
+  _doctype__name: String
+  _report: Report
+  _report__name: String
+  link: String
+  color: String
+  icon: String
+  reverse: Int
+}
+
+enum DesktopIconSortField {
+  NAME
+  CREATION
+  MODIFIED
+}
+
+input DesktopIconSortingInput {
+  direction: SortDirection!
+  field: DesktopIconSortField!
+}
+
+type DesktopIconCountableEdge {
+  cursor: String!
+  node: DesktopIcon!
+}
+
+type DesktopIconCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [DesktopIconCountableEdge!]!
+}
+
+extend type Query {
+  DesktopIcon(name: String!): DesktopIcon!
+  DesktopIcons(filter: [DBFilterInput], sortBy: DesktopIconSortingInput, before: String, after: String, first: Int, last: Int): DesktopIconCountableConnection!
+}

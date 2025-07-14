@@ -1,0 +1,54 @@
+type QualityReview implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  goal: QualityGoal!
+  goal__name: String
+  date: String
+  procedure: QualityProcedure
+  procedure__name: String
+  status: QualityReviewStatusSelectOptions
+  reviews: [QualityReviewObjective!]!
+  additional_information: String
+}
+
+enum QualityReviewStatusSelectOptions {
+  OPEN
+  PASSED
+  FAILED
+}
+
+enum QualityReviewSortField {
+  NAME
+  CREATION
+  MODIFIED
+}
+
+input QualityReviewSortingInput {
+  direction: SortDirection!
+  field: QualityReviewSortField!
+}
+
+type QualityReviewCountableEdge {
+  cursor: String!
+  node: QualityReview!
+}
+
+type QualityReviewCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [QualityReviewCountableEdge!]!
+}
+
+extend type Query {
+  QualityReview(name: String!): QualityReview!
+  QualityReviews(filter: [DBFilterInput], sortBy: QualityReviewSortingInput, before: String, after: String, first: Int, last: Int): QualityReviewCountableConnection!
+}

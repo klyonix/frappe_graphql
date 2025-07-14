@@ -1,0 +1,35 @@
+type PaymentEntryReference implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  reference_doctype: DocType!
+  reference_doctype__name: String
+  reference_name: BaseDocType!
+  reference_name__name: String
+  due_date: String
+  bill_no: String
+  payment_term: PaymentTerm
+  payment_term__name: String
+  payment_term_outstanding: Float
+  account_type: String
+  payment_type: String
+  reconcile_effect_on: String
+  total_amount: Float
+  outstanding_amount: Float
+  allocated_amount: Float
+  exchange_rate: Float
+  exchange_gain_loss: Float
+  account: Account
+  account__name: String
+  payment_request: PaymentRequest
+  payment_request__name: String
+  payment_request_outstanding: Float
+}

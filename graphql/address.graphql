@@ -1,0 +1,141 @@
+type Address implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  address_title: String
+  address_type: AddressAddressTypeSelectOptions!
+  address_line1: String!
+  address_line2: String
+  city: String!
+  county: String
+  state: String
+  country: Country!
+  country__name: String
+  pincode: String
+  email_id: String
+  phone: String
+  fax: String
+  is_primary_address: Int
+  is_shipping_address: Int
+  disabled: Int
+  links: [DynamicLink!]!
+}
+
+extend type Address {
+  tax_category: TaxCategory
+  tax_category__name: String
+  gstin: String
+  gst_state: AddressGstStateSelectOptions
+  gst_category: AddressGstCategorySelectOptions!
+  gst_state_number: String
+  is_your_company_address: Int
+  fsl_dl_details: [DrugLicenseDetails!]!
+  fsl_fssai_details: [FSSAIDetails!]!
+}
+
+enum AddressAddressTypeSelectOptions {
+  BILLING
+  SHIPPING
+  OFFICE
+  PERSONAL
+  PLANT
+  POSTAL
+  SHOP
+  SUBSIDIARY
+  WAREHOUSE
+  CURRENT
+  PERMANENT
+  OTHER
+}
+
+enum AddressGstStateSelectOptions {
+  ANDAMAN_AND_NICOBAR_ISLANDS
+  ANDHRA_PRADESH
+  ARUNACHAL_PRADESH
+  ASSAM
+  BIHAR
+  CHANDIGARH
+  CHHATTISGARH
+  DADRA_AND_NAGAR_HAVELI_AND_DAMAN_AND_DIU
+  DELHI
+  GOA
+  GUJARAT
+  HARYANA
+  HIMACHAL_PRADESH
+  JAMMU_AND_KASHMIR
+  JHARKHAND
+  KARNATAKA
+  KERALA
+  LADAKH
+  LAKSHADWEEP_ISLANDS
+  MADHYA_PRADESH
+  MAHARASHTRA
+  MANIPUR
+  MEGHALAYA
+  MIZORAM
+  NAGALAND
+  ODISHA
+  OTHER_COUNTRIES
+  OTHER_TERRITORY
+  PUDUCHERRY
+  PUNJAB
+  RAJASTHAN
+  SIKKIM
+  TAMIL_NADU
+  TELANGANA
+  TRIPURA
+  UTTAR_PRADESH
+  UTTARAKHAND
+  WEST_BENGAL
+}
+
+enum AddressGstCategorySelectOptions {
+  REGISTERED_REGULAR
+  REGISTERED_COMPOSITION
+  UNREGISTERED
+  SEZ
+  OVERSEAS
+  DEEMED_EXPORT
+  UIN_HOLDERS
+  TAX_DEDUCTOR
+  TAX_COLLECTOR
+  INPUT_SERVICE_DISTRIBUTOR
+}
+
+enum AddressSortField {
+  NAME
+  CREATION
+  MODIFIED
+  CITY
+  COUNTRY
+  PINCODE
+}
+
+input AddressSortingInput {
+  direction: SortDirection!
+  field: AddressSortField!
+}
+
+type AddressCountableEdge {
+  cursor: String!
+  node: Address!
+}
+
+type AddressCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [AddressCountableEdge!]!
+}
+
+extend type Query {
+  Address(name: String!): Address!
+  Addresses(filter: [DBFilterInput], sortBy: AddressSortingInput, before: String, after: String, first: Int, last: Int): AddressCountableConnection!
+}

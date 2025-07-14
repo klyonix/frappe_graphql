@@ -1,0 +1,86 @@
+type FormTour implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  title: String!
+  view_name: FormTourViewSelectOptions
+  workspace_name: Workspace
+  workspace_name__name: String
+  list_name: FormTourSelectListViewSelectOptions
+  report_name: Report
+  report_name__name: String
+  dashboard_name: Dashboard
+  dashboard_name__name: String
+  new_document_form: Int
+  page_name: Page
+  page_name__name: String
+  reference_doctype: DocType
+  reference_doctype__name: String
+  module: ModuleDef
+  module__name: String
+  ui_tour: Int
+  track_steps: Int
+  is_standard: Int
+  save_on_complete: Int
+  first_document: Int
+  include_name_field: Int
+  page_route: String
+  steps: [FormTourStep!]!
+}
+
+enum FormTourViewSelectOptions {
+  WORKSPACES
+  LIST
+  FORM
+  TREE
+  PAGE
+}
+
+enum FormTourSelectListViewSelectOptions {
+  LIST
+  REPORT
+  DASHBOARD
+  KANBAN
+  GANTT
+  CALENDAR
+  FILE
+  IMAGE
+  INBOX
+  MAP
+}
+
+enum FormTourSortField {
+  NAME
+  CREATION
+  MODIFIED
+  TITLE
+}
+
+input FormTourSortingInput {
+  direction: SortDirection!
+  field: FormTourSortField!
+}
+
+type FormTourCountableEdge {
+  cursor: String!
+  node: FormTour!
+}
+
+type FormTourCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [FormTourCountableEdge!]!
+}
+
+extend type Query {
+  FormTour(name: String!): FormTour!
+  FormTours(filter: [DBFilterInput], sortBy: FormTourSortingInput, before: String, after: String, first: Int, last: Int): FormTourCountableConnection!
+}

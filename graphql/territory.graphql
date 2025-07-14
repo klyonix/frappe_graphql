@@ -1,0 +1,61 @@
+type Territory implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  territory_name: String!
+  parent_territory: Territory
+  parent_territory__name: String
+  is_group: Int
+  territory_manager: SalesPerson
+  territory_manager__name: String
+  lft: Int
+  rgt: Int
+  old_parent: Territory
+  old_parent__name: String
+  targets: [TargetDetail!]!
+}
+
+extend type Territory {
+  hq_location: Town
+  hq_location__name: String
+  fsl_town_and_kms: [KilometerUpdation!]!
+}
+
+enum TerritorySortField {
+  NAME
+  CREATION
+  MODIFIED
+  TERRITORY_NAME
+  TERRITORY_MANAGER
+  LFT
+  RGT
+}
+
+input TerritorySortingInput {
+  direction: SortDirection!
+  field: TerritorySortField!
+}
+
+type TerritoryCountableEdge {
+  cursor: String!
+  node: Territory!
+}
+
+type TerritoryCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [TerritoryCountableEdge!]!
+}
+
+extend type Query {
+  Territory(name: String!): Territory!
+  Territorys(filter: [DBFilterInput], sortBy: TerritorySortingInput, before: String, after: String, first: Int, last: Int): TerritoryCountableConnection!
+}

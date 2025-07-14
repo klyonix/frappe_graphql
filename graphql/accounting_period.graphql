@@ -1,0 +1,46 @@
+type AccountingPeriod implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  period_name: String!
+  start_date: String!
+  end_date: String!
+  company: Company!
+  company__name: String
+  closed_documents: [ClosedDocument!]!
+}
+
+enum AccountingPeriodSortField {
+  NAME
+  CREATION
+  MODIFIED
+}
+
+input AccountingPeriodSortingInput {
+  direction: SortDirection!
+  field: AccountingPeriodSortField!
+}
+
+type AccountingPeriodCountableEdge {
+  cursor: String!
+  node: AccountingPeriod!
+}
+
+type AccountingPeriodCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [AccountingPeriodCountableEdge!]!
+}
+
+extend type Query {
+  AccountingPeriod(name: String!): AccountingPeriod!
+  AccountingPeriods(filter: [DBFilterInput], sortBy: AccountingPeriodSortingInput, before: String, after: String, first: Int, last: Int): AccountingPeriodCountableConnection!
+}

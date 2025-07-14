@@ -1,0 +1,21 @@
+type TargetDetail implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  item_group: ItemGroup
+  item_group__name: String
+  fiscal_year: FiscalYear!
+  fiscal_year__name: String
+  target_qty: Float
+  target_amount: Float
+  distribution_id: MonthlyDistribution!
+  distribution_id__name: String
+}

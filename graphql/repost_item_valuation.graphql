@@ -1,0 +1,81 @@
+type RepostItemValuation implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  based_on: RepostItemValuationBasedOnSelectOptions!
+  voucher_type: DocType
+  voucher_type__name: String
+  voucher_no: BaseDocType
+  voucher_no__name: String
+  item_code: Item
+  item_code__name: String
+  warehouse: Warehouse
+  warehouse__name: String
+  posting_date: String!
+  posting_time: String
+  status: RepostItemValuationStatusSelectOptions
+  company: Company
+  company__name: String
+  allow_negative_stock: Int
+  via_landed_cost_voucher: Int
+  allow_zero_rate: Int
+  recreate_stock_ledgers: Int
+  amended_from: RepostItemValuation
+  amended_from__name: String
+  error_log: String
+  reposting_data_file: String
+  items_to_be_repost: String
+  distinct_item_and_warehouse: String
+  total_reposting_count: Int
+  current_index: Int
+  gl_reposting_index: Int
+  affected_transactions: String
+}
+
+enum RepostItemValuationBasedOnSelectOptions {
+  TRANSACTION
+  ITEM_AND_WAREHOUSE
+}
+
+enum RepostItemValuationStatusSelectOptions {
+  QUEUED
+  IN_PROGRESS
+  COMPLETED
+  SKIPPED
+  FAILED
+}
+
+enum RepostItemValuationSortField {
+  NAME
+  CREATION
+  MODIFIED
+}
+
+input RepostItemValuationSortingInput {
+  direction: SortDirection!
+  field: RepostItemValuationSortField!
+}
+
+type RepostItemValuationCountableEdge {
+  cursor: String!
+  node: RepostItemValuation!
+}
+
+type RepostItemValuationCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [RepostItemValuationCountableEdge!]!
+}
+
+extend type Query {
+  RepostItemValuation(name: String!): RepostItemValuation!
+  RepostItemValuations(filter: [DBFilterInput], sortBy: RepostItemValuationSortingInput, before: String, after: String, first: Int, last: Int): RepostItemValuationCountableConnection!
+}

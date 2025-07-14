@@ -1,0 +1,58 @@
+type PaymentTerm implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  payment_term_name: String
+  invoice_portion: Float
+  mode_of_payment: ModeofPayment
+  mode_of_payment__name: String
+  due_date_based_on: String
+  credit_days: Int
+  credit_months: Int
+  discount_type: PaymentTermDiscountTypeSelectOptions
+  discount: Float
+  discount_validity_based_on: String
+  discount_validity: Int
+  description: String
+}
+
+enum PaymentTermDiscountTypeSelectOptions {
+  PERCENTAGE
+  AMOUNT
+}
+
+enum PaymentTermSortField {
+  NAME
+  CREATION
+  MODIFIED
+  PAYMENT_TERM_NAME
+}
+
+input PaymentTermSortingInput {
+  direction: SortDirection!
+  field: PaymentTermSortField!
+}
+
+type PaymentTermCountableEdge {
+  cursor: String!
+  node: PaymentTerm!
+}
+
+type PaymentTermCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [PaymentTermCountableEdge!]!
+}
+
+extend type Query {
+  PaymentTerm(name: String!): PaymentTerm!
+  PaymentTerms(filter: [DBFilterInput], sortBy: PaymentTermSortingInput, before: String, after: String, first: Int, last: Int): PaymentTermCountableConnection!
+}

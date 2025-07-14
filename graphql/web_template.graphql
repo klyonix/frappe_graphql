@@ -1,0 +1,53 @@
+type WebTemplate implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  type: WebTemplateTypeSelectOptions
+  standard: Int
+  module: ModuleDef
+  module__name: String
+  template: String
+  fields: [WebTemplateField!]!
+}
+
+enum WebTemplateTypeSelectOptions {
+  COMPONENT
+  SECTION
+  NAVBAR
+  FOOTER
+}
+
+enum WebTemplateSortField {
+  NAME
+  CREATION
+  MODIFIED
+}
+
+input WebTemplateSortingInput {
+  direction: SortDirection!
+  field: WebTemplateSortField!
+}
+
+type WebTemplateCountableEdge {
+  cursor: String!
+  node: WebTemplate!
+}
+
+type WebTemplateCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [WebTemplateCountableEdge!]!
+}
+
+extend type Query {
+  WebTemplate(name: String!): WebTemplate!
+  WebTemplates(filter: [DBFilterInput], sortBy: WebTemplateSortingInput, before: String, after: String, first: Int, last: Int): WebTemplateCountableConnection!
+}

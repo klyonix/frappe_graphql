@@ -1,0 +1,91 @@
+type PickList implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  naming_series: String!
+  company: Company!
+  company__name: String
+  purpose: PickListPurposeSelectOptions
+  customer: Customer
+  customer__name: String
+  customer_name: String
+  work_order: WorkOrder
+  work_order__name: String
+  material_request: MaterialRequest
+  material_request__name: String
+  for_qty: Float
+  parent_warehouse: Warehouse
+  parent_warehouse__name: String
+  consider_rejected_warehouses: Int
+  pick_manually: Int
+  ignore_pricing_rule: Int
+  scan_barcode: String
+  scan_mode: Int
+  prompt_qty: Int
+  locations: [PickListItem!]!
+  amended_from: PickList
+  amended_from__name: String
+  group_same_items: Int
+  status: PickListStatusSelectOptions!
+  delivery_status: PickListDeliveryStatusSelectOptions
+  per_delivered: Float
+}
+
+extend type PickList {
+}
+
+enum PickListPurposeSelectOptions {
+  MATERIAL_TRANSFER_FOR_MANUFACTURE
+  MATERIAL_TRANSFER
+  DELIVERY
+}
+
+enum PickListStatusSelectOptions {
+  DRAFT
+  OPEN
+  PARTLY_DELIVERED
+  COMPLETED
+  CANCELLED
+}
+
+enum PickListDeliveryStatusSelectOptions {
+  NOT_DELIVERED
+  FULLY_DELIVERED
+  PARTLY_DELIVERED
+}
+
+enum PickListSortField {
+  NAME
+  CREATION
+  MODIFIED
+  STATUS
+}
+
+input PickListSortingInput {
+  direction: SortDirection!
+  field: PickListSortField!
+}
+
+type PickListCountableEdge {
+  cursor: String!
+  node: PickList!
+}
+
+type PickListCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [PickListCountableEdge!]!
+}
+
+extend type Query {
+  PickList(name: String!): PickList!
+  PickLists(filter: [DBFilterInput], sortBy: PickListSortingInput, before: String, after: String, first: Int, last: Int): PickListCountableConnection!
+}

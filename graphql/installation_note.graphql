@@ -1,0 +1,74 @@
+type InstallationNote implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  naming_series: String!
+  customer: Customer!
+  customer__name: String
+  customer_address: Address
+  customer_address__name: String
+  contact_person: Contact
+  contact_person__name: String
+  customer_name: String
+  address_display: String
+  contact_display: String
+  contact_mobile: String
+  contact_email: String
+  territory: Territory!
+  territory__name: String
+  customer_group: CustomerGroup
+  customer_group__name: String
+  inst_date: String!
+  inst_time: String
+  status: InstallationNoteStatusSelectOptions!
+  company: Company!
+  company__name: String
+  amended_from: InstallationNote
+  amended_from__name: String
+  remarks: String
+  items: [InstallationNoteItem!]!
+}
+
+enum InstallationNoteStatusSelectOptions {
+  DRAFT
+  SUBMITTED
+  CANCELLED
+}
+
+enum InstallationNoteSortField {
+  NAME
+  CREATION
+  MODIFIED
+  CUSTOMER
+  TERRITORY
+  INST_DATE
+}
+
+input InstallationNoteSortingInput {
+  direction: SortDirection!
+  field: InstallationNoteSortField!
+}
+
+type InstallationNoteCountableEdge {
+  cursor: String!
+  node: InstallationNote!
+}
+
+type InstallationNoteCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [InstallationNoteCountableEdge!]!
+}
+
+extend type Query {
+  InstallationNote(name: String!): InstallationNote!
+  InstallationNotes(filter: [DBFilterInput], sortBy: InstallationNoteSortingInput, before: String, after: String, first: Int, last: Int): InstallationNoteCountableConnection!
+}

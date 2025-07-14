@@ -1,0 +1,57 @@
+type ModeofPayment implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  mode_of_payment: String!
+  enabled: Int
+  type: ModeofPaymentTypeSelectOptions
+  accounts: [ModeofPaymentAccount!]!
+}
+
+extend type ModeofPayment {
+  fsl_company: Company
+  fsl_company__name: String
+}
+
+enum ModeofPaymentTypeSelectOptions {
+  CASH
+  BANK
+  GENERAL
+  PHONE
+}
+
+enum ModeofPaymentSortField {
+  NAME
+  CREATION
+  MODIFIED
+  MODE_OF_PAYMENT
+}
+
+input ModeofPaymentSortingInput {
+  direction: SortDirection!
+  field: ModeofPaymentSortField!
+}
+
+type ModeofPaymentCountableEdge {
+  cursor: String!
+  node: ModeofPayment!
+}
+
+type ModeofPaymentCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [ModeofPaymentCountableEdge!]!
+}
+
+extend type Query {
+  ModeofPayment(name: String!): ModeofPayment!
+  ModesofPayment(filter: [DBFilterInput], sortBy: ModeofPaymentSortingInput, before: String, after: String, first: Int, last: Int): ModeofPaymentCountableConnection!
+}

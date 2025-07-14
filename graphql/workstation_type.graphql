@@ -1,0 +1,48 @@
+type WorkstationType implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  workstation_type: String!
+  hour_rate_electricity: Float
+  hour_rate_consumable: Float
+  hour_rate_rent: Float
+  hour_rate_labour: Float
+  hour_rate: Float
+  description: String
+}
+
+enum WorkstationTypeSortField {
+  NAME
+  CREATION
+  MODIFIED
+  WORKSTATION_TYPE
+}
+
+input WorkstationTypeSortingInput {
+  direction: SortDirection!
+  field: WorkstationTypeSortField!
+}
+
+type WorkstationTypeCountableEdge {
+  cursor: String!
+  node: WorkstationType!
+}
+
+type WorkstationTypeCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [WorkstationTypeCountableEdge!]!
+}
+
+extend type Query {
+  WorkstationType(name: String!): WorkstationType!
+  WorkstationTypes(filter: [DBFilterInput], sortBy: WorkstationTypeSortingInput, before: String, after: String, first: Int, last: Int): WorkstationTypeCountableConnection!
+}

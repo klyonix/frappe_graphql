@@ -1,0 +1,65 @@
+type BOMUpdateLog implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  update_type: BOMUpdateLogUpdateTypeSelectOptions
+  status: BOMUpdateLogStatusSelectOptions
+  current_bom: BOM
+  current_bom__name: String
+  new_bom: BOM
+  new_bom__name: String
+  error_log: ErrorLog
+  error_log__name: String
+  current_level: Int
+  processed_boms: String
+  bom_batches: [BOMUpdateBatch!]!
+  amended_from: BOMUpdateLog
+  amended_from__name: String
+}
+
+enum BOMUpdateLogUpdateTypeSelectOptions {
+  REPLACE_BOM
+  UPDATE_COST
+}
+
+enum BOMUpdateLogStatusSelectOptions {
+  QUEUED
+  IN_PROGRESS
+  COMPLETED
+  FAILED
+}
+
+enum BOMUpdateLogSortField {
+  NAME
+  CREATION
+  MODIFIED
+}
+
+input BOMUpdateLogSortingInput {
+  direction: SortDirection!
+  field: BOMUpdateLogSortField!
+}
+
+type BOMUpdateLogCountableEdge {
+  cursor: String!
+  node: BOMUpdateLog!
+}
+
+type BOMUpdateLogCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [BOMUpdateLogCountableEdge!]!
+}
+
+extend type Query {
+  BOMUpdateLog(name: String!): BOMUpdateLog!
+  BOMUpdateLogs(filter: [DBFilterInput], sortBy: BOMUpdateLogSortingInput, before: String, after: String, first: Int, last: Int): BOMUpdateLogCountableConnection!
+}

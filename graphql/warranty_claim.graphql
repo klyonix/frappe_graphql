@@ -1,0 +1,103 @@
+type WarrantyClaim implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  naming_series: String!
+  status: WarrantyClaimStatusSelectOptions!
+  complaint_date: String!
+  customer: Customer!
+  customer__name: String
+  serial_no: SerialNo
+  serial_no__name: String
+  complaint: String!
+  item_code: Item
+  item_code__name: String
+  item_name: String
+  description: String
+  warranty_amc_status: WarrantyClaimWarrantyAmcStatusSelectOptions
+  warranty_expiry_date: String
+  amc_expiry_date: String
+  resolution_date: String
+  resolved_by: User
+  resolved_by__name: String
+  resolution_details: String
+  customer_name: String
+  contact_person: Contact
+  contact_person__name: String
+  contact_display: String
+  contact_mobile: String
+  contact_email: String
+  territory: Territory
+  territory__name: String
+  customer_group: CustomerGroup
+  customer_group__name: String
+  customer_address: Address
+  customer_address__name: String
+  address_display: String
+  service_address: String
+  company: Company!
+  company__name: String
+  complaint_raised_by: String
+  from_company: String
+  amended_from: WarrantyClaim
+  amended_from__name: String
+}
+
+enum WarrantyClaimStatusSelectOptions {
+  OPEN
+  CLOSED
+  WORK_IN_PROGRESS
+  CANCELLED
+}
+
+enum WarrantyClaimWarrantyAmcStatusSelectOptions {
+  UNDER_WARRANTY
+  OUT_OF_WARRANTY
+  UNDER_AMC
+  OUT_OF_AMC
+}
+
+enum WarrantyClaimSortField {
+  NAME
+  CREATION
+  MODIFIED
+  STATUS
+  COMPLAINT_DATE
+  CUSTOMER
+  SERIAL_NO
+  ITEM_CODE
+  WARRANTY_AMC_STATUS
+  RESOLUTION_DATE
+  RESOLVED_BY
+  TERRITORY
+  COMPANY
+}
+
+input WarrantyClaimSortingInput {
+  direction: SortDirection!
+  field: WarrantyClaimSortField!
+}
+
+type WarrantyClaimCountableEdge {
+  cursor: String!
+  node: WarrantyClaim!
+}
+
+type WarrantyClaimCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [WarrantyClaimCountableEdge!]!
+}
+
+extend type Query {
+  WarrantyClaim(name: String!): WarrantyClaim!
+  WarrantyClaims(filter: [DBFilterInput], sortBy: WarrantyClaimSortingInput, before: String, after: String, first: Int, last: Int): WarrantyClaimCountableConnection!
+}

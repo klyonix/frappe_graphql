@@ -1,0 +1,59 @@
+type AssetValueAdjustment implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  company: Company
+  company__name: String
+  asset: Asset!
+  asset__name: String
+  asset_category: String
+  date: String!
+  finance_book: FinanceBook
+  finance_book__name: String
+  amended_from: AssetValueAdjustment
+  amended_from__name: String
+  current_asset_value: Float!
+  new_asset_value: Float!
+  difference_amount: Float
+  difference_account: Account!
+  difference_account__name: String
+  journal_entry: JournalEntry
+  journal_entry__name: String
+  cost_center: CostCenter
+  cost_center__name: String
+}
+
+enum AssetValueAdjustmentSortField {
+  NAME
+  CREATION
+  MODIFIED
+}
+
+input AssetValueAdjustmentSortingInput {
+  direction: SortDirection!
+  field: AssetValueAdjustmentSortField!
+}
+
+type AssetValueAdjustmentCountableEdge {
+  cursor: String!
+  node: AssetValueAdjustment!
+}
+
+type AssetValueAdjustmentCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [AssetValueAdjustmentCountableEdge!]!
+}
+
+extend type Query {
+  AssetValueAdjustment(name: String!): AssetValueAdjustment!
+  AssetValueAdjustments(filter: [DBFilterInput], sortBy: AssetValueAdjustmentSortingInput, before: String, after: String, first: Int, last: Int): AssetValueAdjustmentCountableConnection!
+}

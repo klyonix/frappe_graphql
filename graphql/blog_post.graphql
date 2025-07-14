@@ -1,0 +1,70 @@
+type BlogPost implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  title: String!
+  blog_category: BlogCategory!
+  blog_category__name: String
+  blogger: Blogger!
+  blogger__name: String
+  route: String
+  read_time: Int
+  published_on: String
+  published: Int
+  featured: Int
+  hide_cta: Int
+  enable_email_notification: Int
+  disable_comments: Int
+  disable_likes: Int
+  blog_intro: String
+  content_type: BlogPostContentTypeSelectOptions!
+  content: String
+  content_md: String
+  content_html: String
+  email_sent: Int
+  meta_title: String
+  meta_description: String
+  meta_image: String
+}
+
+enum BlogPostContentTypeSelectOptions {
+  MARKDOWN
+  RICH_TEXT
+  HTML
+}
+
+enum BlogPostSortField {
+  NAME
+  CREATION
+  MODIFIED
+  ROUTE
+}
+
+input BlogPostSortingInput {
+  direction: SortDirection!
+  field: BlogPostSortField!
+}
+
+type BlogPostCountableEdge {
+  cursor: String!
+  node: BlogPost!
+}
+
+type BlogPostCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [BlogPostCountableEdge!]!
+}
+
+extend type Query {
+  BlogPost(name: String!): BlogPost!
+  BlogPosts(filter: [DBFilterInput], sortBy: BlogPostSortingInput, before: String, after: String, first: Int, last: Int): BlogPostCountableConnection!
+}

@@ -1,0 +1,46 @@
+type EmailGroupMember implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  email_group: EmailGroup!
+  email_group__name: String
+  email: String!
+  unsubscribed: Int
+}
+
+enum EmailGroupMemberSortField {
+  NAME
+  CREATION
+  MODIFIED
+  EMAIL_GROUP
+  UNSUBSCRIBED
+}
+
+input EmailGroupMemberSortingInput {
+  direction: SortDirection!
+  field: EmailGroupMemberSortField!
+}
+
+type EmailGroupMemberCountableEdge {
+  cursor: String!
+  node: EmailGroupMember!
+}
+
+type EmailGroupMemberCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [EmailGroupMemberCountableEdge!]!
+}
+
+extend type Query {
+  EmailGroupMember(name: String!): EmailGroupMember!
+  EmailGroupMembers(filter: [DBFilterInput], sortBy: EmailGroupMemberSortingInput, before: String, after: String, first: Int, last: Int): EmailGroupMemberCountableConnection!
+}

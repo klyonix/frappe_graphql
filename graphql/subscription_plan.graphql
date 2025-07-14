@@ -1,0 +1,70 @@
+type SubscriptionPlan implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  plan_name: String!
+  currency: Currency!
+  currency__name: String
+  item: Item!
+  item__name: String
+  price_determination: SubscriptionPlanSubscriptionPriceBasedOnSelectOptions!
+  cost: Float
+  price_list: PriceList
+  price_list__name: String
+  billing_interval: SubscriptionPlanBillingIntervalSelectOptions!
+  billing_interval_count: Int!
+  product_price_id: String
+  payment_gateway: PaymentGatewayAccount
+  payment_gateway__name: String
+  cost_center: CostCenter
+  cost_center__name: String
+}
+
+enum SubscriptionPlanSubscriptionPriceBasedOnSelectOptions {
+  FIXED_RATE
+  BASED_ON_PRICE_LIST
+  MONTHLY_RATE
+}
+
+enum SubscriptionPlanBillingIntervalSelectOptions {
+  DAY
+  WEEK
+  MONTH
+  YEAR
+}
+
+enum SubscriptionPlanSortField {
+  NAME
+  CREATION
+  MODIFIED
+  PLAN_NAME
+}
+
+input SubscriptionPlanSortingInput {
+  direction: SortDirection!
+  field: SubscriptionPlanSortField!
+}
+
+type SubscriptionPlanCountableEdge {
+  cursor: String!
+  node: SubscriptionPlan!
+}
+
+type SubscriptionPlanCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [SubscriptionPlanCountableEdge!]!
+}
+
+extend type Query {
+  SubscriptionPlan(name: String!): SubscriptionPlan!
+  SubscriptionPlans(filter: [DBFilterInput], sortBy: SubscriptionPlanSortingInput, before: String, after: String, first: Int, last: Int): SubscriptionPlanCountableConnection!
+}

@@ -1,0 +1,52 @@
+type ConnectedApp implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  provider_name: String!
+  openid_configuration: String
+  client_id: String
+  redirect_uri: String
+  client_secret: Password
+  scopes: [OAuthScope!]!
+  authorization_uri: String
+  token_uri: String
+  revocation_uri: String
+  userinfo_uri: String
+  introspection_uri: String
+  query_parameters: [QueryParameters!]!
+}
+
+enum ConnectedAppSortField {
+  NAME
+  CREATION
+  MODIFIED
+}
+
+input ConnectedAppSortingInput {
+  direction: SortDirection!
+  field: ConnectedAppSortField!
+}
+
+type ConnectedAppCountableEdge {
+  cursor: String!
+  node: ConnectedApp!
+}
+
+type ConnectedAppCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [ConnectedAppCountableEdge!]!
+}
+
+extend type Query {
+  ConnectedApp(name: String!): ConnectedApp!
+  ConnectedApps(filter: [DBFilterInput], sortBy: ConnectedAppSortingInput, before: String, after: String, first: Int, last: Int): ConnectedAppCountableConnection!
+}

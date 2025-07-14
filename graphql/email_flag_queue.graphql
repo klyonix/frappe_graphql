@@ -1,0 +1,50 @@
+type EmailFlagQueue implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  is_completed: Int
+  communication: String
+  action: EmailFlagQueueActionSelectOptions
+  email_account: String
+  uid: String
+}
+
+enum EmailFlagQueueActionSelectOptions {
+  READ
+  UNREAD
+}
+
+enum EmailFlagQueueSortField {
+  NAME
+  CREATION
+  MODIFIED
+}
+
+input EmailFlagQueueSortingInput {
+  direction: SortDirection!
+  field: EmailFlagQueueSortField!
+}
+
+type EmailFlagQueueCountableEdge {
+  cursor: String!
+  node: EmailFlagQueue!
+}
+
+type EmailFlagQueueCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [EmailFlagQueueCountableEdge!]!
+}
+
+extend type Query {
+  EmailFlagQueue(name: String!): EmailFlagQueue!
+  EmailFlagQueues(filter: [DBFilterInput], sortBy: EmailFlagQueueSortingInput, before: String, after: String, first: Int, last: Int): EmailFlagQueueCountableConnection!
+}

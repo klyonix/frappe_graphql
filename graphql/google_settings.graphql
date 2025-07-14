@@ -1,0 +1,23 @@
+type GoogleSettings implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  enable: Int
+  client_id: String
+  client_secret: Password
+  api_key: String
+  google_drive_picker_enabled: Int
+  app_id: String
+}
+
+extend type Query {
+  GoogleSettings: GoogleSettings!
+}

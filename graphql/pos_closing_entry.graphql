@@ -1,0 +1,70 @@
+type POSClosingEntry implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  period_start_date: String!
+  period_end_date: String!
+  posting_date: String!
+  posting_time: String!
+  pos_opening_entry: POSOpeningEntry!
+  pos_opening_entry__name: String
+  status: POSClosingEntryStatusSelectOptions
+  company: Company!
+  company__name: String
+  pos_profile: POSProfile!
+  pos_profile__name: String
+  user: User!
+  user__name: String
+  pos_transactions: [POSInvoiceReference!]!
+  payment_reconciliation: [POSClosingEntryDetail!]!
+  grand_total: Float
+  net_total: Float
+  total_quantity: Float
+  taxes: [POSClosingEntryTaxes!]!
+  error_message: String
+  amended_from: POSClosingEntry
+  amended_from__name: String
+}
+
+enum POSClosingEntryStatusSelectOptions {
+  DRAFT
+  SUBMITTED
+  QUEUED
+  FAILED
+  CANCELLED
+}
+
+enum POSClosingEntrySortField {
+  NAME
+  CREATION
+  MODIFIED
+}
+
+input POSClosingEntrySortingInput {
+  direction: SortDirection!
+  field: POSClosingEntrySortField!
+}
+
+type POSClosingEntryCountableEdge {
+  cursor: String!
+  node: POSClosingEntry!
+}
+
+type POSClosingEntryCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [POSClosingEntryCountableEdge!]!
+}
+
+extend type Query {
+  POSClosingEntry(name: String!): POSClosingEntry!
+  POSClosingEntrys(filter: [DBFilterInput], sortBy: POSClosingEntrySortingInput, before: String, after: String, first: Int, last: Int): POSClosingEntryCountableConnection!
+}

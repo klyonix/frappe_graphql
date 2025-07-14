@@ -1,0 +1,82 @@
+type SerialandBatchBundle implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  naming_series: String
+  company: Company!
+  company__name: String
+  item_name: String
+  has_serial_no: Int
+  has_batch_no: Int
+  item_code: Item!
+  item_code__name: String
+  warehouse: Warehouse
+  warehouse__name: String
+  type_of_transaction: SerialandBatchBundleTypeOfTransactionSelectOptions!
+  entries: [SerialandBatchEntry!]!
+  total_qty: Float
+  item_group: ItemGroup
+  item_group__name: String
+  avg_rate: Float
+  total_amount: Float
+  voucher_type: DocType!
+  voucher_type__name: String
+  voucher_no: BaseDocType
+  voucher_no__name: String
+  voucher_detail_no: String
+  posting_date: String
+  posting_time: String
+  returned_against: String
+  is_cancelled: Int
+  is_rejected: Int
+  amended_from: SerialandBatchBundle
+  amended_from__name: String
+}
+
+enum SerialandBatchBundleTypeOfTransactionSelectOptions {
+  INWARD
+  OUTWARD
+  MAINTENANCE
+  ASSET_REPAIR
+}
+
+enum SerialandBatchBundleSortField {
+  NAME
+  CREATION
+  MODIFIED
+  COMPANY
+  ITEM_CODE
+  WAREHOUSE
+  TYPE_OF_TRANSACTION
+  VOUCHER_NO
+  VOUCHER_DETAIL_NO
+}
+
+input SerialandBatchBundleSortingInput {
+  direction: SortDirection!
+  field: SerialandBatchBundleSortField!
+}
+
+type SerialandBatchBundleCountableEdge {
+  cursor: String!
+  node: SerialandBatchBundle!
+}
+
+type SerialandBatchBundleCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [SerialandBatchBundleCountableEdge!]!
+}
+
+extend type Query {
+  SerialandBatchBundle(name: String!): SerialandBatchBundle!
+  SerialandBatchBundles(filter: [DBFilterInput], sortBy: SerialandBatchBundleSortingInput, before: String, after: String, first: Int, last: Int): SerialandBatchBundleCountableConnection!
+}

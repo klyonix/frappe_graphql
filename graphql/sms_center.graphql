@@ -1,0 +1,32 @@
+type SMSCenter implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  send_to: String
+  customer: Customer
+  customer__name: String
+  supplier: Supplier
+  supplier__name: String
+  sales_partner: SalesPartner
+  sales_partner__name: String
+  department: Department
+  department__name: String
+  branch: Branch
+  branch__name: String
+  receiver_list: String
+  message: String!
+  total_characters: Int
+  total_messages: Int
+}
+
+extend type Query {
+  SMSCenter: SMSCenter!
+}

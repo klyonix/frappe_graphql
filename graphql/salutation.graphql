@@ -1,0 +1,42 @@
+type Salutation implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  salutation: String
+}
+
+enum SalutationSortField {
+  NAME
+  CREATION
+  MODIFIED
+  SALUTATION
+}
+
+input SalutationSortingInput {
+  direction: SortDirection!
+  field: SalutationSortField!
+}
+
+type SalutationCountableEdge {
+  cursor: String!
+  node: Salutation!
+}
+
+type SalutationCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [SalutationCountableEdge!]!
+}
+
+extend type Query {
+  Salutation(name: String!): Salutation!
+  Salutations(filter: [DBFilterInput], sortBy: SalutationSortingInput, before: String, after: String, first: Int, last: Int): SalutationCountableConnection!
+}

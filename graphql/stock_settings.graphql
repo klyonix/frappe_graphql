@@ -1,0 +1,115 @@
+type StockSettings implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  item_naming_by: StockSettingsItemNamingBySelectOptions
+  valuation_method: StockSettingsDefaultValuationMethodSelectOptions
+  item_group: ItemGroup
+  item_group__name: String
+  default_warehouse: Warehouse
+  default_warehouse__name: String
+  sample_retention_warehouse: Warehouse
+  sample_retention_warehouse__name: String
+  stock_uom: UOM
+  stock_uom__name: String
+  auto_insert_price_list_rate_if_missing: Int
+  update_price_list_based_on: StockSettingsUpdatePriceListBasedOnSelectOptions
+  update_existing_price_list_rate: Int
+  allow_to_edit_stock_uom_qty_for_sales: Int
+  allow_to_edit_stock_uom_qty_for_purchase: Int
+  allow_uom_with_conversion_rate_defined_in_item: Int
+  over_delivery_receipt_allowance: Float
+  mr_qty_allowance: Float
+  over_picking_allowance: Float
+  role_allowed_to_over_deliver_receive: Role
+  role_allowed_to_over_deliver_receive__name: String
+  allow_negative_stock: Int
+  show_barcode_field: Int
+  clean_description_html: Int
+  allow_internal_transfer_at_arms_length_price: Int
+  action_if_quality_inspection_is_not_submitted: StockSettingsActionIfQualityInspectionIsNotSubmittedSelectOptions
+  action_if_quality_inspection_is_rejected: StockSettingsActionIfQualityInspectionIsRejectedSelectOptions
+  enable_stock_reservation: Int
+  allow_partial_reservation: Int
+  auto_reserve_stock_for_sales_order_on_purchase: Int
+  auto_reserve_serial_and_batch: Int
+  allow_existing_serial_no: Int
+  do_not_use_batchwise_valuation: Int
+  auto_create_serial_and_batch_bundle_for_outward: Int
+  pick_serial_and_batch_based_on: StockSettingsPickSerialBatchBasedOnSelectOptions
+  disable_serial_no_and_batch_selector: Int
+  use_serial_batch_fields: Int
+  do_not_update_serial_batch_on_creation_of_auto_bundle: Int
+  set_serial_and_batch_bundle_naming_based_on_naming_series: Int
+  use_naming_series: Int
+  naming_series_prefix: String
+  allow_to_make_quality_inspection_after_purchase_or_delivery: Int
+  auto_indent: Int
+  reorder_email_notify: Int
+  allow_from_dn: Int
+  allow_from_pr: Int
+  stock_frozen_upto: String
+  stock_frozen_upto_days: Int
+  role_allowed_to_create_edit_back_dated_transactions: Role
+  role_allowed_to_create_edit_back_dated_transactions__name: String
+  stock_auth_role: Role
+  stock_auth_role__name: String
+}
+
+extend type StockSettings {
+  fsl_month_for_expiry: Int
+}
+
+enum StockSettingsItemNamingBySelectOptions {
+  ITEM_CODE
+  NAMING_SERIES
+}
+
+enum StockSettingsDefaultValuationMethodSelectOptions {
+  FIFO
+  MOVING_AVERAGE
+  LIFO
+}
+
+enum StockSettingsUpdatePriceListBasedOnSelectOptions {
+  RATE
+  PRICE_LIST_RATE
+}
+
+enum StockSettingsActionIfQualityInspectionIsNotSubmittedSelectOptions {
+  STOP
+  WARN
+}
+
+enum StockSettingsActionIfQualityInspectionIsRejectedSelectOptions {
+  STOP
+  WARN
+}
+
+enum StockSettingsPickSerialBatchBasedOnSelectOptions {
+  FIFO
+  LIFO
+  EXPIRY
+}
+
+enum StockSettingsActionIfQualityInspectionIsNotSubmittedSelectOptions {
+  STOP
+  WARN
+}
+
+enum StockSettingsActionIfQualityInspectionIsRejectedSelectOptions {
+  STOP
+  WARN
+}
+
+extend type Query {
+  StockSettings: StockSettings!
+}

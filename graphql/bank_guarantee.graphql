@@ -1,0 +1,79 @@
+type BankGuarantee implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  bg_type: BankGuaranteeBankGuaranteeTypeSelectOptions!
+  reference_doctype: DocType
+  reference_doctype__name: String
+  reference_docname: BaseDocType
+  reference_docname__name: String
+  customer: Customer
+  customer__name: String
+  supplier: Supplier
+  supplier__name: String
+  project: Project
+  project__name: String
+  amount: Float!
+  start_date: String!
+  validity: Int
+  end_date: String
+  bank: Bank
+  bank__name: String
+  bank_account: BankAccount
+  bank_account__name: String
+  account: Account
+  account__name: String
+  bank_account_no: String
+  iban: String
+  branch_code: String
+  swift_number: String
+  more_information: String
+  bank_guarantee_number: String
+  name_of_beneficiary: String
+  margin_money: Float
+  charges: Float
+  fixed_deposit_number: String
+  amended_from: BankGuarantee
+  amended_from__name: String
+}
+
+enum BankGuaranteeBankGuaranteeTypeSelectOptions {
+  RECEIVING
+  PROVIDING
+}
+
+enum BankGuaranteeSortField {
+  NAME
+  CREATION
+  MODIFIED
+  BANK_GUARANTEE_NUMBER
+}
+
+input BankGuaranteeSortingInput {
+  direction: SortDirection!
+  field: BankGuaranteeSortField!
+}
+
+type BankGuaranteeCountableEdge {
+  cursor: String!
+  node: BankGuarantee!
+}
+
+type BankGuaranteeCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [BankGuaranteeCountableEdge!]!
+}
+
+extend type Query {
+  BankGuarantee(name: String!): BankGuarantee!
+  BankGuarantees(filter: [DBFilterInput], sortBy: BankGuaranteeSortingInput, before: String, after: String, first: Int, last: Int): BankGuaranteeCountableConnection!
+}

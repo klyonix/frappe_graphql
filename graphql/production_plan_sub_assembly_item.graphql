@@ -1,0 +1,48 @@
+type ProductionPlanSubAssemblyItem implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  production_item: Item
+  production_item__name: String
+  item_name: String
+  fg_warehouse: Warehouse
+  fg_warehouse__name: String
+  parent_item_code: Item
+  parent_item_code__name: String
+  schedule_date: String
+  qty: Float
+  bom_no: BOM
+  bom_no__name: String
+  bom_level: Int
+  type_of_manufacturing: ProductionPlanSubAssemblyItemManufacturingTypeSelectOptions
+  supplier: Supplier
+  supplier__name: String
+  wo_produced_qty: Float
+  purchase_order: PurchaseOrder
+  purchase_order__name: String
+  production_plan_item: String
+  ordered_qty: Float
+  received_qty: Float
+  indent: Int
+  uom: UOM
+  uom__name: String
+  stock_uom: UOM
+  stock_uom__name: String
+  description: String
+  actual_qty: Float
+  projected_qty: Float
+}
+
+enum ProductionPlanSubAssemblyItemManufacturingTypeSelectOptions {
+  IN_HOUSE
+  SUBCONTRACT
+  MATERIAL_REQUEST
+}

@@ -1,0 +1,109 @@
+type Task implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  subject: String!
+  project: Project
+  project__name: String
+  issue: Issue
+  issue__name: String
+  type: TaskType
+  type__name: String
+  color: String
+  is_group: Int
+  is_template: Int
+  status: TaskStatusSelectOptions
+  priority: TaskPrioritySelectOptions
+  task_weight: Float
+  parent_task: Task
+  parent_task__name: String
+  completed_by: User
+  completed_by__name: String
+  completed_on: String
+  exp_start_date: String
+  expected_time: Float
+  start: Int
+  exp_end_date: String
+  progress: Float
+  duration: Int
+  is_milestone: Int
+  description: String
+  depends_on: [TaskDependsOn!]!
+  depends_on_tasks: String
+  act_start_date: String
+  actual_time: Float
+  act_end_date: String
+  total_costing_amount: Float
+  total_billing_amount: Float
+  review_date: String
+  closing_date: String
+  department: Department
+  department__name: String
+  company: Company
+  company__name: String
+  lft: Int
+  rgt: Int
+  old_parent: String
+  template_task: String
+}
+
+extend type Task {
+  total_expense_claim: Float
+}
+
+enum TaskStatusSelectOptions {
+  OPEN
+  WORKING
+  PENDING_REVIEW
+  OVERDUE
+  TEMPLATE
+  COMPLETED
+  CANCELLED
+}
+
+enum TaskPrioritySelectOptions {
+  LOW
+  MEDIUM
+  HIGH
+  URGENT
+}
+
+enum TaskSortField {
+  NAME
+  CREATION
+  MODIFIED
+  SUBJECT
+  PROJECT
+  PRIORITY
+  PARENT_TASK
+  EXP_END_DATE
+}
+
+input TaskSortingInput {
+  direction: SortDirection!
+  field: TaskSortField!
+}
+
+type TaskCountableEdge {
+  cursor: String!
+  node: Task!
+}
+
+type TaskCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [TaskCountableEdge!]!
+}
+
+extend type Query {
+  Task(name: String!): Task!
+  Tasks(filter: [DBFilterInput], sortBy: TaskSortingInput, before: String, after: String, first: Int, last: Int): TaskCountableConnection!
+}

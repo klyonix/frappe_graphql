@@ -1,0 +1,35 @@
+type PromotionalSchemeProductDiscount implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  disable: Int
+  apply_multiple_pricing_rules: Int
+  rule_description: String!
+  min_qty: Float
+  max_qty: Float
+  min_amount: Float
+  max_amount: Float
+  same_item: Int
+  free_item: Item
+  free_item__name: String
+  free_qty: Float
+  free_item_uom: UOM
+  free_item_uom__name: String
+  free_item_rate: Float
+  round_free_qty: Int
+  warehouse: Warehouse
+  warehouse__name: String
+  threshold_percentage: Float
+  priority: String
+  is_recursive: Int
+  recurse_for: Float
+  apply_recursion_over: Float
+}

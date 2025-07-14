@@ -1,0 +1,56 @@
+type PackingSlip implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  delivery_note: DeliveryNote!
+  delivery_note__name: String
+  naming_series: String!
+  from_case_no: Int!
+  to_case_no: Int
+  items: [PackingSlipItem!]!
+  net_weight_pkg: Float
+  net_weight_uom: UOM
+  net_weight_uom__name: String
+  gross_weight_pkg: Float
+  gross_weight_uom: UOM
+  gross_weight_uom__name: String
+  letter_head: LetterHead
+  letter_head__name: String
+  amended_from: PackingSlip
+  amended_from__name: String
+}
+
+enum PackingSlipSortField {
+  NAME
+  CREATION
+  MODIFIED
+}
+
+input PackingSlipSortingInput {
+  direction: SortDirection!
+  field: PackingSlipSortField!
+}
+
+type PackingSlipCountableEdge {
+  cursor: String!
+  node: PackingSlip!
+}
+
+type PackingSlipCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [PackingSlipCountableEdge!]!
+}
+
+extend type Query {
+  PackingSlip(name: String!): PackingSlip!
+  PackingSlips(filter: [DBFilterInput], sortBy: PackingSlipSortingInput, before: String, after: String, first: Int, last: Int): PackingSlipCountableConnection!
+}

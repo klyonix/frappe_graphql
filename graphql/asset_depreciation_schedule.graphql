@@ -1,0 +1,76 @@
+type AssetDepreciationSchedule implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  asset: Asset!
+  asset__name: String
+  naming_series: String
+  company: Company
+  company__name: String
+  gross_purchase_amount: Float
+  opening_accumulated_depreciation: Float
+  opening_number_of_booked_depreciations: Int
+  finance_book: FinanceBook
+  finance_book__name: String
+  finance_book_id: Int
+  depreciation_method: AssetDepreciationScheduleDepreciationMethodSelectOptions
+  total_number_of_depreciations: Int
+  rate_of_depreciation: Float
+  daily_prorata_based: Int
+  shift_based: Int
+  frequency_of_depreciation: Int
+  expected_value_after_useful_life: Float
+  depreciation_schedule: [DepreciationSchedule!]!
+  notes: String
+  status: AssetDepreciationScheduleStatusSelectOptions
+  amended_from: AssetDepreciationSchedule
+  amended_from__name: String
+}
+
+enum AssetDepreciationScheduleDepreciationMethodSelectOptions {
+  STRAIGHT_LINE
+  DOUBLE_DECLINING_BALANCE
+  WRITTEN_DOWN_VALUE
+  MANUAL
+}
+
+enum AssetDepreciationScheduleStatusSelectOptions {
+  DRAFT
+  ACTIVE
+  CANCELLED
+}
+
+enum AssetDepreciationScheduleSortField {
+  NAME
+  CREATION
+  MODIFIED
+}
+
+input AssetDepreciationScheduleSortingInput {
+  direction: SortDirection!
+  field: AssetDepreciationScheduleSortField!
+}
+
+type AssetDepreciationScheduleCountableEdge {
+  cursor: String!
+  node: AssetDepreciationSchedule!
+}
+
+type AssetDepreciationScheduleCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [AssetDepreciationScheduleCountableEdge!]!
+}
+
+extend type Query {
+  AssetDepreciationSchedule(name: String!): AssetDepreciationSchedule!
+  AssetDepreciationSchedules(filter: [DBFilterInput], sortBy: AssetDepreciationScheduleSortingInput, before: String, after: String, first: Int, last: Int): AssetDepreciationScheduleCountableConnection!
+}

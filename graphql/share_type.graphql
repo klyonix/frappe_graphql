@@ -1,0 +1,43 @@
+type ShareType implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  title: String!
+  description: String
+}
+
+enum ShareTypeSortField {
+  NAME
+  CREATION
+  MODIFIED
+  TITLE
+}
+
+input ShareTypeSortingInput {
+  direction: SortDirection!
+  field: ShareTypeSortField!
+}
+
+type ShareTypeCountableEdge {
+  cursor: String!
+  node: ShareType!
+}
+
+type ShareTypeCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [ShareTypeCountableEdge!]!
+}
+
+extend type Query {
+  ShareType(name: String!): ShareType!
+  ShareTypes(filter: [DBFilterInput], sortBy: ShareTypeSortingInput, before: String, after: String, first: Int, last: Int): ShareTypeCountableConnection!
+}

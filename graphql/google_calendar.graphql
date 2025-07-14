@@ -1,0 +1,52 @@
+type GoogleCalendar implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  enable: Int
+  calendar_name: String!
+  user: User!
+  user__name: String
+  pull_from_google_calendar: Int
+  sync_as_public: Int
+  push_to_google_calendar: Int
+  google_calendar_id: String
+  refresh_token: Password
+  authorization_code: Password
+  next_sync_token: Password
+}
+
+enum GoogleCalendarSortField {
+  NAME
+  CREATION
+  MODIFIED
+  CALENDAR_NAME
+}
+
+input GoogleCalendarSortingInput {
+  direction: SortDirection!
+  field: GoogleCalendarSortField!
+}
+
+type GoogleCalendarCountableEdge {
+  cursor: String!
+  node: GoogleCalendar!
+}
+
+type GoogleCalendarCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [GoogleCalendarCountableEdge!]!
+}
+
+extend type Query {
+  GoogleCalendar(name: String!): GoogleCalendar!
+  GoogleCalendars(filter: [DBFilterInput], sortBy: GoogleCalendarSortingInput, before: String, after: String, first: Int, last: Int): GoogleCalendarCountableConnection!
+}

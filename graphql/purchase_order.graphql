@@ -1,0 +1,205 @@
+type PurchaseOrder implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  title: String!
+  naming_series: String!
+  supplier: Supplier!
+  supplier__name: String
+  supplier_name: String
+  order_confirmation_no: String
+  order_confirmation_date: String
+  transaction_date: String!
+  schedule_date: String
+  company: Company!
+  company__name: String
+  apply_tds: Int
+  tax_withholding_category: TaxWithholdingCategory
+  tax_withholding_category__name: String
+  is_subcontracted: Int
+  has_unit_price_items: Int
+  supplier_warehouse: Warehouse
+  supplier_warehouse__name: String
+  amended_from: PurchaseOrder
+  amended_from__name: String
+  cost_center: CostCenter
+  cost_center__name: String
+  project: Project
+  project__name: String
+  currency: Currency!
+  currency__name: String
+  conversion_rate: Float!
+  buying_price_list: PriceList
+  buying_price_list__name: String
+  price_list_currency: Currency
+  price_list_currency__name: String
+  plc_conversion_rate: Float
+  ignore_pricing_rule: Int
+  scan_barcode: String
+  set_from_warehouse: Warehouse
+  set_from_warehouse__name: String
+  set_warehouse: Warehouse
+  set_warehouse__name: String
+  items: [PurchaseOrderItem!]!
+  total_qty: Float
+  total_net_weight: Float
+  base_total: Float
+  base_net_total: Float
+  total: Float
+  net_total: Float
+  tax_withholding_net_total: Float
+  base_tax_withholding_net_total: Float
+  pricing_rules: [PricingRuleDetail!]!
+  set_reserve_warehouse: Warehouse
+  set_reserve_warehouse__name: String
+  supplied_items: [PurchaseOrderItemSupplied!]!
+  tax_category: TaxCategory
+  tax_category__name: String
+  taxes_and_charges: PurchaseTaxesandChargesTemplate
+  taxes_and_charges__name: String
+  shipping_rule: ShippingRule
+  shipping_rule__name: String
+  incoterm: Incoterm
+  incoterm__name: String
+  named_place: String
+  taxes: [PurchaseTaxesandCharges!]!
+  base_taxes_and_charges_added: Float
+  base_taxes_and_charges_deducted: Float
+  base_total_taxes_and_charges: Float
+  taxes_and_charges_added: Float
+  taxes_and_charges_deducted: Float
+  total_taxes_and_charges: Float
+  base_grand_total: Float
+  base_rounding_adjustment: Float
+  base_in_words: String
+  base_rounded_total: Float
+  grand_total: Float
+  rounding_adjustment: Float
+  rounded_total: Float
+  disable_rounded_total: Int
+  in_words: String
+  advance_paid: Float
+  apply_discount_on: PurchaseOrderApplyAdditionalDiscountOnSelectOptions
+  base_discount_amount: Float
+  additional_discount_percentage: Float
+  discount_amount: Float
+  other_charges_calculation: String
+  supplier_address: Address
+  supplier_address__name: String
+  address_display: String
+  contact_person: Contact
+  contact_person__name: String
+  contact_display: String
+  contact_mobile: String
+  contact_email: String
+  dispatch_address: Address
+  dispatch_address__name: String
+  dispatch_address_display: String
+  shipping_address: Address
+  shipping_address__name: String
+  shipping_address_display: String
+  billing_address: Address
+  billing_address__name: String
+  billing_address_display: String
+  customer: Customer
+  customer__name: String
+  customer_name: String
+  customer_contact_person: Contact
+  customer_contact_person__name: String
+  customer_contact_display: String
+  customer_contact_mobile: String
+  customer_contact_email: String
+  payment_terms_template: PaymentTermsTemplate
+  payment_terms_template__name: String
+  payment_schedule: [PaymentSchedule!]!
+  tc_name: TermsandConditions
+  tc_name__name: String
+  terms: String
+  status: PurchaseOrderStatusSelectOptions!
+  per_billed: Float
+  per_received: Float
+  letter_head: LetterHead
+  letter_head__name: String
+  group_same_items: Int
+  select_print_heading: PrintHeading
+  select_print_heading__name: String
+  language: String
+  from_date: String
+  to_date: String
+  auto_repeat: AutoRepeat
+  auto_repeat__name: String
+  is_internal_supplier: Int
+  represents_company: Company
+  represents_company__name: String
+  ref_sq: SupplierQuotation
+  ref_sq__name: String
+  party_account_currency: Currency
+  party_account_currency__name: String
+  inter_company_order_reference: SalesOrder
+  inter_company_order_reference__name: String
+  is_old_subcontracting_flow: Int
+}
+
+extend type PurchaseOrder {
+  is_reverse_charge: Int
+  gst_breakup_table: String
+  supplier_gstin: String
+  gst_category: String
+  company_gstin: String
+  place_of_supply: String
+}
+
+enum PurchaseOrderApplyAdditionalDiscountOnSelectOptions {
+  GRAND_TOTAL
+  NET_TOTAL
+}
+
+enum PurchaseOrderStatusSelectOptions {
+  DRAFT
+  ON_HOLD
+  TO_RECEIVE_AND_BILL
+  TO_BILL
+  TO_RECEIVE
+  COMPLETED
+  CANCELLED
+  CLOSED
+  DELIVERED
+}
+
+enum PurchaseOrderSortField {
+  NAME
+  CREATION
+  MODIFIED
+  SUPPLIER
+  TRANSACTION_DATE
+  STATUS
+}
+
+input PurchaseOrderSortingInput {
+  direction: SortDirection!
+  field: PurchaseOrderSortField!
+}
+
+type PurchaseOrderCountableEdge {
+  cursor: String!
+  node: PurchaseOrder!
+}
+
+type PurchaseOrderCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [PurchaseOrderCountableEdge!]!
+}
+
+extend type Query {
+  PurchaseOrder(name: String!): PurchaseOrder!
+  PurchaseOrders(filter: [DBFilterInput], sortBy: PurchaseOrderSortingInput, before: String, after: String, first: Int, last: Int): PurchaseOrderCountableConnection!
+}

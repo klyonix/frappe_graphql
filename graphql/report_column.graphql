@@ -1,0 +1,34 @@
+type ReportColumn implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  fieldname: String!
+  label: String!
+  fieldtype: ReportColumnFieldtypeSelectOptions!
+  options: String
+  width: Int
+}
+
+enum ReportColumnFieldtypeSelectOptions {
+  CHECK
+  CURRENCY
+  DATA
+  DATE
+  DATETIME
+  DURATION
+  DYNAMIC_LINK
+  FLOAT
+  FOLD
+  INT
+  LINK
+  SELECT
+  TIME
+}

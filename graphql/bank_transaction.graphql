@@ -1,0 +1,76 @@
+type BankTransaction implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  naming_series: String!
+  date: String
+  status: BankTransactionStatusSelectOptions
+  bank_account: BankAccount
+  bank_account__name: String
+  company: Company
+  company__name: String
+  amended_from: BankTransaction
+  amended_from__name: String
+  deposit: Float
+  withdrawal: Float
+  currency: Currency
+  currency__name: String
+  description: String
+  reference_number: String
+  transaction_id: String
+  transaction_type: String
+  payment_entries: [BankTransactionPayments!]!
+  allocated_amount: Float
+  unallocated_amount: Float
+  party_type: DocType
+  party_type__name: String
+  party: BaseDocType
+  party__name: String
+  bank_party_name: String
+  bank_party_account_number: String
+  bank_party_iban: String
+}
+
+enum BankTransactionStatusSelectOptions {
+  PENDING
+  SETTLED
+  UNRECONCILED
+  RECONCILED
+  CANCELLED
+}
+
+enum BankTransactionSortField {
+  NAME
+  CREATION
+  MODIFIED
+  TRANSACTION_ID
+}
+
+input BankTransactionSortingInput {
+  direction: SortDirection!
+  field: BankTransactionSortField!
+}
+
+type BankTransactionCountableEdge {
+  cursor: String!
+  node: BankTransaction!
+}
+
+type BankTransactionCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [BankTransactionCountableEdge!]!
+}
+
+extend type Query {
+  BankTransaction(name: String!): BankTransaction!
+  BankTransactions(filter: [DBFilterInput], sortBy: BankTransactionSortingInput, before: String, after: String, first: Int, last: Int): BankTransactionCountableConnection!
+}

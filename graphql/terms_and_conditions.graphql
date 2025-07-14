@@ -1,0 +1,50 @@
+type TermsandConditions implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  title: String!
+  disabled: Int
+  selling: Int
+  buying: Int
+  terms: String
+}
+
+extend type TermsandConditions {
+  hr: Int
+}
+
+enum TermsandConditionsSortField {
+  NAME
+  CREATION
+  MODIFIED
+  TITLE
+}
+
+input TermsandConditionsSortingInput {
+  direction: SortDirection!
+  field: TermsandConditionsSortField!
+}
+
+type TermsandConditionsCountableEdge {
+  cursor: String!
+  node: TermsandConditions!
+}
+
+type TermsandConditionsCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [TermsandConditionsCountableEdge!]!
+}
+
+extend type Query {
+  TermsandConditions(name: String!): TermsandConditions!
+  TermsandConditionss(filter: [DBFilterInput], sortBy: TermsandConditionsSortingInput, before: String, after: String, first: Int, last: Int): TermsandConditionsCountableConnection!
+}

@@ -1,0 +1,46 @@
+type PaymentReconciliation implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  company: Company!
+  company__name: String
+  party_type: DocType!
+  party_type__name: String
+  party: BaseDocType!
+  party__name: String
+  receivable_payable_account: Account!
+  receivable_payable_account__name: String
+  default_advance_account: Account
+  default_advance_account__name: String
+  from_invoice_date: String
+  from_payment_date: String
+  minimum_invoice_amount: Float
+  minimum_payment_amount: Float
+  to_invoice_date: String
+  to_payment_date: String
+  maximum_invoice_amount: Float
+  maximum_payment_amount: Float
+  invoice_limit: Int
+  payment_limit: Int
+  bank_cash_account: Account
+  bank_cash_account__name: String
+  cost_center: CostCenter
+  cost_center__name: String
+  invoice_name: String
+  invoices: [PaymentReconciliationInvoice!]!
+  payment_name: String
+  payments: [PaymentReconciliationPayment!]!
+  allocation: [PaymentReconciliationAllocation!]!
+}
+
+extend type Query {
+  PaymentReconciliation: PaymentReconciliation!
+}

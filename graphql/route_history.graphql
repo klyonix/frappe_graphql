@@ -1,0 +1,43 @@
+type RouteHistory implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  route: String
+  user: User
+  user__name: String
+}
+
+enum RouteHistorySortField {
+  NAME
+  CREATION
+  MODIFIED
+}
+
+input RouteHistorySortingInput {
+  direction: SortDirection!
+  field: RouteHistorySortField!
+}
+
+type RouteHistoryCountableEdge {
+  cursor: String!
+  node: RouteHistory!
+}
+
+type RouteHistoryCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [RouteHistoryCountableEdge!]!
+}
+
+extend type Query {
+  RouteHistory(name: String!): RouteHistory!
+  RouteHistorys(filter: [DBFilterInput], sortBy: RouteHistorySortingInput, before: String, after: String, first: Int, last: Int): RouteHistoryCountableConnection!
+}

@@ -1,0 +1,31 @@
+type PaymentTermsTemplateDetail implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  payment_term: PaymentTerm
+  payment_term__name: String
+  description: String
+  invoice_portion: Float!
+  mode_of_payment: ModeofPayment
+  mode_of_payment__name: String
+  due_date_based_on: String!
+  credit_days: Int
+  credit_months: Int
+  discount_type: PaymentTermsTemplateDetailDiscountTypeSelectOptions
+  discount: Float
+  discount_validity_based_on: String
+  discount_validity: Int
+}
+
+enum PaymentTermsTemplateDetailDiscountTypeSelectOptions {
+  PERCENTAGE
+  AMOUNT
+}

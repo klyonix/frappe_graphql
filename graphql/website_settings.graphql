@@ -1,0 +1,61 @@
+type WebsiteSettings implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  home_page: String
+  title_prefix: String
+  app_name: String
+  disable_signup: Int
+  show_footer_on_login: Int
+  app_logo: String
+  website_theme: WebsiteTheme
+  website_theme__name: String
+  website_theme_image_link: String
+  banner_image: String
+  splash_image: String
+  brand_html: String
+  favicon: String
+  top_bar_items: [TopBarItem!]!
+  hide_login: Int
+  navbar_search: Int
+  show_language_picker: Int
+  navbar_template: WebTemplate
+  navbar_template__name: String
+  navbar_template_values: String
+  call_to_action: String
+  call_to_action_url: String
+  banner_html: String
+  footer_items: [TopBarItem!]!
+  copyright: String
+  footer_logo: String
+  hide_footer_signup: Int
+  address: String
+  footer_powered: String
+  footer_template: WebTemplate
+  footer_template__name: String
+  footer_template_values: String
+  enable_view_tracking: Int
+  enable_google_indexing: Int
+  indexing_refresh_token: String
+  indexing_authorization_code: String
+  google_analytics_id: String
+  google_analytics_anonymize_ip: Int
+  auto_account_deletion: Int
+  show_account_deletion_link: Int
+  subdomain: String
+  head_html: String
+  robots_txt: String
+  route_redirects: [WebsiteRouteRedirect!]!
+}
+
+extend type Query {
+  WebsiteSettings: WebsiteSettings!
+}

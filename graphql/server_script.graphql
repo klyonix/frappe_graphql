@@ -1,0 +1,78 @@
+type ServerScript implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  script_type: ServerScriptScriptTypeSelectOptions!
+  reference_doctype: DocType
+  reference_doctype__name: String
+  event_frequency: ServerScriptEventFrequencySelectOptions
+  cron_format: String
+  doctype_event: String
+  api_method: String
+  allow_guest: Int
+  module: ModuleDef
+  module__name: String
+  disabled: Int
+  script: String!
+  enable_rate_limit: Int
+  rate_limit_count: Int
+  rate_limit_seconds: Int
+}
+
+enum ServerScriptScriptTypeSelectOptions {
+  DOCTYPE_EVENT
+  SCHEDULER_EVENT
+  PERMISSION_QUERY
+  API
+}
+
+enum ServerScriptEventFrequencySelectOptions {
+  ALL
+  HOURLY
+  DAILY
+  WEEKLY
+  MONTHLY
+  YEARLY
+  HOURLY_LONG
+  DAILY_LONG
+  WEEKLY_LONG
+  MONTHLY_LONG
+  CRON
+}
+
+enum ServerScriptSortField {
+  NAME
+  CREATION
+  MODIFIED
+  REFERENCE_DOCTYPE
+  MODULE
+}
+
+input ServerScriptSortingInput {
+  direction: SortDirection!
+  field: ServerScriptSortField!
+}
+
+type ServerScriptCountableEdge {
+  cursor: String!
+  node: ServerScript!
+}
+
+type ServerScriptCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [ServerScriptCountableEdge!]!
+}
+
+extend type Query {
+  ServerScript(name: String!): ServerScript!
+  ServerScripts(filter: [DBFilterInput], sortBy: ServerScriptSortingInput, before: String, after: String, first: Int, last: Int): ServerScriptCountableConnection!
+}

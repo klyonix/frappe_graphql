@@ -1,0 +1,75 @@
+type ActivityLog implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  subject: String!
+  content: String
+  communication_date: String
+  ip_address: String
+  operation: ActivityLogOperationSelectOptions
+  status: ActivityLogStatusSelectOptions
+  reference_doctype: DocType
+  reference_doctype__name: String
+  reference_name: BaseDocType
+  reference_name__name: String
+  reference_owner: String
+  timeline_doctype: DocType
+  timeline_doctype__name: String
+  timeline_name: BaseDocType
+  timeline_name__name: String
+  link_doctype: DocType
+  link_doctype__name: String
+  link_name: BaseDocType
+  link_name__name: String
+  user: User
+  user__name: String
+  full_name: String
+}
+
+enum ActivityLogOperationSelectOptions {
+  LOGIN
+  LOGOUT
+  IMPERSONATE
+}
+
+enum ActivityLogStatusSelectOptions {
+  SUCCESS
+  FAILED
+  LINKED
+  CLOSED
+}
+
+enum ActivityLogSortField {
+  NAME
+  CREATION
+  MODIFIED
+}
+
+input ActivityLogSortingInput {
+  direction: SortDirection!
+  field: ActivityLogSortField!
+}
+
+type ActivityLogCountableEdge {
+  cursor: String!
+  node: ActivityLog!
+}
+
+type ActivityLogCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [ActivityLogCountableEdge!]!
+}
+
+extend type Query {
+  ActivityLog(name: String!): ActivityLog!
+  ActivityLogs(filter: [DBFilterInput], sortBy: ActivityLogSortingInput, before: String, after: String, first: Int, last: Int): ActivityLogCountableConnection!
+}

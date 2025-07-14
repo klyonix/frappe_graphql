@@ -1,0 +1,69 @@
+type AutoRepeat implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  reference_doctype: DocType!
+  reference_doctype__name: String
+  reference_document: BaseDocType!
+  reference_document__name: String
+  submit_on_creation: Int
+  start_date: String!
+  end_date: String
+  disabled: Int
+  frequency: String!
+  repeat_on_day: Int
+  repeat_on_last_day: Int
+  next_schedule_date: String
+  repeat_on_days: [AutoRepeatDay!]!
+  notify_by_email: Int
+  recipients: String
+  template: EmailTemplate
+  template__name: String
+  subject: String
+  message: String
+  print_format: PrintFormat
+  print_format__name: String
+  status: AutoRepeatStatusSelectOptions
+}
+
+enum AutoRepeatStatusSelectOptions {
+  ACTIVE
+  DISABLED
+  COMPLETED
+}
+
+enum AutoRepeatSortField {
+  NAME
+  CREATION
+  MODIFIED
+  NEXT_SCHEDULE_DATE
+}
+
+input AutoRepeatSortingInput {
+  direction: SortDirection!
+  field: AutoRepeatSortField!
+}
+
+type AutoRepeatCountableEdge {
+  cursor: String!
+  node: AutoRepeat!
+}
+
+type AutoRepeatCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [AutoRepeatCountableEdge!]!
+}
+
+extend type Query {
+  AutoRepeat(name: String!): AutoRepeat!
+  AutoRepeats(filter: [DBFilterInput], sortBy: AutoRepeatSortingInput, before: String, after: String, first: Int, last: Int): AutoRepeatCountableConnection!
+}

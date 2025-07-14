@@ -1,0 +1,105 @@
+type ProductionPlan implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  naming_series: String!
+  company: Company!
+  company__name: String
+  get_items_from: ProductionPlanGetItemsFromSelectOptions
+  posting_date: String!
+  item_code: Item
+  item_code__name: String
+  customer: Customer
+  customer__name: String
+  warehouse: Warehouse
+  warehouse__name: String
+  project: Project
+  project__name: String
+  sales_order_status: ProductionPlanSalesOrderStatusSelectOptions
+  from_date: String
+  to_date: String
+  from_delivery_date: String
+  to_delivery_date: String
+  sales_orders: [ProductionPlanSalesOrder!]!
+  material_requests: [ProductionPlanMaterialRequest!]!
+  combine_items: Int
+  po_items: [ProductionPlanItem!]!
+  prod_plan_references: [ProductionPlanItemReference!]!
+  combine_sub_items: Int
+  sub_assembly_warehouse: Warehouse
+  sub_assembly_warehouse__name: String
+  skip_available_sub_assembly_item: Int
+  sub_assembly_items: [ProductionPlanSubAssemblyItem!]!
+  include_non_stock_items: Int
+  include_subcontracted_items: Int
+  consider_minimum_order_qty: Int
+  include_safety_stock: Int
+  ignore_existing_ordered_qty: Int
+  for_warehouse: Warehouse
+  for_warehouse__name: String
+  mr_items: [MaterialRequestPlanItem!]!
+  total_planned_qty: Float
+  total_produced_qty: Float
+  status: ProductionPlanStatusSelectOptions
+  warehouses: [ProductionPlanMaterialRequestWarehouse!]!
+  amended_from: ProductionPlan
+  amended_from__name: String
+}
+
+enum ProductionPlanGetItemsFromSelectOptions {
+  SALES_ORDER
+  MATERIAL_REQUEST
+}
+
+enum ProductionPlanSalesOrderStatusSelectOptions {
+  TO_DELIVER_AND_BILL
+  TO_BILL
+  TO_DELIVER
+}
+
+enum ProductionPlanStatusSelectOptions {
+  DRAFT
+  SUBMITTED
+  NOT_STARTED
+  IN_PROCESS
+  COMPLETED
+  CLOSED
+  CANCELLED
+  MATERIAL_REQUESTED
+}
+
+enum ProductionPlanSortField {
+  NAME
+  CREATION
+  MODIFIED
+  STATUS
+}
+
+input ProductionPlanSortingInput {
+  direction: SortDirection!
+  field: ProductionPlanSortField!
+}
+
+type ProductionPlanCountableEdge {
+  cursor: String!
+  node: ProductionPlan!
+}
+
+type ProductionPlanCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [ProductionPlanCountableEdge!]!
+}
+
+extend type Query {
+  ProductionPlan(name: String!): ProductionPlan!
+  ProductionPlans(filter: [DBFilterInput], sortBy: ProductionPlanSortingInput, before: String, after: String, first: Int, last: Int): ProductionPlanCountableConnection!
+}

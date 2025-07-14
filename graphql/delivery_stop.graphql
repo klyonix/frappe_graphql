@@ -1,0 +1,34 @@
+type DeliveryStop implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  customer: Customer
+  customer__name: String
+  address: Address!
+  address__name: String
+  locked: Int
+  customer_address: String
+  visited: Int
+  delivery_note: DeliveryNote
+  delivery_note__name: String
+  grand_total: Float
+  contact: Contact
+  contact__name: String
+  email_sent_to: String
+  customer_contact: String
+  distance: Float
+  estimated_arrival: String
+  lat: Float
+  uom: UOM
+  uom__name: String
+  lng: Float
+  details: String
+}

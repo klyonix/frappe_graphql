@@ -1,0 +1,25 @@
+type JobCardOperation implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  sub_operation: Operation
+  sub_operation__name: String
+  completed_time: String
+  status: JobCardOperationStatusSelectOptions
+  completed_qty: Float
+}
+
+enum JobCardOperationStatusSelectOptions {
+  COMPLETE
+  PAUSE
+  PENDING
+  WORK_IN_PROGRESS
+}

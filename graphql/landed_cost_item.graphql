@@ -1,0 +1,32 @@
+type LandedCostItem implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  item_code: Item!
+  item_code__name: String
+  description: String!
+  receipt_document_type: LandedCostItemReceiptDocumentTypeSelectOptions
+  receipt_document: BaseDocType
+  receipt_document__name: String
+  qty: Float
+  rate: Float
+  amount: Float!
+  is_fixed_asset: Int
+  applicable_charges: Float
+  purchase_receipt_item: String
+  cost_center: CostCenter
+  cost_center__name: String
+}
+
+enum LandedCostItemReceiptDocumentTypeSelectOptions {
+  PURCHASE_INVOICE
+  PURCHASE_RECEIPT
+}

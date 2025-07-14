@@ -1,0 +1,43 @@
+type SchedulerEvent implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  scheduled_against: DocType!
+  scheduled_against__name: String
+  method: String
+}
+
+enum SchedulerEventSortField {
+  NAME
+  CREATION
+  MODIFIED
+}
+
+input SchedulerEventSortingInput {
+  direction: SortDirection!
+  field: SchedulerEventSortField!
+}
+
+type SchedulerEventCountableEdge {
+  cursor: String!
+  node: SchedulerEvent!
+}
+
+type SchedulerEventCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [SchedulerEventCountableEdge!]!
+}
+
+extend type Query {
+  SchedulerEvent(name: String!): SchedulerEvent!
+  SchedulerEvents(filter: [DBFilterInput], sortBy: SchedulerEventSortingInput, before: String, after: String, first: Int, last: Int): SchedulerEventCountableConnection!
+}

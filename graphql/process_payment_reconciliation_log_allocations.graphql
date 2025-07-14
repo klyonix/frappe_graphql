@@ -1,0 +1,34 @@
+type ProcessPaymentReconciliationLogAllocations implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  reference_type: DocType!
+  reference_type__name: String
+  reference_name: BaseDocType!
+  reference_name__name: String
+  reference_row: String
+  invoice_type: DocType!
+  invoice_type__name: String
+  invoice_number: BaseDocType!
+  invoice_number__name: String
+  allocated_amount: Float!
+  unreconciled_amount: Float
+  amount: Float
+  is_advance: String
+  difference_amount: Float
+  gain_loss_posting_date: String
+  difference_account: Account
+  difference_account__name: String
+  exchange_rate: Float
+  currency: Currency
+  currency__name: String
+  reconciled: Int
+}

@@ -1,0 +1,95 @@
+type SerialNo implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  serial_no: String!
+  item_code: Item!
+  item_code__name: String
+  batch_no: Batch
+  batch_no__name: String
+  warehouse: Warehouse
+  warehouse__name: String
+  purchase_rate: Float
+  status: SerialNoStatusSelectOptions
+  item_name: String
+  description: String
+  item_group: ItemGroup
+  item_group__name: String
+  brand: Brand
+  brand__name: String
+  asset: Asset
+  asset__name: String
+  asset_status: SerialNoAssetStatusSelectOptions
+  location: Location
+  location__name: String
+  employee: Employee
+  employee__name: String
+  warranty_expiry_date: String
+  amc_expiry_date: String
+  maintenance_status: SerialNoMaintenanceStatusSelectOptions
+  warranty_period: Int
+  company: Company!
+  company__name: String
+  work_order: WorkOrder
+  work_order__name: String
+  purchase_document_no: String
+}
+
+enum SerialNoStatusSelectOptions {
+  ACTIVE
+  INACTIVE
+  CONSUMED
+  DELIVERED
+  EXPIRED
+}
+
+enum SerialNoAssetStatusSelectOptions {
+  ISSUE
+  RECEIPT
+  TRANSFER
+}
+
+enum SerialNoMaintenanceStatusSelectOptions {
+  UNDER_WARRANTY
+  OUT_OF_WARRANTY
+  UNDER_AMC
+  OUT_OF_AMC
+}
+
+enum SerialNoSortField {
+  NAME
+  CREATION
+  MODIFIED
+  SERIAL_NO
+  MAINTENANCE_STATUS
+  COMPANY
+}
+
+input SerialNoSortingInput {
+  direction: SortDirection!
+  field: SerialNoSortField!
+}
+
+type SerialNoCountableEdge {
+  cursor: String!
+  node: SerialNo!
+}
+
+type SerialNoCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [SerialNoCountableEdge!]!
+}
+
+extend type Query {
+  SerialNo(name: String!): SerialNo!
+  SerialNoes(filter: [DBFilterInput], sortBy: SerialNoSortingInput, before: String, after: String, first: Int, last: Int): SerialNoCountableConnection!
+}

@@ -1,0 +1,71 @@
+type SellingSettings implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  cust_master_name: SellingSettingsCustomerNamingBySelectOptions
+  customer_group: CustomerGroup
+  customer_group__name: String
+  territory: Territory
+  territory__name: String
+  selling_price_list: PriceList
+  selling_price_list__name: String
+  maintain_same_rate_action: SellingSettingsActionIfSameRateIsNotMaintainedThroughoutSalesCycleSelectOptions
+  role_to_override_stop_action: Role
+  role_to_override_stop_action__name: String
+  maintain_same_sales_rate: Int
+  editable_price_list_rate: Int
+  validate_selling_price: Int
+  editable_bundle_item_rates: Int
+  allow_negative_rates_for_items: Int
+  so_required: SellingSettingsIsSalesOrderRequiredForSalesInvoiceDeliveryNoteCreationSelectOptions
+  dn_required: SellingSettingsIsDeliveryNoteRequiredForSalesInvoiceCreationSelectOptions
+  sales_update_frequency: SellingSettingsSalesUpdateFrequencyInCompanyAndProjectSelectOptions!
+  blanket_order_allowance: Float
+  allow_multiple_items: Int
+  allow_against_multiple_purchase_orders: Int
+  allow_sales_order_creation_for_expired_quotation: Int
+  dont_reserve_sales_order_qty_on_sales_return: Int
+  hide_tax_id: Int
+  enable_discount_accounting: Int
+  allow_zero_qty_in_quotation: Int
+  allow_zero_qty_in_sales_order: Int
+}
+
+enum SellingSettingsCustomerNamingBySelectOptions {
+  CUSTOMER_NAME
+  NAMING_SERIES
+  AUTO_NAME
+}
+
+enum SellingSettingsActionIfSameRateIsNotMaintainedThroughoutSalesCycleSelectOptions {
+  STOP
+  WARN
+}
+
+enum SellingSettingsIsSalesOrderRequiredForSalesInvoiceDeliveryNoteCreationSelectOptions {
+  NO
+  YES
+}
+
+enum SellingSettingsIsDeliveryNoteRequiredForSalesInvoiceCreationSelectOptions {
+  NO
+  YES
+}
+
+enum SellingSettingsSalesUpdateFrequencyInCompanyAndProjectSelectOptions {
+  MONTHLY
+  EACH_TRANSACTION
+  DAILY
+}
+
+extend type Query {
+  SellingSettings: SellingSettings!
+}

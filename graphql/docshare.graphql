@@ -1,0 +1,56 @@
+type DocShare implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  user: User
+  user__name: String
+  share_doctype: DocType!
+  share_doctype__name: String
+  share_name: BaseDocType!
+  share_name__name: String
+  read: Int
+  write: Int
+  share: Int
+  submit: Int
+  everyone: Int
+  notify_by_email: Int
+}
+
+enum DocShareSortField {
+  NAME
+  CREATION
+  MODIFIED
+  USER
+  SHARE_DOCTYPE
+  SHARE_NAME
+  EVERYONE
+}
+
+input DocShareSortingInput {
+  direction: SortDirection!
+  field: DocShareSortField!
+}
+
+type DocShareCountableEdge {
+  cursor: String!
+  node: DocShare!
+}
+
+type DocShareCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [DocShareCountableEdge!]!
+}
+
+extend type Query {
+  DocShare(name: String!): DocShare!
+  DocShares(filter: [DBFilterInput], sortBy: DocShareSortingInput, before: String, after: String, first: Int, last: Int): DocShareCountableConnection!
+}

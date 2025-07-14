@@ -1,0 +1,99 @@
+type StockReservationEntry implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  item_code: Item
+  item_code__name: String
+  warehouse: Warehouse
+  warehouse__name: String
+  has_serial_no: Int
+  has_batch_no: Int
+  voucher_type: StockReservationEntryVoucherTypeSelectOptions
+  voucher_no: BaseDocType
+  voucher_no__name: String
+  voucher_detail_no: String
+  from_voucher_type: StockReservationEntryFromVoucherTypeSelectOptions
+  from_voucher_no: BaseDocType
+  from_voucher_no__name: String
+  from_voucher_detail_no: String
+  stock_uom: UOM
+  stock_uom__name: String
+  available_qty: Float
+  voucher_qty: Float
+  reserved_qty: Float
+  delivered_qty: Float
+  reservation_based_on: StockReservationEntryReservationBasedOnSelectOptions
+  sb_entries: [SerialandBatchEntry!]!
+  company: Company
+  company__name: String
+  project: Project
+  project__name: String
+  status: StockReservationEntryStatusSelectOptions
+  amended_from: StockReservationEntry
+  amended_from__name: String
+}
+
+enum StockReservationEntryVoucherTypeSelectOptions {
+  SALES_ORDER
+}
+
+enum StockReservationEntryFromVoucherTypeSelectOptions {
+  PICK_LIST
+  PURCHASE_RECEIPT
+}
+
+enum StockReservationEntryReservationBasedOnSelectOptions {
+  QTY
+  SERIAL_AND_BATCH
+}
+
+enum StockReservationEntryStatusSelectOptions {
+  DRAFT
+  PARTIALLY_RESERVED
+  RESERVED
+  PARTIALLY_DELIVERED
+  DELIVERED
+  CANCELLED
+}
+
+enum StockReservationEntrySortField {
+  NAME
+  CREATION
+  MODIFIED
+  ITEM_CODE
+  WAREHOUSE
+  VOUCHER_NO
+  VOUCHER_DETAIL_NO
+  FROM_VOUCHER_NO
+  COMPANY
+  PROJECT
+}
+
+input StockReservationEntrySortingInput {
+  direction: SortDirection!
+  field: StockReservationEntrySortField!
+}
+
+type StockReservationEntryCountableEdge {
+  cursor: String!
+  node: StockReservationEntry!
+}
+
+type StockReservationEntryCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [StockReservationEntryCountableEdge!]!
+}
+
+extend type Query {
+  StockReservationEntry(name: String!): StockReservationEntry!
+  StockReservationEntrys(filter: [DBFilterInput], sortBy: StockReservationEntrySortingInput, before: String, after: String, first: Int, last: Int): StockReservationEntryCountableConnection!
+}

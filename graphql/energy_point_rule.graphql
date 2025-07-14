@@ -1,0 +1,62 @@
+type EnergyPointRule implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  enabled: Int!
+  rule_name: String!
+  reference_doctype: DocType!
+  reference_doctype__name: String
+  for_doc_event: EnergyPointRuleForDocumentEventSelectOptions
+  field_to_check: String
+  points: Int!
+  for_assigned_users: Int
+  user_field: String
+  multiplier_field: String
+  max_points: Int
+  apply_only_once: Int
+  condition: String
+}
+
+enum EnergyPointRuleForDocumentEventSelectOptions {
+  NEW
+  SUBMIT
+  CANCEL
+  VALUE_CHANGE
+  CUSTOM
+}
+
+enum EnergyPointRuleSortField {
+  NAME
+  CREATION
+  MODIFIED
+  RULE_NAME
+}
+
+input EnergyPointRuleSortingInput {
+  direction: SortDirection!
+  field: EnergyPointRuleSortField!
+}
+
+type EnergyPointRuleCountableEdge {
+  cursor: String!
+  node: EnergyPointRule!
+}
+
+type EnergyPointRuleCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [EnergyPointRuleCountableEdge!]!
+}
+
+extend type Query {
+  EnergyPointRule(name: String!): EnergyPointRule!
+  EnergyPointRules(filter: [DBFilterInput], sortBy: EnergyPointRuleSortingInput, before: String, after: String, first: Int, last: Int): EnergyPointRuleCountableConnection!
+}

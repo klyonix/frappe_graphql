@@ -1,0 +1,128 @@
+type WorkOrder implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  naming_series: String!
+  status: WorkOrderStatusSelectOptions!
+  production_item: Item!
+  production_item__name: String
+  item_name: String
+  image: String
+  bom_no: BOM!
+  bom_no__name: String
+  sales_order: SalesOrder
+  sales_order__name: String
+  company: Company!
+  company__name: String
+  qty: Float!
+  material_transferred_for_manufacturing: Float
+  produced_qty: Float
+  disassembled_qty: Float
+  process_loss_qty: Float
+  project: Project
+  project__name: String
+  required_items: [WorkOrderItem!]!
+  allow_alternative_item: Int
+  use_multi_level_bom: Int
+  skip_transfer: Int
+  from_wip_warehouse: Int
+  update_consumed_material_cost_in_project: Int
+  source_warehouse: Warehouse
+  source_warehouse__name: String
+  wip_warehouse: Warehouse
+  wip_warehouse__name: String
+  fg_warehouse: Warehouse!
+  fg_warehouse__name: String
+  scrap_warehouse: Warehouse
+  scrap_warehouse__name: String
+  has_serial_no: Int
+  has_batch_no: Int
+  batch_size: Float
+  transfer_material_against: WorkOrderTransferMaterialAgainstSelectOptions
+  operations: [WorkOrderOperation!]!
+  planned_start_date: String!
+  planned_end_date: String
+  expected_delivery_date: String
+  actual_start_date: String
+  actual_end_date: String
+  lead_time: Float
+  planned_operating_cost: Float
+  actual_operating_cost: Float
+  additional_operating_cost: Float
+  corrective_operation_cost: Float
+  total_operating_cost: Float
+  description: String
+  stock_uom: UOM
+  stock_uom__name: String
+  material_request: MaterialRequest
+  material_request__name: String
+  material_request_item: String
+  sales_order_item: String
+  production_plan: ProductionPlan
+  production_plan__name: String
+  production_plan_item: String
+  production_plan_sub_assembly_item: String
+  product_bundle_item: Item
+  product_bundle_item__name: String
+  amended_from: WorkOrder
+  amended_from__name: String
+}
+
+extend type WorkOrder {
+  fsl_batch_no: String
+  manufacturing_work_order_no: String
+  manufacturing_work_order_child_table: String
+}
+
+enum WorkOrderStatusSelectOptions {
+  DRAFT
+  SUBMITTED
+  NOT_STARTED
+  IN_PROCESS
+  COMPLETED
+  STOPPED
+  CLOSED
+  CANCELLED
+}
+
+enum WorkOrderTransferMaterialAgainstSelectOptions {
+  WORK_ORDER
+  JOB_CARD
+}
+
+enum WorkOrderSortField {
+  NAME
+  CREATION
+  MODIFIED
+  STATUS
+  PRODUCTION_PLAN
+}
+
+input WorkOrderSortingInput {
+  direction: SortDirection!
+  field: WorkOrderSortField!
+}
+
+type WorkOrderCountableEdge {
+  cursor: String!
+  node: WorkOrder!
+}
+
+type WorkOrderCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [WorkOrderCountableEdge!]!
+}
+
+extend type Query {
+  WorkOrder(name: String!): WorkOrder!
+  WorkOrders(filter: [DBFilterInput], sortBy: WorkOrderSortingInput, before: String, after: String, first: Int, last: Int): WorkOrderCountableConnection!
+}

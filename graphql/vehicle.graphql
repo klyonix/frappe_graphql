@@ -1,0 +1,71 @@
+type Vehicle implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  license_plate: String!
+  make: String!
+  model: String!
+  last_odometer: Int!
+  acquisition_date: String
+  location: String
+  chassis_no: String
+  vehicle_value: Float
+  employee: Employee
+  employee__name: String
+  insurance_company: String
+  policy_no: String
+  start_date: String
+  end_date: String
+  fuel_type: VehicleFuelTypeSelectOptions!
+  uom: UOM!
+  uom__name: String
+  carbon_check_date: String
+  color: String
+  wheels: Int
+  doors: Int
+  amended_from: Vehicle
+  amended_from__name: String
+}
+
+enum VehicleFuelTypeSelectOptions {
+  PETROL
+  DIESEL
+  NATURAL_GAS
+  ELECTRIC
+}
+
+enum VehicleSortField {
+  NAME
+  CREATION
+  MODIFIED
+  LICENSE_PLATE
+}
+
+input VehicleSortingInput {
+  direction: SortDirection!
+  field: VehicleSortField!
+}
+
+type VehicleCountableEdge {
+  cursor: String!
+  node: Vehicle!
+}
+
+type VehicleCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [VehicleCountableEdge!]!
+}
+
+extend type Query {
+  Vehicle(name: String!): Vehicle!
+  Vehicles(filter: [DBFilterInput], sortBy: VehicleSortingInput, before: String, after: String, first: Int, last: Int): VehicleCountableConnection!
+}

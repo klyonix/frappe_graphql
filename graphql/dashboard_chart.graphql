@@ -1,0 +1,119 @@
+type DashboardChart implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  is_standard: Int
+  module: ModuleDef
+  module__name: String
+  chart_name: String!
+  chart_type: DashboardChartChartTypeSelectOptions
+  report_name: Report
+  report_name__name: String
+  use_report_chart: Int
+  x_field: String
+  y_axis: [DashboardChartField!]!
+  source: DashboardChartSource
+  source__name: String
+  document_type: DocType
+  document_type__name: String
+  parent_document_type: DocType
+  parent_document_type__name: String
+  based_on: String
+  value_based_on: String
+  group_by_type: DashboardChartGroupByTypeSelectOptions
+  group_by_based_on: String
+  aggregate_function_based_on: String
+  number_of_groups: Int
+  is_public: Int
+  heatmap_year: String
+  timespan: DashboardChartTimespanSelectOptions
+  from_date: String
+  to_date: String
+  time_interval: DashboardChartTimeIntervalSelectOptions
+  timeseries: Int
+  type: DashboardChartTypeSelectOptions
+  currency: Currency
+  currency__name: String
+  filters_json: String!
+  dynamic_filters_json: String
+  custom_options: String
+  color: String
+  last_synced_on: String
+  roles: [HasRole!]!
+}
+
+enum DashboardChartChartTypeSelectOptions {
+  COUNT
+  SUM
+  AVERAGE
+  GROUP_BY
+  CUSTOM
+  REPORT
+}
+
+enum DashboardChartGroupByTypeSelectOptions {
+  COUNT
+  SUM
+  AVERAGE
+}
+
+enum DashboardChartTimespanSelectOptions {
+  LAST_YEAR
+  LAST_QUARTER
+  LAST_MONTH
+  LAST_WEEK
+  SELECT_DATE_RANGE
+}
+
+enum DashboardChartTimeIntervalSelectOptions {
+  YEARLY
+  QUARTERLY
+  MONTHLY
+  WEEKLY
+  DAILY
+}
+
+enum DashboardChartTypeSelectOptions {
+  LINE
+  BAR
+  PERCENTAGE
+  PIE
+  DONUT
+  HEATMAP
+}
+
+enum DashboardChartSortField {
+  NAME
+  CREATION
+  MODIFIED
+  CHART_NAME
+}
+
+input DashboardChartSortingInput {
+  direction: SortDirection!
+  field: DashboardChartSortField!
+}
+
+type DashboardChartCountableEdge {
+  cursor: String!
+  node: DashboardChart!
+}
+
+type DashboardChartCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [DashboardChartCountableEdge!]!
+}
+
+extend type Query {
+  DashboardChart(name: String!): DashboardChart!
+  DashboardCharts(filter: [DBFilterInput], sortBy: DashboardChartSortingInput, before: String, after: String, first: Int, last: Int): DashboardChartCountableConnection!
+}

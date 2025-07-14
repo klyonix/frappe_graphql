@@ -1,0 +1,43 @@
+type PrintHeading implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  print_heading: String!
+  description: String
+}
+
+enum PrintHeadingSortField {
+  NAME
+  CREATION
+  MODIFIED
+  PRINT_HEADING
+}
+
+input PrintHeadingSortingInput {
+  direction: SortDirection!
+  field: PrintHeadingSortField!
+}
+
+type PrintHeadingCountableEdge {
+  cursor: String!
+  node: PrintHeading!
+}
+
+type PrintHeadingCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [PrintHeadingCountableEdge!]!
+}
+
+extend type Query {
+  PrintHeading(name: String!): PrintHeading!
+  PrintHeadings(filter: [DBFilterInput], sortBy: PrintHeadingSortingInput, before: String, after: String, first: Int, last: Int): PrintHeadingCountableConnection!
+}

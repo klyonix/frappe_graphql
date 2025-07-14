@@ -1,0 +1,227 @@
+type Company implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  company_name: String!
+  abbr: String!
+  default_currency: Currency!
+  default_currency__name: String
+  country: Country!
+  country__name: String
+  is_group: Int
+  default_holiday_list: HolidayList
+  default_holiday_list__name: String
+  default_letter_head: LetterHead
+  default_letter_head__name: String
+  tax_id: String
+  domain: String
+  date_of_establishment: String
+  parent_company: Company
+  parent_company__name: String
+  company_logo: String
+  date_of_incorporation: String
+  phone_no: String
+  email: String
+  company_description: String
+  date_of_commencement: String
+  fax: String
+  website: String
+  registration_details: String
+  lft: Int
+  rgt: Int
+  old_parent: String
+  create_chart_of_accounts_based_on: CompanyCreateChartOfAccountsBasedOnSelectOptions
+  existing_company: Company
+  existing_company__name: String
+  chart_of_accounts: String
+  default_bank_account: Account
+  default_bank_account__name: String
+  default_cash_account: Account
+  default_cash_account__name: String
+  default_receivable_account: Account
+  default_receivable_account__name: String
+  default_payable_account: Account
+  default_payable_account__name: String
+  write_off_account: Account
+  write_off_account__name: String
+  unrealized_profit_loss_account: Account
+  unrealized_profit_loss_account__name: String
+  allow_account_creation_against_child_company: Int
+  default_expense_account: Account
+  default_expense_account__name: String
+  default_income_account: Account
+  default_income_account__name: String
+  default_discount_account: Account
+  default_discount_account__name: String
+  payment_terms: PaymentTermsTemplate
+  payment_terms__name: String
+  cost_center: CostCenter
+  cost_center__name: String
+  default_finance_book: FinanceBook
+  default_finance_book__name: String
+  exchange_gain_loss_account: Account
+  exchange_gain_loss_account__name: String
+  unrealized_exchange_gain_loss_account: Account
+  unrealized_exchange_gain_loss_account__name: String
+  round_off_account: Account
+  round_off_account__name: String
+  round_off_cost_center: CostCenter
+  round_off_cost_center__name: String
+  round_off_for_opening: Account
+  round_off_for_opening__name: String
+  default_deferred_revenue_account: Account
+  default_deferred_revenue_account__name: String
+  default_deferred_expense_account: Account
+  default_deferred_expense_account__name: String
+  book_advance_payments_in_separate_party_account: Int
+  reconcile_on_advance_payment_date: Int
+  reconciliation_takes_effect_on: CompanyReconciliationTakesEffectOnSelectOptions
+  default_advance_received_account: Account
+  default_advance_received_account__name: String
+  default_advance_paid_account: Account
+  default_advance_paid_account__name: String
+  auto_exchange_rate_revaluation: Int
+  auto_err_frequency: CompanyFrequencySelectOptions
+  submit_err_jv: Int
+  exception_budget_approver_role: Role
+  exception_budget_approver_role__name: String
+  accumulated_depreciation_account: Account
+  accumulated_depreciation_account__name: String
+  depreciation_expense_account: Account
+  depreciation_expense_account__name: String
+  series_for_depreciation_entry: String
+  expenses_included_in_asset_valuation: Account
+  expenses_included_in_asset_valuation__name: String
+  disposal_account: Account
+  disposal_account__name: String
+  depreciation_cost_center: CostCenter
+  depreciation_cost_center__name: String
+  capital_work_in_progress_account: Account
+  capital_work_in_progress_account__name: String
+  asset_received_but_not_billed: Account
+  asset_received_but_not_billed__name: String
+  default_buying_terms: TermsandConditions
+  default_buying_terms__name: String
+  sales_monthly_history: String
+  monthly_sales_target: Float
+  total_monthly_sales: Float
+  default_selling_terms: TermsandConditions
+  default_selling_terms__name: String
+  default_warehouse_for_sales_return: Warehouse
+  default_warehouse_for_sales_return__name: String
+  credit_limit: Float
+  transactions_annual_history: String
+  enable_perpetual_inventory: Int
+  enable_provisional_accounting_for_non_stock_items: Int
+  default_inventory_account: Account
+  default_inventory_account__name: String
+  stock_adjustment_account: Account
+  stock_adjustment_account__name: String
+  default_in_transit_warehouse: Warehouse
+  default_in_transit_warehouse__name: String
+  stock_received_but_not_billed: Account
+  stock_received_but_not_billed__name: String
+  default_provisional_account: Account
+  default_provisional_account__name: String
+  expenses_included_in_valuation: Account
+  expenses_included_in_valuation__name: String
+  default_operating_cost_account: Account
+  default_operating_cost_account__name: String
+}
+
+extend type Company {
+  default_gst_rate: String
+  gstin: String
+  pan: String
+  gst_category: CompanyGstCategorySelectOptions!
+  default_customs_expense_account: Account
+  default_customs_expense_account__name: String
+  default_gst_expense_account: Account
+  default_gst_expense_account__name: String
+  default_customs_payable_account: Account
+  default_customs_payable_account__name: String
+  default_expense_claim_payable_account: Account
+  default_expense_claim_payable_account__name: String
+  default_employee_advance_account: Account
+  default_employee_advance_account__name: String
+  default_payroll_payable_account: Account
+  default_payroll_payable_account__name: String
+  basic_component: SalaryComponent
+  basic_component__name: String
+  hra_component: SalaryComponent
+  hra_component__name: String
+  arrear_component: SalaryComponent
+  arrear_component__name: String
+  show_physical_signature: Int
+  logo_for_printing: String
+  bank_details_for_printing: [CompanyPrintOptions!]!
+  registration_details_for_printing: [CompanyPrintOptions!]!
+}
+
+enum CompanyGstCategorySelectOptions {
+  REGISTERED_REGULAR
+  REGISTERED_COMPOSITION
+  UNREGISTERED
+  SEZ
+  OVERSEAS
+  DEEMED_EXPORT
+  UIN_HOLDERS
+  TAX_DEDUCTOR
+  TAX_COLLECTOR
+  INPUT_SERVICE_DISTRIBUTOR
+}
+
+enum CompanyCreateChartOfAccountsBasedOnSelectOptions {
+  STANDARD_TEMPLATE
+  EXISTING_COMPANY
+}
+
+enum CompanyReconciliationTakesEffectOnSelectOptions {
+  ADVANCE_PAYMENT_DATE
+  OLDEST_OF_INVOICE_OR_ADVANCE
+  RECONCILIATION_DATE
+}
+
+enum CompanyFrequencySelectOptions {
+  DAILY
+  WEEKLY
+  MONTHLY
+}
+
+enum CompanySortField {
+  NAME
+  CREATION
+  MODIFIED
+  COMPANY_NAME
+  LFT
+  RGT
+}
+
+input CompanySortingInput {
+  direction: SortDirection!
+  field: CompanySortField!
+}
+
+type CompanyCountableEdge {
+  cursor: String!
+  node: Company!
+}
+
+type CompanyCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [CompanyCountableEdge!]!
+}
+
+extend type Query {
+  Company(name: String!): Company!
+  Companys(filter: [DBFilterInput], sortBy: CompanySortingInput, before: String, after: String, first: Int, last: Int): CompanyCountableConnection!
+}

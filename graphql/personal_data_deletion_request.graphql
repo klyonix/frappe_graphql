@@ -1,0 +1,51 @@
+type PersonalDataDeletionRequest implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  email: String!
+  status: PersonalDataDeletionRequestStatusSelectOptions
+  anonymization_matrix: String
+  deletion_steps: [PersonalDataDeletionStep!]!
+}
+
+enum PersonalDataDeletionRequestStatusSelectOptions {
+  PENDING_VERIFICATION
+  PENDING_APPROVAL
+  ON_HOLD
+  DELETED
+}
+
+enum PersonalDataDeletionRequestSortField {
+  NAME
+  CREATION
+  MODIFIED
+}
+
+input PersonalDataDeletionRequestSortingInput {
+  direction: SortDirection!
+  field: PersonalDataDeletionRequestSortField!
+}
+
+type PersonalDataDeletionRequestCountableEdge {
+  cursor: String!
+  node: PersonalDataDeletionRequest!
+}
+
+type PersonalDataDeletionRequestCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [PersonalDataDeletionRequestCountableEdge!]!
+}
+
+extend type Query {
+  PersonalDataDeletionRequest(name: String!): PersonalDataDeletionRequest!
+  PersonalDataDeletionRequests(filter: [DBFilterInput], sortBy: PersonalDataDeletionRequestSortingInput, before: String, after: String, first: Int, last: Int): PersonalDataDeletionRequestCountableConnection!
+}

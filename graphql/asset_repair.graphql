@@ -1,0 +1,72 @@
+type AssetRepair implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  asset: Asset!
+  asset__name: String
+  company: Company
+  company__name: String
+  asset_name: String
+  naming_series: String!
+  failure_date: String!
+  repair_status: AssetRepairRepairStatusSelectOptions
+  completion_date: String
+  cost_center: CostCenter
+  cost_center__name: String
+  project: Project
+  project__name: String
+  purchase_invoice: PurchaseInvoice
+  purchase_invoice__name: String
+  capitalize_repair_cost: Int
+  stock_consumption: Int
+  repair_cost: Float
+  stock_items: [AssetRepairConsumedItem!]!
+  total_repair_cost: Float
+  increase_in_asset_life: Int
+  description: String
+  actions_performed: String
+  downtime: String
+  amended_from: AssetRepair
+  amended_from__name: String
+}
+
+enum AssetRepairRepairStatusSelectOptions {
+  PENDING
+  COMPLETED
+  CANCELLED
+}
+
+enum AssetRepairSortField {
+  NAME
+  CREATION
+  MODIFIED
+}
+
+input AssetRepairSortingInput {
+  direction: SortDirection!
+  field: AssetRepairSortField!
+}
+
+type AssetRepairCountableEdge {
+  cursor: String!
+  node: AssetRepair!
+}
+
+type AssetRepairCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [AssetRepairCountableEdge!]!
+}
+
+extend type Query {
+  AssetRepair(name: String!): AssetRepair!
+  AssetRepairs(filter: [DBFilterInput], sortBy: AssetRepairSortingInput, before: String, after: String, first: Int, last: Int): AssetRepairCountableConnection!
+}

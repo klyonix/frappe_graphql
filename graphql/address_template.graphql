@@ -1,0 +1,45 @@
+type AddressTemplate implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  country: Country!
+  country__name: String
+  is_default: Int
+  template: String
+}
+
+enum AddressTemplateSortField {
+  NAME
+  CREATION
+  MODIFIED
+  COUNTRY
+}
+
+input AddressTemplateSortingInput {
+  direction: SortDirection!
+  field: AddressTemplateSortField!
+}
+
+type AddressTemplateCountableEdge {
+  cursor: String!
+  node: AddressTemplate!
+}
+
+type AddressTemplateCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [AddressTemplateCountableEdge!]!
+}
+
+extend type Query {
+  AddressTemplate(name: String!): AddressTemplate!
+  AddressTemplates(filter: [DBFilterInput], sortBy: AddressTemplateSortingInput, before: String, after: String, first: Int, last: Int): AddressTemplateCountableConnection!
+}

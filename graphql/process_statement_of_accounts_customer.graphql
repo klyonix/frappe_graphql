@@ -1,0 +1,18 @@
+type ProcessStatementOfAccountsCustomer implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  customer: Customer!
+  customer__name: String
+  customer_name: String
+  billing_email: String
+  primary_email: String
+}

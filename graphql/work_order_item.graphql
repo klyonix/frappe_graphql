@@ -1,0 +1,33 @@
+type WorkOrderItem implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  operation: Operation
+  operation__name: String
+  item_code: Item
+  item_code__name: String
+  source_warehouse: Warehouse
+  source_warehouse__name: String
+  item_name: String
+  description: String
+  allow_alternative_item: Int
+  include_item_in_manufacturing: Int
+  required_qty: Float
+  stock_uom: UOM
+  stock_uom__name: String
+  rate: Float
+  amount: Float
+  transferred_qty: Float
+  consumed_qty: Float
+  returned_qty: Float
+  available_qty_at_source_warehouse: Float
+  available_qty_at_wip_warehouse: Float
+}

@@ -1,0 +1,95 @@
+type PromotionalScheme implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  apply_on: PromotionalSchemeApplyOnSelectOptions!
+  disable: Int
+  items: [PricingRuleItemCode!]!
+  item_groups: [PricingRuleItemGroup!]!
+  brands: [PricingRuleBrand!]!
+  mixed_conditions: Int
+  is_cumulative: Int
+  apply_rule_on_other: PromotionalSchemeApplyRuleOnOtherSelectOptions
+  other_item_code: Item
+  other_item_code__name: String
+  other_item_group: ItemGroup
+  other_item_group__name: String
+  other_brand: Brand
+  other_brand__name: String
+  selling: Int
+  buying: Int
+  applicable_for: PromotionalSchemeApplicableForSelectOptions
+  customer: [CustomerItem!]!
+  customer_group: [CustomerGroupItem!]!
+  territory: [TerritoryItem!]!
+  sales_partner: [SalesPartnerItem!]!
+  campaign: [CampaignItem!]!
+  supplier: [SupplierItem!]!
+  supplier_group: [SupplierGroupItem!]!
+  valid_from: String
+  valid_upto: String
+  company: Company!
+  company__name: String
+  currency: Currency
+  currency__name: String
+  price_discount_slabs: [PromotionalSchemePriceDiscount!]!
+  product_discount_slabs: [PromotionalSchemeProductDiscount!]!
+}
+
+enum PromotionalSchemeApplyOnSelectOptions {
+  ITEM_CODE
+  ITEM_GROUP
+  BRAND
+  TRANSACTION
+}
+
+enum PromotionalSchemeApplyRuleOnOtherSelectOptions {
+  ITEM_CODE
+  ITEM_GROUP
+  BRAND
+}
+
+enum PromotionalSchemeApplicableForSelectOptions {
+  CUSTOMER
+  CUSTOMER_GROUP
+  TERRITORY
+  SALES_PARTNER
+  CAMPAIGN
+  SUPPLIER
+  SUPPLIER_GROUP
+}
+
+enum PromotionalSchemeSortField {
+  NAME
+  CREATION
+  MODIFIED
+}
+
+input PromotionalSchemeSortingInput {
+  direction: SortDirection!
+  field: PromotionalSchemeSortField!
+}
+
+type PromotionalSchemeCountableEdge {
+  cursor: String!
+  node: PromotionalScheme!
+}
+
+type PromotionalSchemeCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [PromotionalSchemeCountableEdge!]!
+}
+
+extend type Query {
+  PromotionalScheme(name: String!): PromotionalScheme!
+  PromotionalSchemes(filter: [DBFilterInput], sortBy: PromotionalSchemeSortingInput, before: String, after: String, first: Int, last: Int): PromotionalSchemeCountableConnection!
+}

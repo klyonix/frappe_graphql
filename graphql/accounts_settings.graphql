@@ -1,0 +1,100 @@
+type AccountsSettings implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  unlink_payment_on_cancellation_of_invoice: Int
+  unlink_advance_payment_on_cancelation_of_order: Int
+  delete_linked_ledger_entries: Int
+  enable_immutable_ledger: Int
+  check_supplier_invoice_uniqueness: Int
+  automatically_fetch_payment_terms: Int
+  enable_common_party_accounting: Int
+  allow_multi_currency_invoices_against_single_party_account: Int
+  merge_similar_account_heads: Int
+  book_deferred_entries_based_on: AccountsSettingsBookDeferredEntriesBasedOnSelectOptions
+  automatically_process_deferred_accounting_entry: Int
+  book_deferred_entries_via_journal_entry: Int
+  submit_journal_entries: Int
+  determine_address_tax_category_from: AccountsSettingsDetermineAddressTaxCategoryFromSelectOptions
+  add_taxes_from_item_tax_template: Int
+  add_taxes_from_taxes_and_charges_template: Int
+  book_tax_discount_loss: Int
+  round_row_wise_tax: Int
+  show_inclusive_tax_in_print: Int
+  show_taxes_as_table_in_print: Int
+  show_payment_schedule_in_print: Int
+  maintain_same_internal_transaction_rate: Int
+  maintain_same_rate_action: AccountsSettingsActionIfSameRateIsNotMaintainedThroughoutInternalTransactionSelectOptions
+  role_to_override_stop_action: Role
+  role_to_override_stop_action__name: String
+  allow_stale: Int
+  allow_pegged_currencies_exchange_rates: Int
+  stale_days: Int
+  auto_reconcile_payments: Int
+  auto_reconciliation_job_trigger: Int
+  reconciliation_queue_size: Int
+  exchange_gain_loss_posting_date: AccountsSettingsPostingDateInheritanceForExchangeGainLossSelectOptions
+  over_billing_allowance: Float
+  role_allowed_to_over_bill: Role
+  role_allowed_to_over_bill__name: String
+  credit_controller: Role
+  credit_controller__name: String
+  make_payment_via_journal_entry: Int
+  post_change_gl_entries: Int
+  calculate_depr_using_total_days: Int
+  book_asset_depreciation_entry_automatically: Int
+  acc_frozen_upto: String
+  ignore_account_closing_balance: Int
+  frozen_accounts_modifier: Role
+  frozen_accounts_modifier__name: String
+  show_balance_in_coa: Int
+  enable_party_matching: Int
+  enable_fuzzy_matching: Int
+  general_ledger_remarks_length: Int
+  receivable_payable_remarks_length: Int
+  receivable_payable_fetch_method: AccountsSettingsDataFetchMethodSelectOptions
+  ignore_is_opening_check_for_reporting: Int
+  create_pr_in_draft_status: Int
+}
+
+extend type AccountsSettings {
+  enable_audit_trail: Int
+}
+
+enum AccountsSettingsBookDeferredEntriesBasedOnSelectOptions {
+  DAYS
+  MONTHS
+}
+
+enum AccountsSettingsDetermineAddressTaxCategoryFromSelectOptions {
+  BILLING_ADDRESS
+  SHIPPING_ADDRESS
+}
+
+enum AccountsSettingsActionIfSameRateIsNotMaintainedThroughoutInternalTransactionSelectOptions {
+  STOP
+  WARN
+}
+
+enum AccountsSettingsPostingDateInheritanceForExchangeGainLossSelectOptions {
+  INVOICE
+  PAYMENT
+  RECONCILIATION_DATE
+}
+
+enum AccountsSettingsDataFetchMethodSelectOptions {
+  BUFFERED_CURSOR
+  UNBUFFERED_CURSOR
+}
+
+extend type Query {
+  AccountsSettings: AccountsSettings!
+}

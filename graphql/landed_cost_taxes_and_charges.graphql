@@ -1,0 +1,22 @@
+type LandedCostTaxesandCharges implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  expense_account: Account
+  expense_account__name: String
+  account_currency: Currency
+  account_currency__name: String
+  exchange_rate: Float
+  description: String!
+  amount: Float!
+  base_amount: Float
+  has_corrective_cost: Int
+}

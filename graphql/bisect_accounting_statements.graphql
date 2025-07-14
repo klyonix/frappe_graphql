@@ -1,0 +1,34 @@
+type BisectAccountingStatements implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  company: Company
+  company__name: String
+  from_date: String
+  to_date: String
+  algorithm: BisectAccountingStatementsAlgorithmSelectOptions
+  current_node: BisectNodes
+  current_node__name: String
+  current_from_date: String
+  current_to_date: String
+  p_l_summary: Float
+  b_s_summary: Float
+  difference: Float
+}
+
+enum BisectAccountingStatementsAlgorithmSelectOptions {
+  BFS
+  DFS
+}
+
+extend type Query {
+  BisectAccountingStatements: BisectAccountingStatements!
+}

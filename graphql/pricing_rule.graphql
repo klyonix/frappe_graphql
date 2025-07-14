@@ -1,0 +1,169 @@
+type PricingRule implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  naming_series: String
+  title: String!
+  disable: Int
+  apply_on: PricingRuleApplyOnSelectOptions!
+  price_or_product_discount: PricingRulePriceOrProductDiscountSelectOptions!
+  warehouse: Warehouse
+  warehouse__name: String
+  items: [PricingRuleItemCode!]!
+  item_groups: [PricingRuleItemGroup!]!
+  brands: [PricingRuleBrand!]!
+  mixed_conditions: Int
+  is_cumulative: Int
+  coupon_code_based: Int
+  apply_rule_on_other: PricingRuleApplyRuleOnOtherSelectOptions
+  other_item_code: Item
+  other_item_code__name: String
+  other_item_group: ItemGroup
+  other_item_group__name: String
+  other_brand: Brand
+  other_brand__name: String
+  selling: Int
+  buying: Int
+  applicable_for: PricingRuleApplicableForSelectOptions
+  customer: Customer
+  customer__name: String
+  customer_group: CustomerGroup
+  customer_group__name: String
+  territory: Territory
+  territory__name: String
+  sales_partner: SalesPartner
+  sales_partner__name: String
+  campaign: Campaign
+  campaign__name: String
+  supplier: Supplier
+  supplier__name: String
+  supplier_group: SupplierGroup
+  supplier_group__name: String
+  min_qty: Float
+  max_qty: Float
+  min_amt: Float
+  max_amt: Float
+  same_item: Int
+  free_item: Item
+  free_item__name: String
+  free_qty: Float
+  free_item_rate: Float
+  free_item_uom: UOM
+  free_item_uom__name: String
+  round_free_qty: Int
+  dont_enforce_free_item_qty: Int
+  is_recursive: Int
+  recurse_for: Float
+  apply_recursion_over: Float
+  valid_from: String
+  valid_upto: String
+  company: Company
+  company__name: String
+  currency: Currency!
+  currency__name: String
+  margin_type: PricingRuleMarginTypeSelectOptions
+  margin_rate_or_amount: Float
+  rate_or_discount: PricingRuleRateOrDiscountSelectOptions
+  apply_discount_on: PricingRuleApplyDiscountOnSelectOptions
+  rate: Float
+  discount_amount: Float
+  discount_percentage: Float
+  for_price_list: PriceList
+  for_price_list__name: String
+  condition: String
+  apply_multiple_pricing_rules: Int
+  apply_discount_on_rate: Int
+  threshold_percentage: Float
+  validate_applied_rule: Int
+  rule_description: String
+  has_priority: Int
+  priority: String
+  promotional_scheme_id: String
+  promotional_scheme: PromotionalScheme
+  promotional_scheme__name: String
+}
+
+extend type PricingRule {
+  whg_is_ptr_discount: Int
+  whg_is_mrp_discount: Int
+}
+
+enum PricingRuleApplyOnSelectOptions {
+  ITEM_CODE
+  ITEM_GROUP
+  BRAND
+  TRANSACTION
+}
+
+enum PricingRulePriceOrProductDiscountSelectOptions {
+  PRICE
+  PRODUCT
+}
+
+enum PricingRuleApplyRuleOnOtherSelectOptions {
+  ITEM_CODE
+  ITEM_GROUP
+  BRAND
+}
+
+enum PricingRuleApplicableForSelectOptions {
+  CUSTOMER
+  CUSTOMER_GROUP
+  TERRITORY
+  SALES_PARTNER
+  CAMPAIGN
+  SUPPLIER
+  SUPPLIER_GROUP
+}
+
+enum PricingRuleMarginTypeSelectOptions {
+  PERCENTAGE
+  AMOUNT
+}
+
+enum PricingRuleRateOrDiscountSelectOptions {
+  RATE
+  DISCOUNT_PERCENTAGE
+  DISCOUNT_AMOUNT
+}
+
+enum PricingRuleApplyDiscountOnSelectOptions {
+  GRAND_TOTAL
+  NET_TOTAL
+}
+
+enum PricingRuleSortField {
+  NAME
+  CREATION
+  MODIFIED
+  WAREHOUSE
+}
+
+input PricingRuleSortingInput {
+  direction: SortDirection!
+  field: PricingRuleSortField!
+}
+
+type PricingRuleCountableEdge {
+  cursor: String!
+  node: PricingRule!
+}
+
+type PricingRuleCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [PricingRuleCountableEdge!]!
+}
+
+extend type Query {
+  PricingRule(name: String!): PricingRule!
+  PricingRules(filter: [DBFilterInput], sortBy: PricingRuleSortingInput, before: String, after: String, first: Int, last: Int): PricingRuleCountableConnection!
+}

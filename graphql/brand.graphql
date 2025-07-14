@@ -1,0 +1,45 @@
+type Brand implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  brand: String!
+  image: String
+  description: String
+  brand_defaults: [ItemDefault!]!
+}
+
+enum BrandSortField {
+  NAME
+  CREATION
+  MODIFIED
+  BRAND
+}
+
+input BrandSortingInput {
+  direction: SortDirection!
+  field: BrandSortField!
+}
+
+type BrandCountableEdge {
+  cursor: String!
+  node: Brand!
+}
+
+type BrandCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [BrandCountableEdge!]!
+}
+
+extend type Query {
+  Brand(name: String!): Brand!
+  Brands(filter: [DBFilterInput], sortBy: BrandSortingInput, before: String, after: String, first: Int, last: Int): BrandCountableConnection!
+}

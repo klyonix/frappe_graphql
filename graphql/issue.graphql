@@ -1,0 +1,101 @@
+type Issue implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  naming_series: String
+  subject: String!
+  customer: Customer
+  customer__name: String
+  raised_by: String
+  status: IssueStatusSelectOptions
+  priority: IssuePriority
+  priority__name: String
+  issue_type: IssueType
+  issue_type__name: String
+  issue_split_from: Issue
+  issue_split_from__name: String
+  description: String
+  service_level_agreement: ServiceLevelAgreement
+  service_level_agreement__name: String
+  response_by: String
+  agreement_status: IssueServiceLevelAgreementStatusSelectOptions
+  sla_resolution_by: String
+  service_level_agreement_creation: String
+  on_hold_since: String
+  total_hold_time: String
+  first_response_time: String
+  first_responded_on: String
+  avg_response_time: String
+  resolution_details: String
+  opening_date: String
+  opening_time: String
+  sla_resolution_date: String
+  resolution_time: String
+  user_resolution_time: String
+  lead: Lead
+  lead__name: String
+  contact: Contact
+  contact__name: String
+  email_account: EmailAccount
+  email_account__name: String
+  customer_name: String
+  project: Project
+  project__name: String
+  company: Company
+  company__name: String
+  via_customer_portal: Int
+  attachment: String
+  content_type: String
+}
+
+enum IssueStatusSelectOptions {
+  OPEN
+  REPLIED
+  ON_HOLD
+  RESOLVED
+  CLOSED
+}
+
+enum IssueServiceLevelAgreementStatusSelectOptions {
+  FIRST_RESPONSE_DUE
+  RESOLUTION_DUE
+  FULFILLED
+  FAILED
+}
+
+enum IssueSortField {
+  NAME
+  CREATION
+  MODIFIED
+  CUSTOMER
+  STATUS
+}
+
+input IssueSortingInput {
+  direction: SortDirection!
+  field: IssueSortField!
+}
+
+type IssueCountableEdge {
+  cursor: String!
+  node: Issue!
+}
+
+type IssueCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [IssueCountableEdge!]!
+}
+
+extend type Query {
+  Issue(name: String!): Issue!
+  Issues(filter: [DBFilterInput], sortBy: IssueSortingInput, before: String, after: String, first: Int, last: Int): IssueCountableConnection!
+}

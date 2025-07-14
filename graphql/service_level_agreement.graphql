@@ -1,0 +1,66 @@
+type ServiceLevelAgreement implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  document_type: DocType!
+  document_type__name: String
+  default_priority: IssuePriority
+  default_priority__name: String
+  service_level: String!
+  enabled: Int
+  default_service_level_agreement: Int
+  entity_type: ServiceLevelAgreementEntityTypeSelectOptions
+  entity: BaseDocType
+  entity__name: String
+  condition: String
+  start_date: String
+  end_date: String
+  apply_sla_for_resolution: Int
+  priorities: [ServiceLevelPriority!]!
+  sla_fulfilled_on: [SLAFulfilledOnStatus!]!
+  pause_sla_on: [PauseSLAOnStatus!]!
+  holiday_list: HolidayList!
+  holiday_list__name: String
+  support_and_resolution: [ServiceDay!]!
+}
+
+enum ServiceLevelAgreementEntityTypeSelectOptions {
+  CUSTOMER
+  CUSTOMER_GROUP
+  TERRITORY
+}
+
+enum ServiceLevelAgreementSortField {
+  NAME
+  CREATION
+  MODIFIED
+}
+
+input ServiceLevelAgreementSortingInput {
+  direction: SortDirection!
+  field: ServiceLevelAgreementSortField!
+}
+
+type ServiceLevelAgreementCountableEdge {
+  cursor: String!
+  node: ServiceLevelAgreement!
+}
+
+type ServiceLevelAgreementCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [ServiceLevelAgreementCountableEdge!]!
+}
+
+extend type Query {
+  ServiceLevelAgreement(name: String!): ServiceLevelAgreement!
+  ServiceLevelAgreements(filter: [DBFilterInput], sortBy: ServiceLevelAgreementSortingInput, before: String, after: String, first: Int, last: Int): ServiceLevelAgreementCountableConnection!
+}

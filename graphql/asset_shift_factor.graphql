@@ -1,0 +1,44 @@
+type AssetShiftFactor implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  shift_name: String!
+  shift_factor: Float!
+  default: Int
+}
+
+enum AssetShiftFactorSortField {
+  NAME
+  CREATION
+  MODIFIED
+  SHIFT_NAME
+}
+
+input AssetShiftFactorSortingInput {
+  direction: SortDirection!
+  field: AssetShiftFactorSortField!
+}
+
+type AssetShiftFactorCountableEdge {
+  cursor: String!
+  node: AssetShiftFactor!
+}
+
+type AssetShiftFactorCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [AssetShiftFactorCountableEdge!]!
+}
+
+extend type Query {
+  AssetShiftFactor(name: String!): AssetShiftFactor!
+  AssetShiftFactors(filter: [DBFilterInput], sortBy: AssetShiftFactorSortingInput, before: String, after: String, first: Int, last: Int): AssetShiftFactorCountableConnection!
+}

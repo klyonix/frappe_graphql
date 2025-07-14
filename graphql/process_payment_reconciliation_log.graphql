@@ -1,0 +1,58 @@
+type ProcessPaymentReconciliationLog implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  process_pr: ProcessPaymentReconciliation!
+  process_pr__name: String
+  status: ProcessPaymentReconciliationLogStatusSelectOptions
+  allocated: Int
+  reconciled: Int
+  total_allocations: Int
+  reconciled_entries: Int
+  error_log: String
+  allocations: [ProcessPaymentReconciliationLogAllocations!]!
+}
+
+enum ProcessPaymentReconciliationLogStatusSelectOptions {
+  RUNNING
+  PAUSED
+  RECONCILED
+  PARTIALLY_RECONCILED
+  FAILED
+  CANCELLED
+}
+
+enum ProcessPaymentReconciliationLogSortField {
+  NAME
+  CREATION
+  MODIFIED
+}
+
+input ProcessPaymentReconciliationLogSortingInput {
+  direction: SortDirection!
+  field: ProcessPaymentReconciliationLogSortField!
+}
+
+type ProcessPaymentReconciliationLogCountableEdge {
+  cursor: String!
+  node: ProcessPaymentReconciliationLog!
+}
+
+type ProcessPaymentReconciliationLogCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [ProcessPaymentReconciliationLogCountableEdge!]!
+}
+
+extend type Query {
+  ProcessPaymentReconciliationLog(name: String!): ProcessPaymentReconciliationLog!
+  ProcessPaymentReconciliationLogs(filter: [DBFilterInput], sortBy: ProcessPaymentReconciliationLogSortingInput, before: String, after: String, first: Int, last: Int): ProcessPaymentReconciliationLogCountableConnection!
+}

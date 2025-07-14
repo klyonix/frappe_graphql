@@ -1,0 +1,48 @@
+type DocumentNamingRule implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  document_type: DocType!
+  document_type__name: String
+  disabled: Int
+  priority: Int
+  conditions: [DocumentNamingRuleCondition!]!
+  prefix: String!
+  counter: Int
+  prefix_digits: Int!
+}
+
+enum DocumentNamingRuleSortField {
+  NAME
+  CREATION
+  MODIFIED
+}
+
+input DocumentNamingRuleSortingInput {
+  direction: SortDirection!
+  field: DocumentNamingRuleSortField!
+}
+
+type DocumentNamingRuleCountableEdge {
+  cursor: String!
+  node: DocumentNamingRule!
+}
+
+type DocumentNamingRuleCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [DocumentNamingRuleCountableEdge!]!
+}
+
+extend type Query {
+  DocumentNamingRule(name: String!): DocumentNamingRule!
+  DocumentNamingRules(filter: [DBFilterInput], sortBy: DocumentNamingRuleSortingInput, before: String, after: String, first: Int, last: Int): DocumentNamingRuleCountableConnection!
+}

@@ -1,0 +1,51 @@
+type Workflow implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  workflow_name: String!
+  document_type: DocType!
+  document_type__name: String
+  is_active: Int
+  override_status: Int
+  send_email_alert: Int
+  states: [WorkflowDocumentState!]!
+  transitions: [WorkflowTransition!]!
+  workflow_state_field: String!
+  workflow_data: String
+}
+
+enum WorkflowSortField {
+  NAME
+  CREATION
+  MODIFIED
+  WORKFLOW_NAME
+}
+
+input WorkflowSortingInput {
+  direction: SortDirection!
+  field: WorkflowSortField!
+}
+
+type WorkflowCountableEdge {
+  cursor: String!
+  node: Workflow!
+}
+
+type WorkflowCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [WorkflowCountableEdge!]!
+}
+
+extend type Query {
+  Workflow(name: String!): Workflow!
+  Workflows(filter: [DBFilterInput], sortBy: WorkflowSortingInput, before: String, after: String, first: Int, last: Int): WorkflowCountableConnection!
+}

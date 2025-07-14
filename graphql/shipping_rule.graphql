@@ -1,0 +1,65 @@
+type ShippingRule implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  label: String!
+  disabled: Int
+  shipping_rule_type: ShippingRuleShippingRuleTypeSelectOptions
+  company: Company!
+  company__name: String
+  account: Account!
+  account__name: String
+  cost_center: CostCenter!
+  cost_center__name: String
+  calculate_based_on: ShippingRuleCalculateBasedOnSelectOptions
+  shipping_amount: Float
+  conditions: [ShippingRuleCondition!]!
+  countries: [ShippingRuleCountry!]!
+}
+
+enum ShippingRuleShippingRuleTypeSelectOptions {
+  SELLING
+  BUYING
+}
+
+enum ShippingRuleCalculateBasedOnSelectOptions {
+  FIXED
+  NET_TOTAL
+  NET_WEIGHT
+}
+
+enum ShippingRuleSortField {
+  NAME
+  CREATION
+  MODIFIED
+  LABEL
+}
+
+input ShippingRuleSortingInput {
+  direction: SortDirection!
+  field: ShippingRuleSortField!
+}
+
+type ShippingRuleCountableEdge {
+  cursor: String!
+  node: ShippingRule!
+}
+
+type ShippingRuleCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [ShippingRuleCountableEdge!]!
+}
+
+extend type Query {
+  ShippingRule(name: String!): ShippingRule!
+  ShippingRules(filter: [DBFilterInput], sortBy: ShippingRuleSortingInput, before: String, after: String, first: Int, last: Int): ShippingRuleCountableConnection!
+}

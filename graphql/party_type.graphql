@@ -1,0 +1,48 @@
+type PartyType implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  party_type: DocType!
+  party_type__name: String
+  account_type: PartyTypeAccountTypeSelectOptions!
+}
+
+enum PartyTypeAccountTypeSelectOptions {
+  PAYABLE
+  RECEIVABLE
+}
+
+enum PartyTypeSortField {
+  NAME
+  CREATION
+  MODIFIED
+}
+
+input PartyTypeSortingInput {
+  direction: SortDirection!
+  field: PartyTypeSortField!
+}
+
+type PartyTypeCountableEdge {
+  cursor: String!
+  node: PartyType!
+}
+
+type PartyTypeCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [PartyTypeCountableEdge!]!
+}
+
+extend type Query {
+  PartyType(name: String!): PartyType!
+  PartyTypes(filter: [DBFilterInput], sortBy: PartyTypeSortingInput, before: String, after: String, first: Int, last: Int): PartyTypeCountableConnection!
+}

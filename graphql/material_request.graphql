@@ -1,0 +1,103 @@
+type MaterialRequest implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  naming_series: String!
+  title: String
+  material_request_type: MaterialRequestPurposeSelectOptions!
+  customer: Customer
+  customer__name: String
+  company: Company!
+  company__name: String
+  transaction_date: String!
+  schedule_date: String
+  amended_from: MaterialRequest
+  amended_from__name: String
+  scan_barcode: String
+  set_from_warehouse: Warehouse
+  set_from_warehouse__name: String
+  set_warehouse: Warehouse
+  set_warehouse__name: String
+  items: [MaterialRequestItem!]!
+  tc_name: TermsandConditions
+  tc_name__name: String
+  terms: String
+  status: MaterialRequestStatusSelectOptions
+  per_ordered: Float
+  transfer_status: MaterialRequestTransferStatusSelectOptions
+  per_received: Float
+  letter_head: LetterHead
+  letter_head__name: String
+  select_print_heading: PrintHeading
+  select_print_heading__name: String
+  job_card: JobCard
+  job_card__name: String
+  work_order: WorkOrder
+  work_order__name: String
+}
+
+enum MaterialRequestPurposeSelectOptions {
+  PURCHASE
+  MATERIAL_TRANSFER
+  MATERIAL_ISSUE
+  MANUFACTURE
+  CUSTOMER_PROVIDED
+}
+
+enum MaterialRequestStatusSelectOptions {
+  DRAFT
+  SUBMITTED
+  STOPPED
+  CANCELLED
+  PENDING
+  PARTIALLY_ORDERED
+  PARTIALLY_RECEIVED
+  ORDERED
+  ISSUED
+  TRANSFERRED
+  RECEIVED
+}
+
+enum MaterialRequestTransferStatusSelectOptions {
+  NOT_STARTED
+  IN_TRANSIT
+  COMPLETED
+}
+
+enum MaterialRequestSortField {
+  NAME
+  CREATION
+  MODIFIED
+  COMPANY
+  TRANSACTION_DATE
+  STATUS
+}
+
+input MaterialRequestSortingInput {
+  direction: SortDirection!
+  field: MaterialRequestSortField!
+}
+
+type MaterialRequestCountableEdge {
+  cursor: String!
+  node: MaterialRequest!
+}
+
+type MaterialRequestCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [MaterialRequestCountableEdge!]!
+}
+
+extend type Query {
+  MaterialRequest(name: String!): MaterialRequest!
+  MaterialRequests(filter: [DBFilterInput], sortBy: MaterialRequestSortingInput, before: String, after: String, first: Int, last: Int): MaterialRequestCountableConnection!
+}

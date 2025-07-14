@@ -1,0 +1,63 @@
+type PropertySetter implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  is_system_generated: Int
+  doctype_or_field: PropertySetterAppliedOnSelectOptions!
+  doc_type: DocType!
+  doc_type__name: String
+  field_name: String
+  row_name: String
+  module: ModuleDef
+  module__name: String
+  property: String!
+  property_type: String
+  value: String
+  default_value: String
+}
+
+enum PropertySetterAppliedOnSelectOptions {
+  DOCFIELD
+  DOCTYPE
+  DOCTYPE_LINK
+  DOCTYPE_ACTION
+  DOCTYPE_STATE
+}
+
+enum PropertySetterSortField {
+  NAME
+  CREATION
+  MODIFIED
+  DOC_TYPE
+  FIELD_NAME
+  PROPERTY
+}
+
+input PropertySetterSortingInput {
+  direction: SortDirection!
+  field: PropertySetterSortField!
+}
+
+type PropertySetterCountableEdge {
+  cursor: String!
+  node: PropertySetter!
+}
+
+type PropertySetterCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [PropertySetterCountableEdge!]!
+}
+
+extend type Query {
+  PropertySetter(name: String!): PropertySetter!
+  PropertySetters(filter: [DBFilterInput], sortBy: PropertySetterSortingInput, before: String, after: String, first: Int, last: Int): PropertySetterCountableConnection!
+}

@@ -1,0 +1,51 @@
+type ScheduledJobLog implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  status: ScheduledJobLogStatusSelectOptions!
+  scheduled_job_type: ScheduledJobType!
+  scheduled_job_type__name: String
+  details: String
+  debug_log: String
+}
+
+enum ScheduledJobLogStatusSelectOptions {
+  SCHEDULED
+  COMPLETE
+  FAILED
+}
+
+enum ScheduledJobLogSortField {
+  NAME
+  CREATION
+  MODIFIED
+}
+
+input ScheduledJobLogSortingInput {
+  direction: SortDirection!
+  field: ScheduledJobLogSortField!
+}
+
+type ScheduledJobLogCountableEdge {
+  cursor: String!
+  node: ScheduledJobLog!
+}
+
+type ScheduledJobLogCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [ScheduledJobLogCountableEdge!]!
+}
+
+extend type Query {
+  ScheduledJobLog(name: String!): ScheduledJobLog!
+  ScheduledJobLogs(filter: [DBFilterInput], sortBy: ScheduledJobLogSortingInput, before: String, after: String, first: Int, last: Int): ScheduledJobLogCountableConnection!
+}

@@ -1,0 +1,71 @@
+type BankStatementImport implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  company: Company!
+  company__name: String
+  bank_account: BankAccount!
+  bank_account__name: String
+  bank: Bank
+  bank__name: String
+  custom_delimiters: Int
+  delimiter_options: String
+  google_sheets_url: String
+  import_file: String
+  status: BankStatementImportStatusSelectOptions
+  template_options: String
+  template_warnings: String
+  show_failed_logs: Int
+  reference_doctype: DocType!
+  reference_doctype__name: String
+  import_type: BankStatementImportImportTypeSelectOptions!
+  submit_after_import: Int
+  mute_emails: Int
+}
+
+enum BankStatementImportStatusSelectOptions {
+  PENDING
+  SUCCESS
+  PARTIAL_SUCCESS
+  ERROR
+}
+
+enum BankStatementImportImportTypeSelectOptions {
+  INSERT_NEW_RECORDS
+  UPDATE_EXISTING_RECORDS
+}
+
+enum BankStatementImportSortField {
+  NAME
+  CREATION
+  MODIFIED
+}
+
+input BankStatementImportSortingInput {
+  direction: SortDirection!
+  field: BankStatementImportSortField!
+}
+
+type BankStatementImportCountableEdge {
+  cursor: String!
+  node: BankStatementImport!
+}
+
+type BankStatementImportCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [BankStatementImportCountableEdge!]!
+}
+
+extend type Query {
+  BankStatementImport(name: String!): BankStatementImport!
+  BankStatementImports(filter: [DBFilterInput], sortBy: BankStatementImportSortingInput, before: String, after: String, first: Int, last: Int): BankStatementImportCountableConnection!
+}

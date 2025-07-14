@@ -1,0 +1,46 @@
+type BlogCategory implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  published: Int
+  title: String!
+  description: String
+  route: String
+  preview_image: String
+}
+
+enum BlogCategorySortField {
+  NAME
+  CREATION
+  MODIFIED
+  ROUTE
+}
+
+input BlogCategorySortingInput {
+  direction: SortDirection!
+  field: BlogCategorySortField!
+}
+
+type BlogCategoryCountableEdge {
+  cursor: String!
+  node: BlogCategory!
+}
+
+type BlogCategoryCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [BlogCategoryCountableEdge!]!
+}
+
+extend type Query {
+  BlogCategory(name: String!): BlogCategory!
+  BlogCategorys(filter: [DBFilterInput], sortBy: BlogCategorySortingInput, before: String, after: String, first: Int, last: Int): BlogCategoryCountableConnection!
+}

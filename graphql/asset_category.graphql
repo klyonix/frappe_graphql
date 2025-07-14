@@ -1,0 +1,46 @@
+type AssetCategory implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  asset_category_name: String!
+  enable_cwip_accounting: Int
+  non_depreciable_category: Int
+  finance_books: [AssetFinanceBook!]!
+  accounts: [AssetCategoryAccount!]!
+}
+
+enum AssetCategorySortField {
+  NAME
+  CREATION
+  MODIFIED
+  ASSET_CATEGORY_NAME
+}
+
+input AssetCategorySortingInput {
+  direction: SortDirection!
+  field: AssetCategorySortField!
+}
+
+type AssetCategoryCountableEdge {
+  cursor: String!
+  node: AssetCategory!
+}
+
+type AssetCategoryCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [AssetCategoryCountableEdge!]!
+}
+
+extend type Query {
+  AssetCategory(name: String!): AssetCategory!
+  AssetCategorys(filter: [DBFilterInput], sortBy: AssetCategorySortingInput, before: String, after: String, first: Int, last: Int): AssetCategoryCountableConnection!
+}

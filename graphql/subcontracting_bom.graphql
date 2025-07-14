@@ -1,0 +1,57 @@
+type SubcontractingBOM implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  is_active: Int
+  finished_good: Item!
+  finished_good__name: String
+  finished_good_qty: Float!
+  finished_good_uom: UOM
+  finished_good_uom__name: String
+  finished_good_bom: BOM!
+  finished_good_bom__name: String
+  service_item: Item!
+  service_item__name: String
+  service_item_qty: Float!
+  service_item_uom: UOM!
+  service_item_uom__name: String
+  conversion_factor: Float
+}
+
+enum SubcontractingBOMSortField {
+  NAME
+  CREATION
+  MODIFIED
+  FINISHED_GOOD
+  FINISHED_GOOD_BOM
+  SERVICE_ITEM
+}
+
+input SubcontractingBOMSortingInput {
+  direction: SortDirection!
+  field: SubcontractingBOMSortField!
+}
+
+type SubcontractingBOMCountableEdge {
+  cursor: String!
+  node: SubcontractingBOM!
+}
+
+type SubcontractingBOMCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [SubcontractingBOMCountableEdge!]!
+}
+
+extend type Query {
+  SubcontractingBOM(name: String!): SubcontractingBOM!
+  SubcontractingBOMS(filter: [DBFilterInput], sortBy: SubcontractingBOMSortingInput, before: String, after: String, first: Int, last: Int): SubcontractingBOMCountableConnection!
+}

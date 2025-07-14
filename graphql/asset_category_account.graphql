@@ -1,0 +1,23 @@
+type AssetCategoryAccount implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  company_name: Company!
+  company_name__name: String
+  fixed_asset_account: Account!
+  fixed_asset_account__name: String
+  accumulated_depreciation_account: Account
+  accumulated_depreciation_account__name: String
+  depreciation_expense_account: Account
+  depreciation_expense_account__name: String
+  capital_work_in_progress_account: Account
+  capital_work_in_progress_account__name: String
+}

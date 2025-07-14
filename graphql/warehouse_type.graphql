@@ -1,0 +1,41 @@
+type WarehouseType implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  description: String
+}
+
+enum WarehouseTypeSortField {
+  NAME
+  CREATION
+  MODIFIED
+}
+
+input WarehouseTypeSortingInput {
+  direction: SortDirection!
+  field: WarehouseTypeSortField!
+}
+
+type WarehouseTypeCountableEdge {
+  cursor: String!
+  node: WarehouseType!
+}
+
+type WarehouseTypeCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [WarehouseTypeCountableEdge!]!
+}
+
+extend type Query {
+  WarehouseType(name: String!): WarehouseType!
+  WarehouseTypes(filter: [DBFilterInput], sortBy: WarehouseTypeSortingInput, before: String, after: String, first: Int, last: Int): WarehouseTypeCountableConnection!
+}

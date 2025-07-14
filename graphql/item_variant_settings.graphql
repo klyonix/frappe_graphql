@@ -1,0 +1,20 @@
+type ItemVariantSettings implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  do_not_update_variants: Int
+  allow_rename_attribute_value: Int
+  fields: [VariantField!]!
+}
+
+extend type Query {
+  ItemVariantSettings: ItemVariantSettings!
+}

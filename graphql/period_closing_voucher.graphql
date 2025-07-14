@@ -1,0 +1,60 @@
+type PeriodClosingVoucher implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  transaction_date: String
+  company: Company!
+  company__name: String
+  fiscal_year: FiscalYear!
+  fiscal_year__name: String
+  period_start_date: String!
+  period_end_date: String!
+  amended_from: PeriodClosingVoucher
+  amended_from__name: String
+  closing_account_head: Account!
+  closing_account_head__name: String
+  gle_processing_status: PeriodClosingVoucherGlEntryProcessingStatusSelectOptions
+  remarks: String!
+  error_message: String
+}
+
+enum PeriodClosingVoucherGlEntryProcessingStatusSelectOptions {
+  IN_PROGRESS
+  COMPLETED
+  FAILED
+}
+
+enum PeriodClosingVoucherSortField {
+  NAME
+  CREATION
+  MODIFIED
+}
+
+input PeriodClosingVoucherSortingInput {
+  direction: SortDirection!
+  field: PeriodClosingVoucherSortField!
+}
+
+type PeriodClosingVoucherCountableEdge {
+  cursor: String!
+  node: PeriodClosingVoucher!
+}
+
+type PeriodClosingVoucherCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [PeriodClosingVoucherCountableEdge!]!
+}
+
+extend type Query {
+  PeriodClosingVoucher(name: String!): PeriodClosingVoucher!
+  PeriodClosingVouchers(filter: [DBFilterInput], sortBy: PeriodClosingVoucherSortingInput, before: String, after: String, first: Int, last: Int): PeriodClosingVoucherCountableConnection!
+}

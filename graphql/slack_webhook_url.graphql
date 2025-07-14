@@ -1,0 +1,44 @@
+type SlackWebhookURL implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  webhook_name: String!
+  webhook_url: String!
+  show_document_link: Int
+}
+
+enum SlackWebhookURLSortField {
+  NAME
+  CREATION
+  MODIFIED
+  WEBHOOK_NAME
+}
+
+input SlackWebhookURLSortingInput {
+  direction: SortDirection!
+  field: SlackWebhookURLSortField!
+}
+
+type SlackWebhookURLCountableEdge {
+  cursor: String!
+  node: SlackWebhookURL!
+}
+
+type SlackWebhookURLCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [SlackWebhookURLCountableEdge!]!
+}
+
+extend type Query {
+  SlackWebhookURL(name: String!): SlackWebhookURL!
+  SlackWebhookURLS(filter: [DBFilterInput], sortBy: SlackWebhookURLSortingInput, before: String, after: String, first: Int, last: Int): SlackWebhookURLCountableConnection!
+}

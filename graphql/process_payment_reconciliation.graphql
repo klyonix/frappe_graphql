@@ -1,0 +1,72 @@
+type ProcessPaymentReconciliation implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  company: Company!
+  company__name: String
+  party_type: DocType!
+  party_type__name: String
+  party: BaseDocType!
+  party__name: String
+  receivable_payable_account: Account!
+  receivable_payable_account__name: String
+  default_advance_account: Account!
+  default_advance_account__name: String
+  from_invoice_date: String
+  to_invoice_date: String
+  from_payment_date: String
+  to_payment_date: String
+  cost_center: CostCenter
+  cost_center__name: String
+  bank_cash_account: Account
+  bank_cash_account__name: String
+  status: ProcessPaymentReconciliationStatusSelectOptions
+  error_log: String
+  amended_from: ProcessPaymentReconciliation
+  amended_from__name: String
+}
+
+enum ProcessPaymentReconciliationStatusSelectOptions {
+  QUEUED
+  RUNNING
+  PAUSED
+  COMPLETED
+  PARTIALLY_RECONCILED
+  FAILED
+  CANCELLED
+}
+
+enum ProcessPaymentReconciliationSortField {
+  NAME
+  CREATION
+  MODIFIED
+}
+
+input ProcessPaymentReconciliationSortingInput {
+  direction: SortDirection!
+  field: ProcessPaymentReconciliationSortField!
+}
+
+type ProcessPaymentReconciliationCountableEdge {
+  cursor: String!
+  node: ProcessPaymentReconciliation!
+}
+
+type ProcessPaymentReconciliationCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [ProcessPaymentReconciliationCountableEdge!]!
+}
+
+extend type Query {
+  ProcessPaymentReconciliation(name: String!): ProcessPaymentReconciliation!
+  ProcessPaymentReconciliations(filter: [DBFilterInput], sortBy: ProcessPaymentReconciliationSortingInput, before: String, after: String, first: Int, last: Int): ProcessPaymentReconciliationCountableConnection!
+}

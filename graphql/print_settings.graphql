@@ -1,0 +1,83 @@
+type PrintSettings implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  send_print_as_pdf: Int
+  repeat_header_footer: Int
+  pdf_page_size: PrintSettingsPdfPageSizeSelectOptions
+  pdf_page_height: Float
+  pdf_page_width: Float
+  with_letterhead: Int
+  allow_print_for_draft: Int
+  add_draft_heading: Int
+  allow_page_break_inside_tables: Int
+  allow_print_for_cancelled: Int
+  enable_print_server: Int
+  enable_raw_printing: Int
+  print_style: PrintStyle
+  print_style__name: String
+  font: PrintSettingsFontSelectOptions
+  font_size: Float
+}
+
+extend type PrintSettings {
+  compact_item_print: Int
+  print_uom_after_quantity: Int
+  print_taxes_with_zero_amount: Int
+}
+
+enum PrintSettingsPdfPageSizeSelectOptions {
+  A0
+  A1
+  A2
+  A3
+  A4
+  A5
+  A6
+  A7
+  A8
+  A9
+  B0
+  B1
+  B2
+  B3
+  B4
+  B5
+  B6
+  B7
+  B8
+  B9
+  B10
+  C5E
+  COMM10E
+  DLE
+  EXECUTIVE
+  FOLIO
+  LEDGER
+  LEGAL
+  LETTER
+  TABLOID
+  CUSTOM
+}
+
+enum PrintSettingsFontSelectOptions {
+  DEFAULT
+  HELVETICA_NEUE
+  ARIAL
+  HELVETICA
+  INTER
+  VERDANA
+  MONOSPACE
+}
+
+extend type Query {
+  PrintSettings: PrintSettings!
+}

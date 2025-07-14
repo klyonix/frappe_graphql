@@ -1,0 +1,43 @@
+type Competitor implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  competitor_name: String!
+  website: String
+}
+
+enum CompetitorSortField {
+  NAME
+  CREATION
+  MODIFIED
+  COMPETITOR_NAME
+}
+
+input CompetitorSortingInput {
+  direction: SortDirection!
+  field: CompetitorSortField!
+}
+
+type CompetitorCountableEdge {
+  cursor: String!
+  node: Competitor!
+}
+
+type CompetitorCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [CompetitorCountableEdge!]!
+}
+
+extend type Query {
+  Competitor(name: String!): Competitor!
+  Competitors(filter: [DBFilterInput], sortBy: CompetitorSortingInput, before: String, after: String, first: Int, last: Int): CompetitorCountableConnection!
+}

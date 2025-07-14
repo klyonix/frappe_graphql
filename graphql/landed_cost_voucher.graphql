@@ -1,0 +1,57 @@
+type LandedCostVoucher implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  naming_series: String!
+  company: Company!
+  company__name: String
+  posting_date: String!
+  purchase_receipts: [LandedCostPurchaseReceipt!]!
+  items: [LandedCostItem!]!
+  taxes: [LandedCostTaxesandCharges!]!
+  total_taxes_and_charges: Float!
+  distribute_charges_based_on: LandedCostVoucherDistributeChargesBasedOnSelectOptions!
+  amended_from: LandedCostVoucher
+  amended_from__name: String
+}
+
+enum LandedCostVoucherDistributeChargesBasedOnSelectOptions {
+  QTY
+  AMOUNT
+  DISTRIBUTE_MANUALLY
+}
+
+enum LandedCostVoucherSortField {
+  NAME
+  CREATION
+  MODIFIED
+}
+
+input LandedCostVoucherSortingInput {
+  direction: SortDirection!
+  field: LandedCostVoucherSortField!
+}
+
+type LandedCostVoucherCountableEdge {
+  cursor: String!
+  node: LandedCostVoucher!
+}
+
+type LandedCostVoucherCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [LandedCostVoucherCountableEdge!]!
+}
+
+extend type Query {
+  LandedCostVoucher(name: String!): LandedCostVoucher!
+  LandedCostVouchers(filter: [DBFilterInput], sortBy: LandedCostVoucherSortingInput, before: String, after: String, first: Int, last: Int): LandedCostVoucherCountableConnection!
+}

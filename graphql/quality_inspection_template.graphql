@@ -1,0 +1,43 @@
+type QualityInspectionTemplate implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  quality_inspection_template_name: String!
+  item_quality_inspection_parameter: [ItemQualityInspectionParameter!]!
+}
+
+enum QualityInspectionTemplateSortField {
+  NAME
+  CREATION
+  MODIFIED
+  QUALITY_INSPECTION_TEMPLATE_NAME
+}
+
+input QualityInspectionTemplateSortingInput {
+  direction: SortDirection!
+  field: QualityInspectionTemplateSortField!
+}
+
+type QualityInspectionTemplateCountableEdge {
+  cursor: String!
+  node: QualityInspectionTemplate!
+}
+
+type QualityInspectionTemplateCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [QualityInspectionTemplateCountableEdge!]!
+}
+
+extend type Query {
+  QualityInspectionTemplate(name: String!): QualityInspectionTemplate!
+  QualityInspectionTemplates(filter: [DBFilterInput], sortBy: QualityInspectionTemplateSortingInput, before: String, after: String, first: Int, last: Int): QualityInspectionTemplateCountableConnection!
+}

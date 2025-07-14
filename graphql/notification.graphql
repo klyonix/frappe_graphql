@@ -1,0 +1,96 @@
+type Notification implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  enabled: Int
+  is_standard: Int
+  module: ModuleDef
+  module__name: String
+  channel: NotificationChannelSelectOptions!
+  slack_webhook_url: SlackWebhookURL
+  slack_webhook_url__name: String
+  subject: String
+  event: NotificationSendAlertOnSelectOptions!
+  document_type: DocType!
+  document_type__name: String
+  method: String
+  date_changed: String
+  days_in_advance: Int
+  value_changed: String
+  sender: EmailAccount
+  sender__name: String
+  send_system_notification: Int
+  sender_email: String
+  condition: String
+  set_property_after_alert: String
+  property_value: String
+  send_to_all_assignees: Int
+  recipients: [NotificationRecipient!]!
+  message_type: NotificationMessageTypeSelectOptions
+  message: String
+  attach_print: Int
+  print_format: PrintFormat
+  print_format__name: String
+}
+
+enum NotificationChannelSelectOptions {
+  EMAIL
+  SLACK
+  SYSTEM_NOTIFICATION
+  SMS
+}
+
+enum NotificationSendAlertOnSelectOptions {
+  NEW
+  SAVE
+  SUBMIT
+  CANCEL
+  DAYS_AFTER
+  DAYS_BEFORE
+  VALUE_CHANGE
+  METHOD
+  CUSTOM
+}
+
+enum NotificationMessageTypeSelectOptions {
+  MARKDOWN
+  HTML
+  PLAIN_TEXT
+}
+
+enum NotificationSortField {
+  NAME
+  CREATION
+  MODIFIED
+  EVENT
+  DOCUMENT_TYPE
+}
+
+input NotificationSortingInput {
+  direction: SortDirection!
+  field: NotificationSortField!
+}
+
+type NotificationCountableEdge {
+  cursor: String!
+  node: Notification!
+}
+
+type NotificationCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [NotificationCountableEdge!]!
+}
+
+extend type Query {
+  Notification(name: String!): Notification!
+  Notifications(filter: [DBFilterInput], sortBy: NotificationSortingInput, before: String, after: String, first: Int, last: Int): NotificationCountableConnection!
+}

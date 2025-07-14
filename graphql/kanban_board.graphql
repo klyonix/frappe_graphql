@@ -1,0 +1,50 @@
+type KanbanBoard implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  kanban_board_name: String!
+  reference_doctype: DocType!
+  reference_doctype__name: String
+  field_name: String!
+  private: Int
+  show_labels: Int
+  columns: [KanbanBoardColumn!]!
+  filters: String
+  fields: String
+}
+
+enum KanbanBoardSortField {
+  NAME
+  CREATION
+  MODIFIED
+  KANBAN_BOARD_NAME
+}
+
+input KanbanBoardSortingInput {
+  direction: SortDirection!
+  field: KanbanBoardSortField!
+}
+
+type KanbanBoardCountableEdge {
+  cursor: String!
+  node: KanbanBoard!
+}
+
+type KanbanBoardCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [KanbanBoardCountableEdge!]!
+}
+
+extend type Query {
+  KanbanBoard(name: String!): KanbanBoard!
+  KanbanBoards(filter: [DBFilterInput], sortBy: KanbanBoardSortingInput, before: String, after: String, first: Int, last: Int): KanbanBoardCountableConnection!
+}

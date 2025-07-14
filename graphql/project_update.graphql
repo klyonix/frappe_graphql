@@ -1,0 +1,50 @@
+type ProjectUpdate implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  naming_series: String
+  project: Project!
+  project__name: String
+  sent: Int
+  date: String
+  time: String
+  users: [ProjectUser!]!
+  amended_from: ProjectUpdate
+  amended_from__name: String
+}
+
+enum ProjectUpdateSortField {
+  NAME
+  CREATION
+  MODIFIED
+  DATE
+}
+
+input ProjectUpdateSortingInput {
+  direction: SortDirection!
+  field: ProjectUpdateSortField!
+}
+
+type ProjectUpdateCountableEdge {
+  cursor: String!
+  node: ProjectUpdate!
+}
+
+type ProjectUpdateCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [ProjectUpdateCountableEdge!]!
+}
+
+extend type Query {
+  ProjectUpdate(name: String!): ProjectUpdate!
+  ProjectUpdates(filter: [DBFilterInput], sortBy: ProjectUpdateSortingInput, before: String, after: String, first: Int, last: Int): ProjectUpdateCountableConnection!
+}

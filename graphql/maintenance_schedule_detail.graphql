@@ -1,0 +1,30 @@
+type MaintenanceScheduleDetail implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  item_code: Item
+  item_code__name: String
+  item_name: String
+  scheduled_date: String!
+  actual_date: String
+  sales_person: SalesPerson
+  sales_person__name: String
+  completion_status: MaintenanceScheduleDetailCompletionStatusSelectOptions
+  serial_no: String
+  item_reference: MaintenanceScheduleItem
+  item_reference__name: String
+}
+
+enum MaintenanceScheduleDetailCompletionStatusSelectOptions {
+  PENDING
+  PARTIALLY_COMPLETED
+  FULLY_COMPLETED
+}

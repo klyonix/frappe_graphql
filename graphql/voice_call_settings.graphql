@@ -1,0 +1,52 @@
+type VoiceCallSettings implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  user: User!
+  user__name: String
+  call_receiving_device: VoiceCallSettingsCallReceivingDeviceSelectOptions
+  greeting_message: String
+  agent_busy_message: String
+  agent_unavailable_message: String
+}
+
+enum VoiceCallSettingsCallReceivingDeviceSelectOptions {
+  COMPUTER
+  PHONE
+}
+
+enum VoiceCallSettingsSortField {
+  NAME
+  CREATION
+  MODIFIED
+  USER
+}
+
+input VoiceCallSettingsSortingInput {
+  direction: SortDirection!
+  field: VoiceCallSettingsSortField!
+}
+
+type VoiceCallSettingsCountableEdge {
+  cursor: String!
+  node: VoiceCallSettings!
+}
+
+type VoiceCallSettingsCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [VoiceCallSettingsCountableEdge!]!
+}
+
+extend type Query {
+  VoiceCallSettings(name: String!): VoiceCallSettings!
+  VoiceCallSettingss(filter: [DBFilterInput], sortBy: VoiceCallSettingsSortingInput, before: String, after: String, first: Int, last: Int): VoiceCallSettingsCountableConnection!
+}

@@ -1,0 +1,70 @@
+type JournalEntryTemplate implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  template_title: String!
+  voucher_type: JournalEntryTemplateJournalEntryTypeSelectOptions!
+  naming_series: String!
+  company: Company!
+  company__name: String
+  is_opening: JournalEntryTemplateIsOpeningSelectOptions
+  multi_currency: Int
+  accounts: [JournalEntryTemplateAccount!]!
+}
+
+enum JournalEntryTemplateJournalEntryTypeSelectOptions {
+  JOURNAL_ENTRY
+  INTER_COMPANY_JOURNAL_ENTRY
+  BANK_ENTRY
+  CASH_ENTRY
+  CREDIT_CARD_ENTRY
+  DEBIT_NOTE
+  CREDIT_NOTE
+  CONTRA_ENTRY
+  EXCISE_ENTRY
+  WRITE_OFF_ENTRY
+  OPENING_ENTRY
+  DEPRECIATION_ENTRY
+  EXCHANGE_RATE_REVALUATION
+}
+
+enum JournalEntryTemplateIsOpeningSelectOptions {
+  NO
+  YES
+}
+
+enum JournalEntryTemplateSortField {
+  NAME
+  CREATION
+  MODIFIED
+  TEMPLATE_TITLE
+}
+
+input JournalEntryTemplateSortingInput {
+  direction: SortDirection!
+  field: JournalEntryTemplateSortField!
+}
+
+type JournalEntryTemplateCountableEdge {
+  cursor: String!
+  node: JournalEntryTemplate!
+}
+
+type JournalEntryTemplateCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [JournalEntryTemplateCountableEdge!]!
+}
+
+extend type Query {
+  JournalEntryTemplate(name: String!): JournalEntryTemplate!
+  JournalEntryTemplates(filter: [DBFilterInput], sortBy: JournalEntryTemplateSortingInput, before: String, after: String, first: Int, last: Int): JournalEntryTemplateCountableConnection!
+}

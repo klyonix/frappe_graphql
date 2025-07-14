@@ -1,0 +1,43 @@
+type WebsiteSidebar implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  title: String!
+  sidebar_items: [WebsiteSidebarItem!]!
+}
+
+enum WebsiteSidebarSortField {
+  NAME
+  CREATION
+  MODIFIED
+  TITLE
+}
+
+input WebsiteSidebarSortingInput {
+  direction: SortDirection!
+  field: WebsiteSidebarSortField!
+}
+
+type WebsiteSidebarCountableEdge {
+  cursor: String!
+  node: WebsiteSidebar!
+}
+
+type WebsiteSidebarCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [WebsiteSidebarCountableEdge!]!
+}
+
+extend type Query {
+  WebsiteSidebar(name: String!): WebsiteSidebar!
+  WebsiteSidebars(filter: [DBFilterInput], sortBy: WebsiteSidebarSortingInput, before: String, after: String, first: Int, last: Int): WebsiteSidebarCountableConnection!
+}

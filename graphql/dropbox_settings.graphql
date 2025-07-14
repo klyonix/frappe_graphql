@@ -1,0 +1,33 @@
+type DropboxSettings implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  enabled: Int
+  send_notifications_to: String!
+  send_email_for_successful_backup: Int
+  backup_frequency: DropboxSettingsBackupFrequencySelectOptions!
+  limit_no_of_backups: Int
+  no_of_backups: Int
+  file_backup: Int
+  app_access_key: String
+  app_secret_key: Password
+  dropbox_refresh_token: Password
+  dropbox_access_token: Password
+}
+
+enum DropboxSettingsBackupFrequencySelectOptions {
+  DAILY
+  WEEKLY
+}
+
+extend type Query {
+  DropboxSettings: DropboxSettings!
+}

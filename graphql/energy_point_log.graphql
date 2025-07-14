@@ -1,0 +1,64 @@
+type EnergyPointLog implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  user: User!
+  user__name: String
+  type: EnergyPointLogTypeSelectOptions
+  points: Int
+  rule: EnergyPointRule
+  rule__name: String
+  reference_doctype: DocType
+  reference_doctype__name: String
+  reference_name: String
+  reverted: Int
+  revert_of: EnergyPointLog
+  revert_of__name: String
+  reason: String
+  seen: Int
+}
+
+enum EnergyPointLogTypeSelectOptions {
+  AUTO
+  APPRECIATION
+  CRITICISM
+  REVIEW
+  REVERT
+}
+
+enum EnergyPointLogSortField {
+  NAME
+  CREATION
+  MODIFIED
+  USER
+  REFERENCE_NAME
+}
+
+input EnergyPointLogSortingInput {
+  direction: SortDirection!
+  field: EnergyPointLogSortField!
+}
+
+type EnergyPointLogCountableEdge {
+  cursor: String!
+  node: EnergyPointLog!
+}
+
+type EnergyPointLogCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [EnergyPointLogCountableEdge!]!
+}
+
+extend type Query {
+  EnergyPointLog(name: String!): EnergyPointLog!
+  EnergyPointLogs(filter: [DBFilterInput], sortBy: EnergyPointLogSortingInput, before: String, after: String, first: Int, last: Int): EnergyPointLogCountableConnection!
+}

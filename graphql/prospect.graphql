@@ -1,0 +1,61 @@
+type Prospect implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  company_name: String
+  customer_group: CustomerGroup
+  customer_group__name: String
+  no_of_employees: String
+  annual_revenue: Float
+  market_segment: MarketSegment
+  market_segment__name: String
+  industry: IndustryType
+  industry__name: String
+  territory: Territory
+  territory__name: String
+  prospect_owner: User
+  prospect_owner__name: String
+  website: String
+  fax: String
+  company: Company!
+  company__name: String
+  leads: [ProspectLead!]!
+  opportunities: [ProspectOpportunity!]!
+  notes: [CRMNote!]!
+}
+
+enum ProspectSortField {
+  NAME
+  CREATION
+  MODIFIED
+  COMPANY_NAME
+}
+
+input ProspectSortingInput {
+  direction: SortDirection!
+  field: ProspectSortField!
+}
+
+type ProspectCountableEdge {
+  cursor: String!
+  node: Prospect!
+}
+
+type ProspectCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [ProspectCountableEdge!]!
+}
+
+extend type Query {
+  Prospect(name: String!): Prospect!
+  Prospects(filter: [DBFilterInput], sortBy: ProspectSortingInput, before: String, after: String, first: Int, last: Int): ProspectCountableConnection!
+}

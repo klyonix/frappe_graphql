@@ -1,0 +1,50 @@
+type Package implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  package_name: String!
+  readme: String
+  license_type: PackageLicenseTypeSelectOptions
+  license: String
+}
+
+enum PackageLicenseTypeSelectOptions {
+  MIT_LICENSE
+  GNU_GENERAL_PUBLIC_LICENSE
+  GNU_AFFERO_GENERAL_PUBLIC_LICENSE
+}
+
+enum PackageSortField {
+  NAME
+  CREATION
+  MODIFIED
+}
+
+input PackageSortingInput {
+  direction: SortDirection!
+  field: PackageSortField!
+}
+
+type PackageCountableEdge {
+  cursor: String!
+  node: Package!
+}
+
+type PackageCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [PackageCountableEdge!]!
+}
+
+extend type Query {
+  Package(name: String!): Package!
+  Packages(filter: [DBFilterInput], sortBy: PackageSortingInput, before: String, after: String, first: Int, last: Int): PackageCountableConnection!
+}

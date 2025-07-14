@@ -1,0 +1,71 @@
+type Workstation implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  workstation_name: String!
+  workstation_type: WorkstationType
+  workstation_type__name: String
+  plant_floor: PlantFloor
+  plant_floor__name: String
+  production_capacity: Int!
+  warehouse: Warehouse
+  warehouse__name: String
+  status: WorkstationStatusSelectOptions
+  on_status_image: String
+  off_status_image: String
+  hour_rate_electricity: Float
+  hour_rate_consumable: Float
+  hour_rate_rent: Float
+  hour_rate_labour: Float
+  hour_rate: Float
+  description: String
+  holiday_list: HolidayList
+  holiday_list__name: String
+  working_hours: [WorkstationWorkingHour!]!
+  total_working_hours: Float
+}
+
+enum WorkstationStatusSelectOptions {
+  PRODUCTION
+  OFF
+  IDLE
+  PROBLEM
+  MAINTENANCE
+  SETUP
+}
+
+enum WorkstationSortField {
+  NAME
+  CREATION
+  MODIFIED
+  WORKSTATION_NAME
+}
+
+input WorkstationSortingInput {
+  direction: SortDirection!
+  field: WorkstationSortField!
+}
+
+type WorkstationCountableEdge {
+  cursor: String!
+  node: Workstation!
+}
+
+type WorkstationCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [WorkstationCountableEdge!]!
+}
+
+extend type Query {
+  Workstation(name: String!): Workstation!
+  Workstations(filter: [DBFilterInput], sortBy: WorkstationSortingInput, before: String, after: String, first: Int, last: Int): WorkstationCountableConnection!
+}

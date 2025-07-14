@@ -1,0 +1,50 @@
+type Operation implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  workstation: Workstation
+  workstation__name: String
+  is_corrective_operation: Int
+  create_job_card_based_on_batch_size: Int
+  quality_inspection_template: QualityInspectionTemplate
+  quality_inspection_template__name: String
+  batch_size: Int
+  sub_operations: [SubOperation!]!
+  total_operation_time: Float
+  description: String
+}
+
+enum OperationSortField {
+  NAME
+  CREATION
+  MODIFIED
+}
+
+input OperationSortingInput {
+  direction: SortDirection!
+  field: OperationSortField!
+}
+
+type OperationCountableEdge {
+  cursor: String!
+  node: Operation!
+}
+
+type OperationCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [OperationCountableEdge!]!
+}
+
+extend type Query {
+  Operation(name: String!): Operation!
+  Operations(filter: [DBFilterInput], sortBy: OperationSortingInput, before: String, after: String, first: Int, last: Int): OperationCountableConnection!
+}

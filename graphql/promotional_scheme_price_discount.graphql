@@ -1,0 +1,45 @@
+type PromotionalSchemePriceDiscount implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  disable: Int
+  apply_multiple_pricing_rules: Int
+  rule_description: String!
+  min_qty: Float
+  max_qty: Float
+  min_amount: Float
+  max_amount: Float
+  rate_or_discount: PromotionalSchemePriceDiscountDiscountTypeSelectOptions
+  rate: Float
+  discount_amount: Float
+  discount_percentage: Float
+  for_price_list: PriceList
+  for_price_list__name: String
+  warehouse: Warehouse
+  warehouse__name: String
+  threshold_percentage: Float
+  validate_applied_rule: Int
+  priority: String
+  apply_discount_on_rate: Int
+}
+
+extend type PromotionalSchemePriceDiscount {
+  whg_is_mrp_discount: Int
+  whg_is_ptr_discount: Int
+  whg_mrp_discount: Float
+  whg_ptr_discount: Float
+}
+
+enum PromotionalSchemePriceDiscountDiscountTypeSelectOptions {
+  RATE
+  DISCOUNT_PERCENTAGE
+  DISCOUNT_AMOUNT
+}

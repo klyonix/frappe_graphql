@@ -1,0 +1,45 @@
+type HelpCategory implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  category_name: String!
+  category_description: String
+  published: Int
+  help_articles: Int
+  route: String
+}
+
+enum HelpCategorySortField {
+  NAME
+  CREATION
+  MODIFIED
+}
+
+input HelpCategorySortingInput {
+  direction: SortDirection!
+  field: HelpCategorySortField!
+}
+
+type HelpCategoryCountableEdge {
+  cursor: String!
+  node: HelpCategory!
+}
+
+type HelpCategoryCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [HelpCategoryCountableEdge!]!
+}
+
+extend type Query {
+  HelpCategory(name: String!): HelpCategory!
+  HelpCategorys(filter: [DBFilterInput], sortBy: HelpCategorySortingInput, before: String, after: String, first: Int, last: Int): HelpCategoryCountableConnection!
+}

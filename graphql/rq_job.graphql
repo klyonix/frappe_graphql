@@ -1,0 +1,67 @@
+type RQJob implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  job_id: String
+  job_name: String
+  queue: RQJobQueueSelectOptions
+  timeout: String
+  arguments: String
+  status: RQJobStatusSelectOptions
+  time_taken: String
+  started_at: String
+  ended_at: String
+  exc_info: String
+}
+
+enum RQJobQueueSelectOptions {
+  DEFAULT
+  SHORT
+  LONG
+}
+
+enum RQJobStatusSelectOptions {
+  QUEUED
+  STARTED
+  FINISHED
+  FAILED
+  DEFERRED
+  SCHEDULED
+  CANCELED
+}
+
+enum RQJobSortField {
+  NAME
+  CREATION
+  MODIFIED
+  JOB_ID
+}
+
+input RQJobSortingInput {
+  direction: SortDirection!
+  field: RQJobSortField!
+}
+
+type RQJobCountableEdge {
+  cursor: String!
+  node: RQJob!
+}
+
+type RQJobCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [RQJobCountableEdge!]!
+}
+
+extend type Query {
+  RQJob(name: String!): RQJob!
+  RQJobs(filter: [DBFilterInput], sortBy: RQJobSortingInput, before: String, after: String, first: Int, last: Int): RQJobCountableConnection!
+}

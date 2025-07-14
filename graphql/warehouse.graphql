@@ -1,0 +1,75 @@
+type Warehouse implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  disabled: Int
+  warehouse_name: String!
+  is_group: Int
+  parent_warehouse: Warehouse
+  parent_warehouse__name: String
+  is_rejected_warehouse: Int
+  account: Account
+  account__name: String
+  company: Company!
+  company__name: String
+  email_id: String
+  phone_no: String
+  mobile_no: String
+  address_line_1: String
+  address_line_2: String
+  city: String
+  state: String
+  pin: String
+  warehouse_type: WarehouseType
+  warehouse_type__name: String
+  default_in_transit_warehouse: Warehouse
+  default_in_transit_warehouse__name: String
+  lft: Int
+  rgt: Int
+  old_parent: Warehouse
+  old_parent__name: String
+}
+
+extend type Warehouse {
+  fsl_abbr: String
+  fsl_dl_details: [DrugLicenseDetails!]!
+  fsl_fssai_details: [FSSAIDetails!]!
+  fsl_other_attachments: [Attachment!]!
+}
+
+enum WarehouseSortField {
+  NAME
+  CREATION
+  MODIFIED
+  PARENT_WAREHOUSE
+  COMPANY
+}
+
+input WarehouseSortingInput {
+  direction: SortDirection!
+  field: WarehouseSortField!
+}
+
+type WarehouseCountableEdge {
+  cursor: String!
+  node: Warehouse!
+}
+
+type WarehouseCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [WarehouseCountableEdge!]!
+}
+
+extend type Query {
+  Warehouse(name: String!): Warehouse!
+  Warehouses(filter: [DBFilterInput], sortBy: WarehouseSortingInput, before: String, after: String, first: Int, last: Int): WarehouseCountableConnection!
+}

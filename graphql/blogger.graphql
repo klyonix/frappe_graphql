@@ -1,0 +1,48 @@
+type Blogger implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  disabled: Int
+  short_name: String!
+  full_name: String!
+  user: User
+  user__name: String
+  bio: String
+  avatar: String
+}
+
+enum BloggerSortField {
+  NAME
+  CREATION
+  MODIFIED
+  SHORT_NAME
+}
+
+input BloggerSortingInput {
+  direction: SortDirection!
+  field: BloggerSortField!
+}
+
+type BloggerCountableEdge {
+  cursor: String!
+  node: Blogger!
+}
+
+type BloggerCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [BloggerCountableEdge!]!
+}
+
+extend type Query {
+  Blogger(name: String!): Blogger!
+  Bloggers(filter: [DBFilterInput], sortBy: BloggerSortingInput, before: String, after: String, first: Int, last: Int): BloggerCountableConnection!
+}

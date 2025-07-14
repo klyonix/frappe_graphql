@@ -1,0 +1,52 @@
+type DunningType implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  dunning_type: String!
+  is_default: Int
+  company: Company!
+  company__name: String
+  dunning_fee: Float
+  rate_of_interest: Float
+  dunning_letter_text: [DunningLetterText!]!
+  income_account: Account
+  income_account__name: String
+  cost_center: CostCenter
+  cost_center__name: String
+}
+
+enum DunningTypeSortField {
+  NAME
+  CREATION
+  MODIFIED
+  DUNNING_TYPE
+}
+
+input DunningTypeSortingInput {
+  direction: SortDirection!
+  field: DunningTypeSortField!
+}
+
+type DunningTypeCountableEdge {
+  cursor: String!
+  node: DunningType!
+}
+
+type DunningTypeCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [DunningTypeCountableEdge!]!
+}
+
+extend type Query {
+  DunningType(name: String!): DunningType!
+  DunningTypes(filter: [DBFilterInput], sortBy: DunningTypeSortingInput, before: String, after: String, first: Int, last: Int): DunningTypeCountableConnection!
+}

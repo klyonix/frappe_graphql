@@ -1,0 +1,42 @@
+type TaskType implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  weight: Float
+  description: String
+}
+
+enum TaskTypeSortField {
+  NAME
+  CREATION
+  MODIFIED
+}
+
+input TaskTypeSortingInput {
+  direction: SortDirection!
+  field: TaskTypeSortField!
+}
+
+type TaskTypeCountableEdge {
+  cursor: String!
+  node: TaskType!
+}
+
+type TaskTypeCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [TaskTypeCountableEdge!]!
+}
+
+extend type Query {
+  TaskType(name: String!): TaskType!
+  TaskTypes(filter: [DBFilterInput], sortBy: TaskTypeSortingInput, before: String, after: String, first: Int, last: Int): TaskTypeCountableConnection!
+}

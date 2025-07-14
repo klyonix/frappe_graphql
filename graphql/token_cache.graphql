@@ -1,0 +1,52 @@
+type TokenCache implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  user: User
+  user__name: String
+  connected_app: ConnectedApp
+  connected_app__name: String
+  provider_name: String
+  access_token: Password
+  refresh_token: Password
+  expires_in: Int
+  state: String
+  scopes: [OAuthScope!]!
+  success_uri: String
+  token_type: String
+}
+
+enum TokenCacheSortField {
+  NAME
+  CREATION
+  MODIFIED
+}
+
+input TokenCacheSortingInput {
+  direction: SortDirection!
+  field: TokenCacheSortField!
+}
+
+type TokenCacheCountableEdge {
+  cursor: String!
+  node: TokenCache!
+}
+
+type TokenCacheCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [TokenCacheCountableEdge!]!
+}
+
+extend type Query {
+  TokenCache(name: String!): TokenCache!
+  TokenCaches(filter: [DBFilterInput], sortBy: TokenCacheSortingInput, before: String, after: String, first: Int, last: Int): TokenCacheCountableConnection!
+}

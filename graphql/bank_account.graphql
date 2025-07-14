@@ -1,0 +1,66 @@
+type BankAccount implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  account_name: String!
+  account: Account
+  account__name: String
+  bank: Bank!
+  bank__name: String
+  account_type: BankAccountType
+  account_type__name: String
+  account_subtype: BankAccountSubtype
+  account_subtype__name: String
+  disabled: Int
+  is_default: Int
+  is_company_account: Int
+  company: Company
+  company__name: String
+  party_type: DocType
+  party_type__name: String
+  party: BaseDocType
+  party__name: String
+  iban: String
+  branch_code: String
+  bank_account_no: String
+  integration_id: String
+  last_integration_date: String
+  mask: String
+}
+
+enum BankAccountSortField {
+  NAME
+  CREATION
+  MODIFIED
+  COLUMN_BREAK_7
+  INTEGRATION_ID
+}
+
+input BankAccountSortingInput {
+  direction: SortDirection!
+  field: BankAccountSortField!
+}
+
+type BankAccountCountableEdge {
+  cursor: String!
+  node: BankAccount!
+}
+
+type BankAccountCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [BankAccountCountableEdge!]!
+}
+
+extend type Query {
+  BankAccount(name: String!): BankAccount!
+  BankAccounts(filter: [DBFilterInput], sortBy: BankAccountSortingInput, before: String, after: String, first: Int, last: Int): BankAccountCountableConnection!
+}
