@@ -1,0 +1,72 @@
+type EmailQueue implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  sender: String
+  recipients: [EmailQueueRecipient!]!
+  show_as_cc: String
+  message: String
+  status: EmailQueueStatusSelectOptions
+  error: String
+  message_id: String
+  reference_doctype: DocType
+  reference_doctype__name: String
+  reference_name: String
+  communication: Communication
+  communication__name: String
+  send_after: String
+  priority: Int
+  add_unsubscribe_link: Int
+  unsubscribe_param: String
+  unsubscribe_method: String
+  expose_recipients: String
+  attachments: String
+  retry: Int
+  email_account: EmailAccount
+  email_account__name: String
+}
+
+enum EmailQueueStatusSelectOptions {
+  NOT_SENT
+  SENDING
+  SENT
+  PARTIALLY_SENT
+  ERROR
+}
+
+enum EmailQueueSortField {
+  NAME
+  CREATION
+  MODIFIED
+  REFERENCE_NAME
+  COMMUNICATION
+}
+
+input EmailQueueSortingInput {
+  direction: SortDirection!
+  field: EmailQueueSortField!
+}
+
+type EmailQueueCountableEdge {
+  cursor: String!
+  node: EmailQueue!
+}
+
+type EmailQueueCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [EmailQueueCountableEdge!]!
+}
+
+extend type Query {
+  EmailQueue(name: String!): EmailQueue!
+  EmailQueues(filter: [DBFilterInput], sortBy: EmailQueueSortingInput, before: String, after: String, first: Int, last: Int): EmailQueueCountableConnection!
+}

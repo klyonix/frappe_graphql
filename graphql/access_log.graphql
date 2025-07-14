@@ -1,0 +1,51 @@
+type AccessLog implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  export_from: String
+  user: User
+  user__name: String
+  reference_document: String
+  timestamp: String
+  file_type: String
+  method: String
+  report_name: String
+  filters: String
+  page: String
+  columns: String
+}
+
+enum AccessLogSortField {
+  NAME
+  CREATION
+  MODIFIED
+}
+
+input AccessLogSortingInput {
+  direction: SortDirection!
+  field: AccessLogSortField!
+}
+
+type AccessLogCountableEdge {
+  cursor: String!
+  node: AccessLog!
+}
+
+type AccessLogCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [AccessLogCountableEdge!]!
+}
+
+extend type Query {
+  AccessLog(name: String!): AccessLog!
+  AccessLogs(filter: [DBFilterInput], sortBy: AccessLogSortingInput, before: String, after: String, first: Int, last: Int): AccessLogCountableConnection!
+}

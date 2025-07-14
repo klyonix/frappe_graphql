@@ -1,0 +1,63 @@
+type Recorder implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  path: String
+  number_of_queries: Int
+  time_in_queries: Float
+  method: RecorderMethodSelectOptions
+  cmd: String
+  time: String
+  duration: Float
+  event_type: String
+  request_headers: String
+  form_dict: String
+  suggested_indexes: [RecorderSuggestedIndex!]!
+  sql_queries: [RecorderQuery!]!
+  profile: String
+}
+
+enum RecorderMethodSelectOptions {
+  GET
+  POST
+  PUT
+  DELETE
+  PATCH
+  HEAD
+  OPTIONS
+}
+
+enum RecorderSortField {
+  NAME
+  CREATION
+  MODIFIED
+}
+
+input RecorderSortingInput {
+  direction: SortDirection!
+  field: RecorderSortField!
+}
+
+type RecorderCountableEdge {
+  cursor: String!
+  node: Recorder!
+}
+
+type RecorderCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [RecorderCountableEdge!]!
+}
+
+extend type Query {
+  Recorder(name: String!): Recorder!
+  Recorders(filter: [DBFilterInput], sortBy: RecorderSortingInput, before: String, after: String, first: Int, last: Int): RecorderCountableConnection!
+}

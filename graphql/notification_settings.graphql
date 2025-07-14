@@ -1,0 +1,53 @@
+type NotificationSettings implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  enabled: Int
+  subscribed_documents: [NotificationSubscribedDocument!]!
+  enable_email_notifications: Int
+  enable_email_mention: Int
+  enable_email_assignment: Int
+  enable_email_threads_on_assigned_document: Int
+  enable_email_energy_point: Int
+  enable_email_share: Int
+  enable_email_event_reminders: Int
+  user: User
+  user__name: String
+  seen: Int
+  energy_points_system_notifications: Int
+}
+
+enum NotificationSettingsSortField {
+  NAME
+  CREATION
+  MODIFIED
+}
+
+input NotificationSettingsSortingInput {
+  direction: SortDirection!
+  field: NotificationSettingsSortField!
+}
+
+type NotificationSettingsCountableEdge {
+  cursor: String!
+  node: NotificationSettings!
+}
+
+type NotificationSettingsCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [NotificationSettingsCountableEdge!]!
+}
+
+extend type Query {
+  NotificationSettings(name: String!): NotificationSettings!
+  NotificationSettingss(filter: [DBFilterInput], sortBy: NotificationSettingsSortingInput, before: String, after: String, first: Int, last: Int): NotificationSettingsCountableConnection!
+}

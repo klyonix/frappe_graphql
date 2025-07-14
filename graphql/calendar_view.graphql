@@ -1,0 +1,46 @@
+type CalendarView implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  reference_doctype: DocType!
+  reference_doctype__name: String
+  subject_field: String!
+  start_date_field: String!
+  end_date_field: String!
+  all_day: Int
+}
+
+enum CalendarViewSortField {
+  NAME
+  CREATION
+  MODIFIED
+}
+
+input CalendarViewSortingInput {
+  direction: SortDirection!
+  field: CalendarViewSortField!
+}
+
+type CalendarViewCountableEdge {
+  cursor: String!
+  node: CalendarView!
+}
+
+type CalendarViewCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [CalendarViewCountableEdge!]!
+}
+
+extend type Query {
+  CalendarView(name: String!): CalendarView!
+  CalendarViews(filter: [DBFilterInput], sortBy: CalendarViewSortingInput, before: String, after: String, first: Int, last: Int): CalendarViewCountableConnection!
+}

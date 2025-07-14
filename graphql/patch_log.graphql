@@ -1,0 +1,43 @@
+type PatchLog implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  patch: String
+  skipped: Int
+  traceback: String
+}
+
+enum PatchLogSortField {
+  NAME
+  CREATION
+  MODIFIED
+}
+
+input PatchLogSortingInput {
+  direction: SortDirection!
+  field: PatchLogSortField!
+}
+
+type PatchLogCountableEdge {
+  cursor: String!
+  node: PatchLog!
+}
+
+type PatchLogCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [PatchLogCountableEdge!]!
+}
+
+extend type Query {
+  PatchLog(name: String!): PatchLog!
+  PatchLogs(filter: [DBFilterInput], sortBy: PatchLogSortingInput, before: String, after: String, first: Int, last: Int): PatchLogCountableConnection!
+}

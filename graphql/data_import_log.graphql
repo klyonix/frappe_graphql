@@ -1,0 +1,48 @@
+type DataImportLog implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  data_import: DataImport
+  data_import__name: String
+  row_indexes: String
+  success: Int
+  docname: String
+  messages: String
+  exception: String
+  log_index: Int
+}
+
+enum DataImportLogSortField {
+  NAME
+  CREATION
+  MODIFIED
+}
+
+input DataImportLogSortingInput {
+  direction: SortDirection!
+  field: DataImportLogSortField!
+}
+
+type DataImportLogCountableEdge {
+  cursor: String!
+  node: DataImportLog!
+}
+
+type DataImportLogCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [DataImportLogCountableEdge!]!
+}
+
+extend type Query {
+  DataImportLog(name: String!): DataImportLog!
+  DataImportLogs(filter: [DBFilterInput], sortBy: DataImportLogSortingInput, before: String, after: String, first: Int, last: Int): DataImportLogCountableConnection!
+}

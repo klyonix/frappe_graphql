@@ -1,0 +1,43 @@
+type NetworkPrinterSettings implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  server_ip: String!
+  port: Int!
+  printer_name: String!
+}
+
+enum NetworkPrinterSettingsSortField {
+  NAME
+  CREATION
+  MODIFIED
+}
+
+input NetworkPrinterSettingsSortingInput {
+  direction: SortDirection!
+  field: NetworkPrinterSettingsSortField!
+}
+
+type NetworkPrinterSettingsCountableEdge {
+  cursor: String!
+  node: NetworkPrinterSettings!
+}
+
+type NetworkPrinterSettingsCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [NetworkPrinterSettingsCountableEdge!]!
+}
+
+extend type Query {
+  NetworkPrinterSettings(name: String!): NetworkPrinterSettings!
+  NetworkPrinterSettingss(filter: [DBFilterInput], sortBy: NetworkPrinterSettingsSortingInput, before: String, after: String, first: Int, last: Int): NetworkPrinterSettingsCountableConnection!
+}

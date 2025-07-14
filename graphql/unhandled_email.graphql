@@ -1,0 +1,46 @@
+type UnhandledEmail implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  email_account: EmailAccount
+  email_account__name: String
+  uid: String
+  reason: String
+  message_id: String
+  raw: String
+}
+
+enum UnhandledEmailSortField {
+  NAME
+  CREATION
+  MODIFIED
+}
+
+input UnhandledEmailSortingInput {
+  direction: SortDirection!
+  field: UnhandledEmailSortField!
+}
+
+type UnhandledEmailCountableEdge {
+  cursor: String!
+  node: UnhandledEmail!
+}
+
+type UnhandledEmailCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [UnhandledEmailCountableEdge!]!
+}
+
+extend type Query {
+  UnhandledEmail(name: String!): UnhandledEmail!
+  UnhandledEmails(filter: [DBFilterInput], sortBy: UnhandledEmailSortingInput, before: String, after: String, first: Int, last: Int): UnhandledEmailCountableConnection!
+}

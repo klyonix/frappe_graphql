@@ -1,0 +1,83 @@
+type WebForm implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  title: String!
+  route: String
+  published: Int
+  doc_type: DocType!
+  doc_type__name: String
+  module: ModuleDef
+  module__name: String
+  is_standard: Int
+  introduction_text: String
+  web_form_fields: [WebFormField!]!
+  anonymous: Int
+  login_required: Int
+  apply_document_permissions: Int
+  allow_edit: Int
+  allow_multiple: Int
+  allow_delete: Int
+  allow_incomplete: Int
+  allow_comments: Int
+  allow_print: Int
+  print_format: PrintFormat
+  print_format__name: String
+  max_attachment_size: Int
+  show_attachments: Int
+  allowed_embedding_domains: String
+  condition_json: String
+  show_list: Int
+  list_title: String
+  list_columns: [WebFormListColumn!]!
+  show_sidebar: Int
+  website_sidebar: WebsiteSidebar
+  website_sidebar__name: String
+  button_label: String
+  banner_image: String
+  breadcrumbs: String
+  success_title: String
+  success_url: String
+  success_message: String
+  meta_title: String
+  meta_description: String
+  meta_image: String
+  client_script: String
+  custom_css: String
+}
+
+enum WebFormSortField {
+  NAME
+  CREATION
+  MODIFIED
+  ROUTE
+}
+
+input WebFormSortingInput {
+  direction: SortDirection!
+  field: WebFormSortField!
+}
+
+type WebFormCountableEdge {
+  cursor: String!
+  node: WebForm!
+}
+
+type WebFormCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [WebFormCountableEdge!]!
+}
+
+extend type Query {
+  WebForm(name: String!): WebForm!
+  WebForms(filter: [DBFilterInput], sortBy: WebFormSortingInput, before: String, after: String, first: Int, last: Int): WebFormCountableConnection!
+}

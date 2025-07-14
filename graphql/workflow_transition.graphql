@@ -1,0 +1,25 @@
+type WorkflowTransition implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  state: WorkflowState!
+  state__name: String
+  action: WorkflowActionMaster!
+  action__name: String
+  next_state: WorkflowState!
+  next_state__name: String
+  allowed: Role!
+  allowed__name: String
+  allow_self_approval: Int
+  send_email_to_creator: Int
+  condition: String
+  workflow_builder_id: String
+}

@@ -1,0 +1,57 @@
+type HelpArticle implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  title: String!
+  category: HelpCategory!
+  category__name: String
+  published: Int
+  author: String
+  level: HelpArticleLevelSelectOptions
+  content: String!
+  likes: Int
+  route: String
+  helpful: Int
+  not_helpful: Int
+}
+
+enum HelpArticleLevelSelectOptions {
+  BEGINNER
+  INTERMEDIATE
+  EXPERT
+}
+
+enum HelpArticleSortField {
+  NAME
+  CREATION
+  MODIFIED
+}
+
+input HelpArticleSortingInput {
+  direction: SortDirection!
+  field: HelpArticleSortField!
+}
+
+type HelpArticleCountableEdge {
+  cursor: String!
+  node: HelpArticle!
+}
+
+type HelpArticleCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [HelpArticleCountableEdge!]!
+}
+
+extend type Query {
+  HelpArticle(name: String!): HelpArticle!
+  HelpArticles(filter: [DBFilterInput], sortBy: HelpArticleSortingInput, before: String, after: String, first: Int, last: Int): HelpArticleCountableConnection!
+}

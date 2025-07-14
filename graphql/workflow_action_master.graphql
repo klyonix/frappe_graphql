@@ -1,0 +1,42 @@
+type WorkflowActionMaster implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  workflow_action_name: String!
+}
+
+enum WorkflowActionMasterSortField {
+  NAME
+  CREATION
+  MODIFIED
+  WORKFLOW_ACTION_NAME
+}
+
+input WorkflowActionMasterSortingInput {
+  direction: SortDirection!
+  field: WorkflowActionMasterSortField!
+}
+
+type WorkflowActionMasterCountableEdge {
+  cursor: String!
+  node: WorkflowActionMaster!
+}
+
+type WorkflowActionMasterCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [WorkflowActionMasterCountableEdge!]!
+}
+
+extend type Query {
+  WorkflowActionMaster(name: String!): WorkflowActionMaster!
+  WorkflowActionMasters(filter: [DBFilterInput], sortBy: WorkflowActionMasterSortingInput, before: String, after: String, first: Int, last: Int): WorkflowActionMasterCountableConnection!
+}

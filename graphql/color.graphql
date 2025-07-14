@@ -1,0 +1,41 @@
+type Color implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  color: String!
+}
+
+enum ColorSortField {
+  NAME
+  CREATION
+  MODIFIED
+}
+
+input ColorSortingInput {
+  direction: SortDirection!
+  field: ColorSortField!
+}
+
+type ColorCountableEdge {
+  cursor: String!
+  node: Color!
+}
+
+type ColorCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [ColorCountableEdge!]!
+}
+
+extend type Query {
+  Color(name: String!): Color!
+  Colors(filter: [DBFilterInput], sortBy: ColorSortingInput, before: String, after: String, first: Int, last: Int): ColorCountableConnection!
+}

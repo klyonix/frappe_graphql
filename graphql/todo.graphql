@@ -1,0 +1,71 @@
+type ToDo implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  status: ToDoStatusSelectOptions
+  priority: ToDoPrioritySelectOptions
+  color: String
+  date: String
+  allocated_to: User
+  allocated_to__name: String
+  description: String!
+  reference_type: DocType
+  reference_type__name: String
+  reference_name: BaseDocType
+  reference_name__name: String
+  role: Role
+  role__name: String
+  assigned_by: User
+  assigned_by__name: String
+  assigned_by_full_name: String
+  sender: String
+  assignment_rule: AssignmentRule
+  assignment_rule__name: String
+}
+
+enum ToDoStatusSelectOptions {
+  OPEN
+  CLOSED
+  CANCELLED
+}
+
+enum ToDoPrioritySelectOptions {
+  HIGH
+  MEDIUM
+  LOW
+}
+
+enum ToDoSortField {
+  NAME
+  CREATION
+  MODIFIED
+}
+
+input ToDoSortingInput {
+  direction: SortDirection!
+  field: ToDoSortField!
+}
+
+type ToDoCountableEdge {
+  cursor: String!
+  node: ToDo!
+}
+
+type ToDoCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [ToDoCountableEdge!]!
+}
+
+extend type Query {
+  ToDo(name: String!): ToDo!
+  ToDoes(filter: [DBFilterInput], sortBy: ToDoSortingInput, before: String, after: String, first: Int, last: Int): ToDoCountableConnection!
+}

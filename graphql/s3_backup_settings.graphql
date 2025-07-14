@@ -1,0 +1,33 @@
+type S3BackupSettings implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  enabled: Int
+  access_key_id: String!
+  secret_access_key: Password!
+  notify_email: String!
+  send_email_for_successful_backup: Int
+  bucket: String!
+  endpoint_url: String
+  frequency: S3BackupSettingsBackupFrequencySelectOptions!
+  backup_files: Int
+}
+
+enum S3BackupSettingsBackupFrequencySelectOptions {
+  DAILY
+  WEEKLY
+  MONTHLY
+  NONE
+}
+
+extend type Query {
+  S3BackupSettings: S3BackupSettings!
+}

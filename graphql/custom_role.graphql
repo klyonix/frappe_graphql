@@ -1,0 +1,46 @@
+type CustomRole implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  page: Page
+  page__name: String
+  report: Report
+  report__name: String
+  roles: [HasRole!]!
+  ref_doctype: String
+}
+
+enum CustomRoleSortField {
+  NAME
+  CREATION
+  MODIFIED
+}
+
+input CustomRoleSortingInput {
+  direction: SortDirection!
+  field: CustomRoleSortField!
+}
+
+type CustomRoleCountableEdge {
+  cursor: String!
+  node: CustomRole!
+}
+
+type CustomRoleCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [CustomRoleCountableEdge!]!
+}
+
+extend type Query {
+  CustomRole(name: String!): CustomRole!
+  CustomRoles(filter: [DBFilterInput], sortBy: CustomRoleSortingInput, before: String, after: String, first: Int, last: Int): CustomRoleCountableConnection!
+}

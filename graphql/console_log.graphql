@@ -1,0 +1,43 @@
+type ConsoleLog implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  script: String
+  type: String
+  committed: Int
+}
+
+enum ConsoleLogSortField {
+  NAME
+  CREATION
+  MODIFIED
+}
+
+input ConsoleLogSortingInput {
+  direction: SortDirection!
+  field: ConsoleLogSortField!
+}
+
+type ConsoleLogCountableEdge {
+  cursor: String!
+  node: ConsoleLog!
+}
+
+type ConsoleLogCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [ConsoleLogCountableEdge!]!
+}
+
+extend type Query {
+  ConsoleLog(name: String!): ConsoleLog!
+  ConsoleLogs(filter: [DBFilterInput], sortBy: ConsoleLogSortingInput, before: String, after: String, first: Int, last: Int): ConsoleLogCountableConnection!
+}

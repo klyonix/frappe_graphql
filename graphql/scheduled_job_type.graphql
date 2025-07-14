@@ -1,0 +1,69 @@
+type ScheduledJobType implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  stopped: Int
+  method: String!
+  server_script: ServerScript
+  server_script__name: String
+  scheduler_event: SchedulerEvent
+  scheduler_event__name: String
+  frequency: ScheduledJobTypeFrequencySelectOptions!
+  cron_format: String
+  create_log: Int
+  last_execution: String
+  next_execution: String
+}
+
+enum ScheduledJobTypeFrequencySelectOptions {
+  ALL
+  HOURLY
+  HOURLY_LONG
+  HOURLY_MAINTENANCE
+  DAILY
+  DAILY_LONG
+  DAILY_MAINTENANCE
+  WEEKLY
+  WEEKLY_LONG
+  MONTHLY
+  MONTHLY_LONG
+  CRON
+  YEARLY
+  ANNUAL
+}
+
+enum ScheduledJobTypeSortField {
+  NAME
+  CREATION
+  MODIFIED
+  SERVER_SCRIPT
+}
+
+input ScheduledJobTypeSortingInput {
+  direction: SortDirection!
+  field: ScheduledJobTypeSortField!
+}
+
+type ScheduledJobTypeCountableEdge {
+  cursor: String!
+  node: ScheduledJobType!
+}
+
+type ScheduledJobTypeCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [ScheduledJobTypeCountableEdge!]!
+}
+
+extend type Query {
+  ScheduledJobType(name: String!): ScheduledJobType!
+  ScheduledJobTypes(filter: [DBFilterInput], sortBy: ScheduledJobTypeSortingInput, before: String, after: String, first: Int, last: Int): ScheduledJobTypeCountableConnection!
+}

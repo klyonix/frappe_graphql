@@ -1,0 +1,45 @@
+type DocTypeLayout implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  document_type: DocType!
+  document_type__name: String
+  route: String!
+  fields: [DocTypeLayoutField!]!
+  client_script: String
+}
+
+enum DocTypeLayoutSortField {
+  NAME
+  CREATION
+  MODIFIED
+}
+
+input DocTypeLayoutSortingInput {
+  direction: SortDirection!
+  field: DocTypeLayoutSortField!
+}
+
+type DocTypeLayoutCountableEdge {
+  cursor: String!
+  node: DocTypeLayout!
+}
+
+type DocTypeLayoutCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [DocTypeLayoutCountableEdge!]!
+}
+
+extend type Query {
+  DocTypeLayout(name: String!): DocTypeLayout!
+  DocTypeLayouts(filter: [DBFilterInput], sortBy: DocTypeLayoutSortingInput, before: String, after: String, first: Int, last: Int): DocTypeLayoutCountableConnection!
+}

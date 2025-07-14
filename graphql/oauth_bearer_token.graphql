@@ -1,0 +1,56 @@
+type OAuthBearerToken implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  client: OAuthClient
+  client__name: String
+  user: User
+  user__name: String
+  scopes: String
+  access_token: String
+  refresh_token: String
+  expiration_time: String
+  expires_in: Int
+  status: OAuthBearerTokenStatusSelectOptions
+}
+
+enum OAuthBearerTokenStatusSelectOptions {
+  ACTIVE
+  REVOKED
+}
+
+enum OAuthBearerTokenSortField {
+  NAME
+  CREATION
+  MODIFIED
+  ACCESS_TOKEN
+}
+
+input OAuthBearerTokenSortingInput {
+  direction: SortDirection!
+  field: OAuthBearerTokenSortField!
+}
+
+type OAuthBearerTokenCountableEdge {
+  cursor: String!
+  node: OAuthBearerToken!
+}
+
+type OAuthBearerTokenCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [OAuthBearerTokenCountableEdge!]!
+}
+
+extend type Query {
+  OAuthBearerToken(name: String!): OAuthBearerToken!
+  OAuthBearerTokens(filter: [DBFilterInput], sortBy: OAuthBearerTokenSortingInput, before: String, after: String, first: Int, last: Int): OAuthBearerTokenCountableConnection!
+}

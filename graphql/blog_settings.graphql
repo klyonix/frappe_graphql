@@ -1,0 +1,30 @@
+type BlogSettings implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  blog_title: String
+  blog_introduction: String
+  preview_image: String
+  enable_social_sharing: Int
+  allow_guest_to_comment: Int
+  browse_by_category: Int
+  show_cta_in_blog: Int
+  title: String
+  subtitle: String
+  cta_label: String
+  cta_url: String
+  like_limit: Int
+  comment_limit: Int
+}
+
+extend type Query {
+  BlogSettings: BlogSettings!
+}

@@ -1,0 +1,31 @@
+type ContactUsSettings implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  forward_to_email: String
+  heading: String
+  introduction: String
+  query_options: String
+  address_title: String
+  address_line1: String
+  address_line2: String
+  city: String
+  state: String
+  pincode: String
+  country: String
+  phone: String
+  email_id: String
+  skype: String
+}
+
+extend type Query {
+  ContactUsSettings: ContactUsSettings!
+}

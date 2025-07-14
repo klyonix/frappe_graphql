@@ -1,0 +1,31 @@
+type DocumentNamingSettings implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  transaction_type: String
+  naming_series_options: String
+  user_must_always_select: Int
+  try_naming_series: String
+  series_preview: String
+  prefix: String
+  current_value: Int
+  default_amend_naming: DocumentNamingSettingsDefaultAmendmentNamingSelectOptions!
+  amend_naming_override: [AmendedDocumentNamingSettings!]!
+}
+
+enum DocumentNamingSettingsDefaultAmendmentNamingSelectOptions {
+  AMEND_COUNTER
+  DEFAULT_NAMING
+}
+
+extend type Query {
+  DocumentNamingSettings: DocumentNamingSettings!
+}

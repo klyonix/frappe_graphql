@@ -1,0 +1,52 @@
+type ClientScript implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  dt: DocType!
+  dt__name: String
+  view: ClientScriptApplyToSelectOptions
+  module: ModuleDef
+  module__name: String
+  enabled: Int
+  script: String
+}
+
+enum ClientScriptApplyToSelectOptions {
+  LIST
+  FORM
+}
+
+enum ClientScriptSortField {
+  NAME
+  CREATION
+  MODIFIED
+}
+
+input ClientScriptSortingInput {
+  direction: SortDirection!
+  field: ClientScriptSortField!
+}
+
+type ClientScriptCountableEdge {
+  cursor: String!
+  node: ClientScript!
+}
+
+type ClientScriptCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [ClientScriptCountableEdge!]!
+}
+
+extend type Query {
+  ClientScript(name: String!): ClientScript!
+  ClientScripts(filter: [DBFilterInput], sortBy: ClientScriptSortingInput, before: String, after: String, first: Int, last: Int): ClientScriptCountableConnection!
+}

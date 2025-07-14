@@ -1,0 +1,62 @@
+type OAuthClient implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  client_id: String
+  app_name: String!
+  user: User
+  user__name: String
+  allowed_roles: [OAuthClientRole!]!
+  client_secret: String
+  skip_authorization: Int
+  scopes: String!
+  redirect_uris: String
+  default_redirect_uri: String!
+  grant_type: OAuthClientGrantTypeSelectOptions
+  response_type: OAuthClientResponseTypeSelectOptions
+}
+
+enum OAuthClientGrantTypeSelectOptions {
+  AUTHORIZATION_CODE
+  IMPLICIT
+}
+
+enum OAuthClientResponseTypeSelectOptions {
+  CODE
+  TOKEN
+}
+
+enum OAuthClientSortField {
+  NAME
+  CREATION
+  MODIFIED
+}
+
+input OAuthClientSortingInput {
+  direction: SortDirection!
+  field: OAuthClientSortField!
+}
+
+type OAuthClientCountableEdge {
+  cursor: String!
+  node: OAuthClient!
+}
+
+type OAuthClientCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [OAuthClientCountableEdge!]!
+}
+
+extend type Query {
+  OAuthClient(name: String!): OAuthClient!
+  OAuthClients(filter: [DBFilterInput], sortBy: OAuthClientSortingInput, before: String, after: String, first: Int, last: Int): OAuthClientCountableConnection!
+}

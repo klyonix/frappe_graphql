@@ -1,0 +1,73 @@
+type SocialLoginKey implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  enable_social_login: Int
+  social_login_provider: SocialLoginKeySocialLoginProviderSelectOptions
+  client_id: String
+  provider_name: String!
+  client_secret: Password
+  icon: String
+  base_url: String
+  sign_ups: SocialLoginKeySignUpsSelectOptions
+  authorize_url: String
+  access_token_url: String
+  redirect_url: String
+  api_endpoint: String
+  custom_base_url: Int
+  api_endpoint_args: String
+  auth_url_data: String
+  user_id_property: String
+}
+
+enum SocialLoginKeySocialLoginProviderSelectOptions {
+  CUSTOM
+  FACEBOOK
+  FRAPPE
+  GITHUB
+  GOOGLE
+  OFFICE_365
+  SALESFORCE
+  FAIRLOGIN
+  KEYCLOAK
+}
+
+enum SocialLoginKeySignUpsSelectOptions {
+  ALLOW
+  DENY
+}
+
+enum SocialLoginKeySortField {
+  NAME
+  CREATION
+  MODIFIED
+}
+
+input SocialLoginKeySortingInput {
+  direction: SortDirection!
+  field: SocialLoginKeySortField!
+}
+
+type SocialLoginKeyCountableEdge {
+  cursor: String!
+  node: SocialLoginKey!
+}
+
+type SocialLoginKeyCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [SocialLoginKeyCountableEdge!]!
+}
+
+extend type Query {
+  SocialLoginKey(name: String!): SocialLoginKey!
+  SocialLoginKeys(filter: [DBFilterInput], sortBy: SocialLoginKeySortingInput, before: String, after: String, first: Int, last: Int): SocialLoginKeyCountableConnection!
+}

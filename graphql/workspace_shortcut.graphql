@@ -1,0 +1,47 @@
+type WorkspaceShortcut implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  type: WorkspaceShortcutTypeSelectOptions!
+  link_to: BaseDocType
+  link_to__name: String
+  url: String
+  doc_view: WorkspaceShortcutDoctypeViewSelectOptions
+  kanban_board: KanbanBoard
+  kanban_board__name: String
+  label: String!
+  icon: String
+  restrict_to_domain: Domain
+  restrict_to_domain__name: String
+  report_ref_doctype: DocType
+  report_ref_doctype__name: String
+  stats_filter: String
+  color: String
+  format: String
+}
+
+enum WorkspaceShortcutTypeSelectOptions {
+  DOCTYPE
+  REPORT
+  PAGE
+  DASHBOARD
+  URL
+}
+
+enum WorkspaceShortcutDoctypeViewSelectOptions {
+  LIST
+  REPORT_BUILDER
+  DASHBOARD
+  TREE
+  NEW
+  CALENDAR
+  KANBAN
+}
