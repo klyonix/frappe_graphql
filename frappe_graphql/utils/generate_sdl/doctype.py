@@ -195,7 +195,7 @@ def get_graphql_type(meta, docfield, options: dict, generated_enums=None):
     string_fieldtypes = [
         "Small Text", "Long Text", "Code", "Text Editor", "Markdown Editor", "HTML Editor",
         "Date", "Datetime", "Time", "Text", "Data", "Rating", "Read Only",
-        "Attach", "Attach Image", "Signature", "Color", "Barcode", "Geolocation", "Duration"
+        "Attach", "Attach Image", "Signature", "Color", "Barcode", "Geolocation", "Duration", "Autocomplete", "Phone", "JSON", "Icon"
     ]
     int_fieldtypes = ["Int", "Long Int", "Check"]
     float_fieldtypes = ["Currency", "Float", "Percent"]
