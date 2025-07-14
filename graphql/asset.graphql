@@ -1,0 +1,141 @@
+type Asset implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  company: Company!
+  company__name: String
+  item_code: Item!
+  item_code__name: String
+  item_name: String
+  asset_owner: AssetAssetOwnerSelectOptions
+  asset_owner_company: Company
+  asset_owner_company__name: String
+  is_existing_asset: Int
+  is_composite_asset: Int
+  supplier: Supplier
+  supplier__name: String
+  customer: Customer
+  customer__name: String
+  image: String
+  journal_entry_for_scrap: JournalEntry
+  journal_entry_for_scrap__name: String
+  naming_series: String
+  asset_name: String!
+  asset_category: AssetCategory
+  asset_category__name: String
+  location: Location!
+  location__name: String
+  split_from: Asset
+  split_from__name: String
+  custodian: Employee
+  custodian__name: String
+  department: Department
+  department__name: String
+  disposal_date: String
+  cost_center: CostCenter
+  cost_center__name: String
+  purchase_receipt: PurchaseReceipt
+  purchase_receipt__name: String
+  purchase_receipt_item: String
+  purchase_invoice: PurchaseInvoice
+  purchase_invoice__name: String
+  purchase_invoice_item: String
+  purchase_date: String!
+  available_for_use_date: String
+  gross_purchase_amount: Float
+  asset_quantity: Int
+  additional_asset_cost: Float
+  total_asset_cost: Float
+  calculate_depreciation: Int
+  opening_accumulated_depreciation: Float
+  opening_number_of_booked_depreciations: Int
+  is_fully_depreciated: Int
+  finance_books: [AssetFinanceBook!]!
+  depreciation_method: AssetDepreciationMethodSelectOptions
+  value_after_depreciation: Float
+  total_number_of_depreciations: Int
+  frequency_of_depreciation: Int
+  next_depreciation_date: String
+  policy_number: String
+  insurer: String
+  insured_value: String
+  insurance_start_date: String
+  insurance_end_date: String
+  comprehensive_insurance: String
+  maintenance_required: Int
+  status: AssetStatusSelectOptions
+  booked_fixed_asset: Int
+  purchase_amount: Float
+  default_finance_book: FinanceBook
+  default_finance_book__name: String
+  depr_entry_posting_status: AssetDepreciationEntryPostingStatusSelectOptions
+  amended_from: Asset
+  amended_from__name: String
+}
+
+enum AssetAssetOwnerSelectOptions {
+  COMPANY
+  SUPPLIER
+  CUSTOMER
+}
+
+enum AssetDepreciationMethodSelectOptions {
+  STRAIGHT_LINE
+  DOUBLE_DECLINING_BALANCE
+  MANUAL
+}
+
+enum AssetStatusSelectOptions {
+  DRAFT
+  SUBMITTED
+  PARTIALLY_DEPRECIATED
+  FULLY_DEPRECIATED
+  SOLD
+  SCRAPPED
+  IN_MAINTENANCE
+  OUT_OF_ORDER
+  ISSUE
+  RECEIPT
+  CAPITALIZED
+  WORK_IN_PROGRESS
+}
+
+enum AssetDepreciationEntryPostingStatusSelectOptions {
+  SUCCESSFUL
+  FAILED
+}
+
+enum AssetSortField {
+  NAME
+  CREATION
+  MODIFIED
+}
+
+input AssetSortingInput {
+  direction: SortDirection!
+  field: AssetSortField!
+}
+
+type AssetCountableEdge {
+  cursor: String!
+  node: Asset!
+}
+
+type AssetCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [AssetCountableEdge!]!
+}
+
+extend type Query {
+  Asset(name: String!): Asset!
+  Assets(filter: [DBFilterInput], sortBy: AssetSortingInput, before: String, after: String, first: Int, last: Int): AssetCountableConnection!
+}

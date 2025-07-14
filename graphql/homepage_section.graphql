@@ -1,0 +1,50 @@
+type HomepageSection implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  section_based_on: HomepageSectionSectionBasedOnSelectOptions
+  section_cards: [HomepageSectionCard!]!
+  no_of_columns: String
+  section_html: String
+  section_order: Int
+}
+
+enum HomepageSectionSectionBasedOnSelectOptions {
+  CARDS
+  CUSTOM_HTML
+}
+
+enum HomepageSectionSortField {
+  NAME
+  CREATION
+  MODIFIED
+}
+
+input HomepageSectionSortingInput {
+  direction: SortDirection!
+  field: HomepageSectionSortField!
+}
+
+type HomepageSectionCountableEdge {
+  cursor: String!
+  node: HomepageSection!
+}
+
+type HomepageSectionCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [HomepageSectionCountableEdge!]!
+}
+
+extend type Query {
+  HomepageSection(name: String!): HomepageSection!
+  HomepageSections(filter: [DBFilterInput], sortBy: HomepageSectionSortingInput, before: String, after: String, first: Int, last: Int): HomepageSectionCountableConnection!
+}

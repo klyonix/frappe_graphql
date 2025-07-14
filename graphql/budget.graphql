@@ -1,0 +1,105 @@
+type Budget implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  naming_series: String!
+  budget_against: BudgetBudgetAgainstSelectOptions!
+  company: Company!
+  company__name: String
+  cost_center: CostCenter
+  cost_center__name: String
+  project: Project
+  project__name: String
+  fiscal_year: FiscalYear!
+  fiscal_year__name: String
+  monthly_distribution: MonthlyDistribution
+  monthly_distribution__name: String
+  amended_from: Budget
+  amended_from__name: String
+  applicable_on_material_request: Int
+  action_if_annual_budget_exceeded_on_mr: BudgetActionIfAnnualBudgetExceededOnMrSelectOptions
+  action_if_accumulated_monthly_budget_exceeded_on_mr: BudgetActionIfAccumulatedMonthlyBudgetExceededOnMrSelectOptions
+  applicable_on_purchase_order: Int
+  action_if_annual_budget_exceeded_on_po: BudgetActionIfAnnualBudgetExceededOnPoSelectOptions
+  action_if_accumulated_monthly_budget_exceeded_on_po: BudgetActionIfAccumulatedMonthlyBudgetExceededOnPoSelectOptions
+  applicable_on_booking_actual_expenses: Int
+  action_if_annual_budget_exceeded: BudgetActionIfAnnualBudgetExceededOnActualSelectOptions
+  action_if_accumulated_monthly_budget_exceeded: BudgetActionIfAccumulatedMonthlyBudgetExceededOnActualSelectOptions
+  accounts: [BudgetAccount!]!
+}
+
+enum BudgetBudgetAgainstSelectOptions {
+  COST_CENTER
+  PROJECT
+}
+
+enum BudgetActionIfAnnualBudgetExceededOnMrSelectOptions {
+  STOP
+  WARN
+  IGNORE
+}
+
+enum BudgetActionIfAccumulatedMonthlyBudgetExceededOnMrSelectOptions {
+  STOP
+  WARN
+  IGNORE
+}
+
+enum BudgetActionIfAnnualBudgetExceededOnPoSelectOptions {
+  STOP
+  WARN
+  IGNORE
+}
+
+enum BudgetActionIfAccumulatedMonthlyBudgetExceededOnPoSelectOptions {
+  STOP
+  WARN
+  IGNORE
+}
+
+enum BudgetActionIfAnnualBudgetExceededOnActualSelectOptions {
+  STOP
+  WARN
+  IGNORE
+}
+
+enum BudgetActionIfAccumulatedMonthlyBudgetExceededOnActualSelectOptions {
+  STOP
+  WARN
+  IGNORE
+}
+
+enum BudgetSortField {
+  NAME
+  CREATION
+  MODIFIED
+}
+
+input BudgetSortingInput {
+  direction: SortDirection!
+  field: BudgetSortField!
+}
+
+type BudgetCountableEdge {
+  cursor: String!
+  node: Budget!
+}
+
+type BudgetCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [BudgetCountableEdge!]!
+}
+
+extend type Query {
+  Budget(name: String!): Budget!
+  Budgets(filter: [DBFilterInput], sortBy: BudgetSortingInput, before: String, after: String, first: Int, last: Int): BudgetCountableConnection!
+}

@@ -1,0 +1,53 @@
+type AssetMaintenance implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  asset_name: Asset!
+  asset_name__name: String
+  asset_category: String
+  company: Company!
+  company__name: String
+  item_code: String
+  item_name: String
+  maintenance_team: AssetMaintenanceTeam!
+  maintenance_team__name: String
+  maintenance_manager: String
+  maintenance_manager_name: String
+  asset_maintenance_tasks: [AssetMaintenanceTask!]!
+}
+
+enum AssetMaintenanceSortField {
+  NAME
+  CREATION
+  MODIFIED
+  ASSET_NAME
+}
+
+input AssetMaintenanceSortingInput {
+  direction: SortDirection!
+  field: AssetMaintenanceSortField!
+}
+
+type AssetMaintenanceCountableEdge {
+  cursor: String!
+  node: AssetMaintenance!
+}
+
+type AssetMaintenanceCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [AssetMaintenanceCountableEdge!]!
+}
+
+extend type Query {
+  AssetMaintenance(name: String!): AssetMaintenance!
+  AssetMaintenances(filter: [DBFilterInput], sortBy: AssetMaintenanceSortingInput, before: String, after: String, first: Int, last: Int): AssetMaintenanceCountableConnection!
+}

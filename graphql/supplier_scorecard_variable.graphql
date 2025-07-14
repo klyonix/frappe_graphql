@@ -1,0 +1,47 @@
+type SupplierScorecardVariable implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  variable_label: String!
+  is_custom: Int!
+  param_name: String!
+  path: String!
+  description: String
+}
+
+enum SupplierScorecardVariableSortField {
+  NAME
+  CREATION
+  MODIFIED
+  VARIABLE_LABEL
+  PARAM_NAME
+}
+
+input SupplierScorecardVariableSortingInput {
+  direction: SortDirection!
+  field: SupplierScorecardVariableSortField!
+}
+
+type SupplierScorecardVariableCountableEdge {
+  cursor: String!
+  node: SupplierScorecardVariable!
+}
+
+type SupplierScorecardVariableCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [SupplierScorecardVariableCountableEdge!]!
+}
+
+extend type Query {
+  SupplierScorecardVariable(name: String!): SupplierScorecardVariable!
+  SupplierScorecardVariables(filter: [DBFilterInput], sortBy: SupplierScorecardVariableSortingInput, before: String, after: String, first: Int, last: Int): SupplierScorecardVariableCountableConnection!
+}

@@ -1,0 +1,41 @@
+type Branch implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  branch: String!
+}
+
+enum BranchSortField {
+  NAME
+  CREATION
+  MODIFIED
+}
+
+input BranchSortingInput {
+  direction: SortDirection!
+  field: BranchSortField!
+}
+
+type BranchCountableEdge {
+  cursor: String!
+  node: Branch!
+}
+
+type BranchCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [BranchCountableEdge!]!
+}
+
+extend type Query {
+  Branch(name: String!): Branch!
+  Branches(filter: [DBFilterInput], sortBy: BranchSortingInput, before: String, after: String, first: Int, last: Int): BranchCountableConnection!
+}

@@ -1,0 +1,82 @@
+type RequestforQuotation implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  naming_series: String!
+  company: Company!
+  company__name: String
+  billing_address: Address
+  billing_address__name: String
+  billing_address_display: String
+  vendor: Supplier
+  vendor__name: String
+  transaction_date: String!
+  schedule_date: String
+  status: RequestforQuotationStatusSelectOptions!
+  has_unit_price_items: Int
+  amended_from: RequestforQuotation
+  amended_from__name: String
+  suppliers: [RequestforQuotationSupplier!]!
+  items: [RequestforQuotationItem!]!
+  email_template: EmailTemplate
+  email_template__name: String
+  send_attached_files: Int
+  send_document_print: Int
+  message_for_supplier: String!
+  incoterm: Incoterm
+  incoterm__name: String
+  named_place: String
+  tc_name: TermsandConditions
+  tc_name__name: String
+  terms: String
+  select_print_heading: PrintHeading
+  select_print_heading__name: String
+  letter_head: LetterHead
+  letter_head__name: String
+  opportunity: Opportunity
+  opportunity__name: String
+}
+
+enum RequestforQuotationStatusSelectOptions {
+  DRAFT
+  SUBMITTED
+  CANCELLED
+}
+
+enum RequestforQuotationSortField {
+  NAME
+  CREATION
+  MODIFIED
+  COMPANY
+  TRANSACTION_DATE
+  STATUS
+}
+
+input RequestforQuotationSortingInput {
+  direction: SortDirection!
+  field: RequestforQuotationSortField!
+}
+
+type RequestforQuotationCountableEdge {
+  cursor: String!
+  node: RequestforQuotation!
+}
+
+type RequestforQuotationCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [RequestforQuotationCountableEdge!]!
+}
+
+extend type Query {
+  RequestforQuotation(name: String!): RequestforQuotation!
+  RequestsforQuotation(filter: [DBFilterInput], sortBy: RequestforQuotationSortingInput, before: String, after: String, first: Int, last: Int): RequestforQuotationCountableConnection!
+}

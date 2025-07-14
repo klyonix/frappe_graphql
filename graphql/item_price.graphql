@@ -1,0 +1,79 @@
+type ItemPrice implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  item_code: Item!
+  item_code__name: String
+  uom: UOM!
+  uom__name: String
+  packing_unit: Int
+  item_name: String
+  brand: Brand
+  brand__name: String
+  item_description: String
+  price_list: PriceList!
+  price_list__name: String
+  customer: Customer
+  customer__name: String
+  supplier: Supplier
+  supplier__name: String
+  batch_no: Batch
+  batch_no__name: String
+  buying: Int
+  selling: Int
+  currency: Currency
+  currency__name: String
+  price_list_rate: Float!
+  valid_from: String
+  lead_time_days: Int
+  valid_upto: String
+  note: String
+  reference: String
+}
+
+extend type ItemPrice {
+  whg_item_group: ItemGroup
+  whg_item_group__name: String
+  fsl_mrp: Float
+  fsl_ptr: Float
+  fsl_pts: Float
+  fsl_item_price_master: ItemPriceMaster
+  fsl_item_price_master__name: String
+}
+
+enum ItemPriceSortField {
+  NAME
+  CREATION
+  MODIFIED
+  ITEM_CODE
+  PRICE_LIST
+}
+
+input ItemPriceSortingInput {
+  direction: SortDirection!
+  field: ItemPriceSortField!
+}
+
+type ItemPriceCountableEdge {
+  cursor: String!
+  node: ItemPrice!
+}
+
+type ItemPriceCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [ItemPriceCountableEdge!]!
+}
+
+extend type Query {
+  ItemPrice(name: String!): ItemPrice!
+  ItemPrices(filter: [DBFilterInput], sortBy: ItemPriceSortingInput, before: String, after: String, first: Int, last: Int): ItemPriceCountableConnection!
+}

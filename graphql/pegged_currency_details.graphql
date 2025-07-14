@@ -1,0 +1,18 @@
+type PeggedCurrencyDetails implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  source_currency: Currency
+  source_currency__name: String
+  pegged_against: Currency
+  pegged_against__name: String
+  pegged_exchange_rate: String
+}

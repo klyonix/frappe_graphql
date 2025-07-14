@@ -1,0 +1,88 @@
+type MaintenanceVisit implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  naming_series: String!
+  customer: Customer!
+  customer__name: String
+  customer_name: String
+  address_display: String
+  contact_display: String
+  contact_mobile: String
+  contact_email: String
+  maintenance_schedule: MaintenanceSchedule
+  maintenance_schedule__name: String
+  maintenance_schedule_detail: MaintenanceScheduleDetail
+  maintenance_schedule_detail__name: String
+  mntc_date: String!
+  mntc_time: String
+  completion_status: MaintenanceVisitCompletionStatusSelectOptions!
+  maintenance_type: MaintenanceVisitMaintenanceTypeSelectOptions!
+  purposes: [MaintenanceVisitPurpose!]!
+  customer_feedback: String
+  status: MaintenanceVisitStatusSelectOptions!
+  amended_from: MaintenanceVisit
+  amended_from__name: String
+  company: Company!
+  company__name: String
+  customer_address: Address
+  customer_address__name: String
+  contact_person: Contact
+  contact_person__name: String
+  territory: Territory
+  territory__name: String
+  customer_group: CustomerGroup
+  customer_group__name: String
+}
+
+enum MaintenanceVisitCompletionStatusSelectOptions {
+  PARTIALLY_COMPLETED
+  FULLY_COMPLETED
+}
+
+enum MaintenanceVisitMaintenanceTypeSelectOptions {
+  SCHEDULED
+  UNSCHEDULED
+  BREAKDOWN
+}
+
+enum MaintenanceVisitStatusSelectOptions {
+  DRAFT
+  CANCELLED
+  SUBMITTED
+}
+
+enum MaintenanceVisitSortField {
+  NAME
+  CREATION
+  MODIFIED
+}
+
+input MaintenanceVisitSortingInput {
+  direction: SortDirection!
+  field: MaintenanceVisitSortField!
+}
+
+type MaintenanceVisitCountableEdge {
+  cursor: String!
+  node: MaintenanceVisit!
+}
+
+type MaintenanceVisitCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [MaintenanceVisitCountableEdge!]!
+}
+
+extend type Query {
+  MaintenanceVisit(name: String!): MaintenanceVisit!
+  MaintenanceVisits(filter: [DBFilterInput], sortBy: MaintenanceVisitSortingInput, before: String, after: String, first: Int, last: Int): MaintenanceVisitCountableConnection!
+}

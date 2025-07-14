@@ -1,0 +1,72 @@
+type InvoiceDiscounting implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  posting_date: String!
+  loan_start_date: String
+  loan_period: Int
+  loan_end_date: String
+  status: InvoiceDiscountingStatusSelectOptions
+  company: Company!
+  company__name: String
+  invoices: [DiscountedInvoice!]!
+  total_amount: Float
+  bank_charges: Float
+  short_term_loan: Account!
+  short_term_loan__name: String
+  bank_account: Account!
+  bank_account__name: String
+  bank_charges_account: Account!
+  bank_charges_account__name: String
+  accounts_receivable_credit: Account!
+  accounts_receivable_credit__name: String
+  accounts_receivable_discounted: Account!
+  accounts_receivable_discounted__name: String
+  accounts_receivable_unpaid: Account!
+  accounts_receivable_unpaid__name: String
+  amended_from: InvoiceDiscounting
+  amended_from__name: String
+}
+
+enum InvoiceDiscountingStatusSelectOptions {
+  DRAFT
+  SANCTIONED
+  DISBURSED
+  SETTLED
+  CANCELLED
+}
+
+enum InvoiceDiscountingSortField {
+  NAME
+  CREATION
+  MODIFIED
+}
+
+input InvoiceDiscountingSortingInput {
+  direction: SortDirection!
+  field: InvoiceDiscountingSortField!
+}
+
+type InvoiceDiscountingCountableEdge {
+  cursor: String!
+  node: InvoiceDiscounting!
+}
+
+type InvoiceDiscountingCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [InvoiceDiscountingCountableEdge!]!
+}
+
+extend type Query {
+  InvoiceDiscounting(name: String!): InvoiceDiscounting!
+  InvoiceDiscountings(filter: [DBFilterInput], sortBy: InvoiceDiscountingSortingInput, before: String, after: String, first: Int, last: Int): InvoiceDiscountingCountableConnection!
+}

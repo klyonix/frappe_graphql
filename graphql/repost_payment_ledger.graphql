@@ -1,0 +1,57 @@
+type RepostPaymentLedger implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  company: Company!
+  company__name: String
+  posting_date: String!
+  voucher_type: DocType
+  voucher_type__name: String
+  add_manually: Int
+  repost_status: RepostPaymentLedgerRepostStatusSelectOptions
+  repost_error_log: String
+  repost_vouchers: [RepostPaymentLedgerItems!]!
+  amended_from: RepostPaymentLedger
+  amended_from__name: String
+}
+
+enum RepostPaymentLedgerRepostStatusSelectOptions {
+  QUEUED
+  FAILED
+  COMPLETED
+}
+
+enum RepostPaymentLedgerSortField {
+  NAME
+  CREATION
+  MODIFIED
+}
+
+input RepostPaymentLedgerSortingInput {
+  direction: SortDirection!
+  field: RepostPaymentLedgerSortField!
+}
+
+type RepostPaymentLedgerCountableEdge {
+  cursor: String!
+  node: RepostPaymentLedger!
+}
+
+type RepostPaymentLedgerCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [RepostPaymentLedgerCountableEdge!]!
+}
+
+extend type Query {
+  RepostPaymentLedger(name: String!): RepostPaymentLedger!
+  RepostPaymentLedgers(filter: [DBFilterInput], sortBy: RepostPaymentLedgerSortingInput, before: String, after: String, first: Int, last: Int): RepostPaymentLedgerCountableConnection!
+}

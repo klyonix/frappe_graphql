@@ -1,0 +1,62 @@
+type QualityAction implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  corrective_preventive: QualityActionCorrectivePreventiveSelectOptions!
+  review: QualityReview
+  review__name: String
+  feedback: QualityFeedback
+  feedback__name: String
+  status: QualityActionStatusSelectOptions
+  date: String
+  goal: QualityGoal
+  goal__name: String
+  procedure: QualityProcedure
+  procedure__name: String
+  resolutions: [QualityActionResolution!]!
+}
+
+enum QualityActionCorrectivePreventiveSelectOptions {
+  CORRECTIVE
+  PREVENTIVE
+}
+
+enum QualityActionStatusSelectOptions {
+  OPEN
+  COMPLETED
+}
+
+enum QualityActionSortField {
+  NAME
+  CREATION
+  MODIFIED
+}
+
+input QualityActionSortingInput {
+  direction: SortDirection!
+  field: QualityActionSortField!
+}
+
+type QualityActionCountableEdge {
+  cursor: String!
+  node: QualityAction!
+}
+
+type QualityActionCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [QualityActionCountableEdge!]!
+}
+
+extend type Query {
+  QualityAction(name: String!): QualityAction!
+  QualityActions(filter: [DBFilterInput], sortBy: QualityActionSortingInput, before: String, after: String, first: Int, last: Int): QualityActionCountableConnection!
+}

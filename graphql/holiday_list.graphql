@@ -1,0 +1,60 @@
+type HolidayList implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  holiday_list_name: String!
+  from_date: String!
+  to_date: String!
+  total_holidays: Int
+  weekly_off: HolidayListWeeklyOffSelectOptions
+  country: String
+  subdivision: String
+  holidays: [Holiday!]!
+  color: String
+}
+
+enum HolidayListWeeklyOffSelectOptions {
+  SUNDAY
+  MONDAY
+  TUESDAY
+  WEDNESDAY
+  THURSDAY
+  FRIDAY
+  SATURDAY
+}
+
+enum HolidayListSortField {
+  NAME
+  CREATION
+  MODIFIED
+  HOLIDAY_LIST_NAME
+}
+
+input HolidayListSortingInput {
+  direction: SortDirection!
+  field: HolidayListSortField!
+}
+
+type HolidayListCountableEdge {
+  cursor: String!
+  node: HolidayList!
+}
+
+type HolidayListCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [HolidayListCountableEdge!]!
+}
+
+extend type Query {
+  HolidayList(name: String!): HolidayList!
+  HolidayLists(filter: [DBFilterInput], sortBy: HolidayListSortingInput, before: String, after: String, first: Int, last: Int): HolidayListCountableConnection!
+}

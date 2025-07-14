@@ -1,0 +1,56 @@
+type PutawayRule implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  disable: Int
+  item_code: Item!
+  item_code__name: String
+  item_name: String
+  warehouse: Warehouse!
+  warehouse__name: String
+  priority: Int
+  company: Company!
+  company__name: String
+  capacity: Float!
+  uom: UOM
+  uom__name: String
+  conversion_factor: Float
+  stock_uom: UOM
+  stock_uom__name: String
+  stock_capacity: Float
+}
+
+enum PutawayRuleSortField {
+  NAME
+  CREATION
+  MODIFIED
+}
+
+input PutawayRuleSortingInput {
+  direction: SortDirection!
+  field: PutawayRuleSortField!
+}
+
+type PutawayRuleCountableEdge {
+  cursor: String!
+  node: PutawayRule!
+}
+
+type PutawayRuleCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [PutawayRuleCountableEdge!]!
+}
+
+extend type Query {
+  PutawayRule(name: String!): PutawayRule!
+  PutawayRules(filter: [DBFilterInput], sortBy: PutawayRuleSortingInput, before: String, after: String, first: Int, last: Int): PutawayRuleCountableConnection!
+}

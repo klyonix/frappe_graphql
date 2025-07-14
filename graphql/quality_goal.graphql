@@ -1,0 +1,65 @@
+type QualityGoal implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  goal: String!
+  frequency: QualityGoalMonitoringFrequencySelectOptions
+  procedure: QualityProcedure
+  procedure__name: String
+  weekday: QualityGoalWeekdaySelectOptions
+  date: String
+  objectives: [QualityGoalObjective!]!
+}
+
+enum QualityGoalMonitoringFrequencySelectOptions {
+  NONE
+  DAILY
+  WEEKLY
+  MONTHLY
+  QUARTERLY
+}
+
+enum QualityGoalWeekdaySelectOptions {
+  MONDAY
+  TUESDAY
+  WEDNESDAY
+  THURSDAY
+  FRIDAY
+  SATURDAY
+}
+
+enum QualityGoalSortField {
+  NAME
+  CREATION
+  MODIFIED
+  GOAL
+}
+
+input QualityGoalSortingInput {
+  direction: SortDirection!
+  field: QualityGoalSortField!
+}
+
+type QualityGoalCountableEdge {
+  cursor: String!
+  node: QualityGoal!
+}
+
+type QualityGoalCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [QualityGoalCountableEdge!]!
+}
+
+extend type Query {
+  QualityGoal(name: String!): QualityGoal!
+  QualityGoals(filter: [DBFilterInput], sortBy: QualityGoalSortingInput, before: String, after: String, first: Int, last: Int): QualityGoalCountableConnection!
+}

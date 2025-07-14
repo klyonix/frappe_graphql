@@ -1,0 +1,43 @@
+type CustomsTariffNumber implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  tariff_number: String!
+  description: String
+}
+
+enum CustomsTariffNumberSortField {
+  NAME
+  CREATION
+  MODIFIED
+  TARIFF_NUMBER
+}
+
+input CustomsTariffNumberSortingInput {
+  direction: SortDirection!
+  field: CustomsTariffNumberSortField!
+}
+
+type CustomsTariffNumberCountableEdge {
+  cursor: String!
+  node: CustomsTariffNumber!
+}
+
+type CustomsTariffNumberCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [CustomsTariffNumberCountableEdge!]!
+}
+
+extend type Query {
+  CustomsTariffNumber(name: String!): CustomsTariffNumber!
+  CustomsTariffNumbers(filter: [DBFilterInput], sortBy: CustomsTariffNumberSortingInput, before: String, after: String, first: Int, last: Int): CustomsTariffNumberCountableConnection!
+}

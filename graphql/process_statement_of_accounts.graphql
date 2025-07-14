@@ -1,0 +1,119 @@
+type ProcessStatementOfAccounts implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  report: ProcessStatementOfAccountsReportSelectOptions!
+  from_date: String
+  posting_date: String
+  company: Company!
+  company__name: String
+  account: Account
+  account__name: String
+  categorize_by: String
+  cost_center: [PSOACostCenter!]!
+  territory: Territory
+  territory__name: String
+  ignore_exchange_rate_revaluation_journals: Int
+  ignore_cr_dr_notes: Int
+  to_date: String
+  finance_book: FinanceBook
+  finance_book__name: String
+  currency: Currency
+  currency__name: String
+  project: [PSOAProject!]!
+  payment_terms_template: PaymentTermsTemplate
+  payment_terms_template__name: String
+  sales_partner: SalesPartner
+  sales_partner__name: String
+  sales_person: SalesPerson
+  sales_person__name: String
+  show_remarks: Int
+  based_on_payment_terms: Int
+  customer_collection: ProcessStatementOfAccountsSelectCustomersBySelectOptions
+  collection_name: BaseDocType
+  collection_name__name: String
+  primary_mandatory: Int
+  show_net_values_in_party_account: Int
+  customers: [ProcessStatementOfAccountsCustomer!]!
+  orientation: ProcessStatementOfAccountsOrientationSelectOptions
+  include_break: Int
+  include_ageing: Int
+  ageing_based_on: ProcessStatementOfAccountsAgeingBasedOnSelectOptions
+  letter_head: LetterHead
+  letter_head__name: String
+  terms_and_conditions: TermsandConditions
+  terms_and_conditions__name: String
+  enable_auto_email: Int
+  sender: EmailAccount
+  sender__name: String
+  frequency: ProcessStatementOfAccountsFrequencySelectOptions
+  filter_duration: Int
+  start_date: String
+  pdf_name: String
+  subject: String
+  cc_to: [ProcessStatementOfAccountsCC!]!
+  body: String
+}
+
+enum ProcessStatementOfAccountsReportSelectOptions {
+  GENERAL_LEDGER
+  ACCOUNTS_RECEIVABLE
+}
+
+enum ProcessStatementOfAccountsSelectCustomersBySelectOptions {
+  CUSTOMER_GROUP
+  TERRITORY
+  SALES_PARTNER
+  SALES_PERSON
+}
+
+enum ProcessStatementOfAccountsOrientationSelectOptions {
+  LANDSCAPE
+  PORTRAIT
+}
+
+enum ProcessStatementOfAccountsAgeingBasedOnSelectOptions {
+  DUE_DATE
+  POSTING_DATE
+}
+
+enum ProcessStatementOfAccountsFrequencySelectOptions {
+  WEEKLY
+  MONTHLY
+  QUARTERLY
+}
+
+enum ProcessStatementOfAccountsSortField {
+  NAME
+  CREATION
+  MODIFIED
+}
+
+input ProcessStatementOfAccountsSortingInput {
+  direction: SortDirection!
+  field: ProcessStatementOfAccountsSortField!
+}
+
+type ProcessStatementOfAccountsCountableEdge {
+  cursor: String!
+  node: ProcessStatementOfAccounts!
+}
+
+type ProcessStatementOfAccountsCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [ProcessStatementOfAccountsCountableEdge!]!
+}
+
+extend type Query {
+  ProcessStatementOfAccounts(name: String!): ProcessStatementOfAccounts!
+  ProcessStatementOfAccountss(filter: [DBFilterInput], sortBy: ProcessStatementOfAccountsSortingInput, before: String, after: String, first: Int, last: Int): ProcessStatementOfAccountsCountableConnection!
+}

@@ -1,0 +1,43 @@
+type QualityFeedbackTemplate implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  template: String!
+  parameters: [QualityFeedbackTemplateParameter!]!
+}
+
+enum QualityFeedbackTemplateSortField {
+  NAME
+  CREATION
+  MODIFIED
+  TEMPLATE
+}
+
+input QualityFeedbackTemplateSortingInput {
+  direction: SortDirection!
+  field: QualityFeedbackTemplateSortField!
+}
+
+type QualityFeedbackTemplateCountableEdge {
+  cursor: String!
+  node: QualityFeedbackTemplate!
+}
+
+type QualityFeedbackTemplateCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [QualityFeedbackTemplateCountableEdge!]!
+}
+
+extend type Query {
+  QualityFeedbackTemplate(name: String!): QualityFeedbackTemplate!
+  QualityFeedbackTemplates(filter: [DBFilterInput], sortBy: QualityFeedbackTemplateSortingInput, before: String, after: String, first: Int, last: Int): QualityFeedbackTemplateCountableConnection!
+}

@@ -1,0 +1,77 @@
+type EmailDigest implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  enabled: Int
+  company: Company!
+  company__name: String
+  frequency: EmailDigestHowFrequentlySelectOptions!
+  next_send: String
+  recipients: [EmailDigestRecipient!]!
+  income: Int
+  expenses_booked: Int
+  income_year_to_date: Int
+  expense_year_to_date: Int
+  bank_balance: Int
+  credit_balance: Int
+  invoiced_amount: Int
+  payables: Int
+  sales_orders_to_bill: Int
+  purchase_orders_to_bill: Int
+  sales_order: Int
+  purchase_order: Int
+  sales_orders_to_deliver: Int
+  purchase_orders_to_receive: Int
+  sales_invoice: Int
+  purchase_invoice: Int
+  new_quotations: Int
+  pending_quotations: Int
+  issue: Int
+  project: Int
+  purchase_orders_items_overdue: Int
+  calendar_events: Int
+  todo_list: Int
+  notifications: Int
+  add_quote: Int
+}
+
+enum EmailDigestHowFrequentlySelectOptions {
+  DAILY
+  WEEKLY
+  MONTHLY
+}
+
+enum EmailDigestSortField {
+  NAME
+  CREATION
+  MODIFIED
+}
+
+input EmailDigestSortingInput {
+  direction: SortDirection!
+  field: EmailDigestSortField!
+}
+
+type EmailDigestCountableEdge {
+  cursor: String!
+  node: EmailDigest!
+}
+
+type EmailDigestCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [EmailDigestCountableEdge!]!
+}
+
+extend type Query {
+  EmailDigest(name: String!): EmailDigest!
+  EmailDigests(filter: [DBFilterInput], sortBy: EmailDigestSortingInput, before: String, after: String, first: Int, last: Int): EmailDigestCountableConnection!
+}

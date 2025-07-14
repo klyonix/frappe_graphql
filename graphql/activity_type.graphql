@@ -1,0 +1,44 @@
+type ActivityType implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  activity_type: String!
+  costing_rate: Float
+  billing_rate: Float
+  disabled: Int
+}
+
+enum ActivityTypeSortField {
+  NAME
+  CREATION
+  MODIFIED
+}
+
+input ActivityTypeSortingInput {
+  direction: SortDirection!
+  field: ActivityTypeSortField!
+}
+
+type ActivityTypeCountableEdge {
+  cursor: String!
+  node: ActivityType!
+}
+
+type ActivityTypeCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [ActivityTypeCountableEdge!]!
+}
+
+extend type Query {
+  ActivityType(name: String!): ActivityType!
+  ActivityTypes(filter: [DBFilterInput], sortBy: ActivityTypeSortingInput, before: String, after: String, first: Int, last: Int): ActivityTypeCountableConnection!
+}

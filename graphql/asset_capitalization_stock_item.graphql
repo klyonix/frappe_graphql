@@ -1,0 +1,33 @@
+type AssetCapitalizationStockItem implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  item_code: Item!
+  item_code__name: String
+  item_name: String
+  warehouse: Warehouse!
+  warehouse__name: String
+  purchase_receipt_item: String
+  stock_qty: Float
+  actual_qty: Float
+  valuation_rate: Float
+  amount: Float
+  stock_uom: UOM!
+  stock_uom__name: String
+  serial_and_batch_bundle: SerialandBatchBundle
+  serial_and_batch_bundle__name: String
+  use_serial_batch_fields: Int
+  serial_no: String
+  batch_no: Batch
+  batch_no__name: String
+  cost_center: CostCenter
+  cost_center__name: String
+}

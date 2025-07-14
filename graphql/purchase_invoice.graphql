@@ -1,0 +1,293 @@
+type PurchaseInvoice implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  title: String
+  naming_series: String!
+  supplier: Supplier!
+  supplier__name: String
+  supplier_name: String
+  tax_id: String
+  company: Company
+  company__name: String
+  posting_date: String!
+  posting_time: String
+  set_posting_time: Int
+  due_date: String
+  is_paid: Int
+  is_return: Int
+  return_against: PurchaseInvoice
+  return_against__name: String
+  update_outstanding_for_self: Int
+  update_billed_amount_in_purchase_order: Int
+  update_billed_amount_in_purchase_receipt: Int
+  apply_tds: Int
+  tax_withholding_category: TaxWithholdingCategory
+  tax_withholding_category__name: String
+  amended_from: PurchaseInvoice
+  amended_from__name: String
+  bill_no: String
+  bill_date: String
+  cost_center: CostCenter
+  cost_center__name: String
+  project: Project
+  project__name: String
+  currency: Currency
+  currency__name: String
+  conversion_rate: Float
+  use_transaction_date_exchange_rate: Int
+  buying_price_list: PriceList
+  buying_price_list__name: String
+  price_list_currency: Currency
+  price_list_currency__name: String
+  plc_conversion_rate: Float
+  ignore_pricing_rule: Int
+  scan_barcode: String
+  update_stock: Int
+  set_warehouse: Warehouse
+  set_warehouse__name: String
+  set_from_warehouse: Warehouse
+  set_from_warehouse__name: String
+  is_subcontracted: Int
+  rejected_warehouse: Warehouse
+  rejected_warehouse__name: String
+  supplier_warehouse: Warehouse
+  supplier_warehouse__name: String
+  items: [PurchaseInvoiceItem!]!
+  total_qty: Float
+  total_net_weight: Float
+  base_total: Float
+  base_net_total: Float
+  total: Float
+  net_total: Float
+  tax_withholding_net_total: Float
+  base_tax_withholding_net_total: Float
+  tax_category: TaxCategory
+  tax_category__name: String
+  taxes_and_charges: PurchaseTaxesandChargesTemplate
+  taxes_and_charges__name: String
+  shipping_rule: ShippingRule
+  shipping_rule__name: String
+  incoterm: Incoterm
+  incoterm__name: String
+  named_place: String
+  taxes: [PurchaseTaxesandCharges!]!
+  base_taxes_and_charges_added: Float
+  base_taxes_and_charges_deducted: Float
+  base_total_taxes_and_charges: Float
+  taxes_and_charges_added: Float
+  taxes_and_charges_deducted: Float
+  total_taxes_and_charges: Float
+  base_grand_total: Float
+  base_rounding_adjustment: Float
+  base_rounded_total: Float
+  base_in_words: String
+  grand_total: Float
+  rounding_adjustment: Float
+  use_company_roundoff_cost_center: Int
+  rounded_total: Float
+  in_words: String
+  total_advance: Float
+  outstanding_amount: Float
+  disable_rounded_total: Int
+  apply_discount_on: PurchaseInvoiceApplyAdditionalDiscountOnSelectOptions
+  base_discount_amount: Float
+  additional_discount_percentage: Float
+  discount_amount: Float
+  tax_withheld_vouchers: [TaxWithheldVouchers!]!
+  other_charges_calculation: String
+  pricing_rules: [PricingRuleDetail!]!
+  supplied_items: [PurchaseReceiptItemSupplied!]!
+  mode_of_payment: ModeofPayment
+  mode_of_payment__name: String
+  base_paid_amount: Float
+  clearance_date: String
+  cash_bank_account: Account
+  cash_bank_account__name: String
+  paid_amount: Float
+  allocate_advances_automatically: Int
+  only_include_allocated_payments: Int
+  advances: [PurchaseInvoiceAdvance!]!
+  advance_tax: [AdvanceTax!]!
+  write_off_amount: Float
+  base_write_off_amount: Float
+  write_off_account: Account
+  write_off_account__name: String
+  write_off_cost_center: CostCenter
+  write_off_cost_center__name: String
+  supplier_address: Address
+  supplier_address__name: String
+  address_display: String
+  contact_person: Contact
+  contact_person__name: String
+  contact_display: String
+  contact_mobile: String
+  contact_email: String
+  dispatch_address: Address
+  dispatch_address__name: String
+  dispatch_address_display: String
+  shipping_address: Address
+  shipping_address__name: String
+  shipping_address_display: String
+  billing_address: Address
+  billing_address__name: String
+  billing_address_display: String
+  payment_terms_template: PaymentTermsTemplate
+  payment_terms_template__name: String
+  ignore_default_payment_terms_template: Int
+  payment_schedule: [PaymentSchedule!]!
+  tc_name: TermsandConditions
+  tc_name__name: String
+  terms: String
+  status: PurchaseInvoiceStatusSelectOptions
+  per_received: Float
+  credit_to: Account!
+  credit_to__name: String
+  party_account_currency: Currency
+  party_account_currency__name: String
+  is_opening: PurchaseInvoiceIsOpeningEntrySelectOptions
+  against_expense_account: String
+  unrealized_profit_loss_account: Account
+  unrealized_profit_loss_account__name: String
+  subscription: Subscription
+  subscription__name: String
+  auto_repeat: AutoRepeat
+  auto_repeat__name: String
+  from_date: String
+  to_date: String
+  letter_head: LetterHead
+  letter_head__name: String
+  group_same_items: Int
+  select_print_heading: PrintHeading
+  select_print_heading__name: String
+  language: String
+  on_hold: Int
+  release_date: String
+  hold_comment: String
+  is_internal_supplier: Int
+  represents_company: Company
+  represents_company__name: String
+  supplier_group: SupplierGroup
+  supplier_group__name: String
+  inter_company_invoice_reference: SalesInvoice
+  inter_company_invoice_reference__name: String
+  is_old_subcontracting_flow: Int
+  remarks: String
+}
+
+extend type PurchaseInvoice {
+  ewaybill: String
+  fsl_dn: DebitNote
+  fsl_dn__name: String
+  fsl_ldn: LegacyDebitNote
+  fsl_ldn__name: String
+  is_reverse_charge: Int
+  gst_breakup_table: String
+  supplier_gstin: String
+  gst_category: String
+  company_gstin: String
+  place_of_supply: String
+  transporter: Supplier
+  transporter__name: String
+  gst_transporter_id: String
+  driver: Driver
+  driver__name: String
+  lr_no: String
+  vehicle_no: String
+  distance: Int
+  transporter_name: String
+  mode_of_transport: PurchaseInvoiceModeOfTransportSelectOptions
+  driver_name: String
+  lr_date: String
+  gst_vehicle_type: String
+  itc_classification: PurchaseInvoiceItcClassificationSelectOptions
+  ineligibility_reason: String
+  reconciliation_status: PurchaseInvoiceReconciliationStatusSelectOptions
+}
+
+enum PurchaseInvoiceApplyAdditionalDiscountOnSelectOptions {
+  GRAND_TOTAL
+  NET_TOTAL
+}
+
+enum PurchaseInvoiceStatusSelectOptions {
+  DRAFT
+  RETURN
+  DEBIT_NOTE_ISSUED
+  SUBMITTED
+  PAID
+  PARTLY_PAID
+  UNPAID
+  OVERDUE
+  CANCELLED
+  INTERNAL_TRANSFER
+}
+
+enum PurchaseInvoiceIsOpeningEntrySelectOptions {
+  NO
+  YES
+}
+
+enum PurchaseInvoiceModeOfTransportSelectOptions {
+  ROAD
+  AIR
+  RAIL
+  SHIP
+}
+
+enum PurchaseInvoiceItcClassificationSelectOptions {
+  INPUT_SERVICE_DISTRIBUTOR
+  IMPORT_OF_SERVICE
+  IMPORT_OF_GOODS
+  ITC_ON_REVERSE_CHARGE
+  ALL_OTHER_ITC
+}
+
+enum PurchaseInvoiceReconciliationStatusSelectOptions {
+  NOT_APPLICABLE
+  RECONCILED
+  UNRECONCILED
+  IGNORED
+  MATCH_FOUND
+}
+
+enum PurchaseInvoiceSortField {
+  NAME
+  CREATION
+  MODIFIED
+  SUPPLIER
+  POSTING_DATE
+  RETURN_AGAINST
+  BILL_NO
+  CREDIT_TO
+  RELEASE_DATE
+}
+
+input PurchaseInvoiceSortingInput {
+  direction: SortDirection!
+  field: PurchaseInvoiceSortField!
+}
+
+type PurchaseInvoiceCountableEdge {
+  cursor: String!
+  node: PurchaseInvoice!
+}
+
+type PurchaseInvoiceCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [PurchaseInvoiceCountableEdge!]!
+}
+
+extend type Query {
+  PurchaseInvoice(name: String!): PurchaseInvoice!
+  PurchaseInvoices(filter: [DBFilterInput], sortBy: PurchaseInvoiceSortingInput, before: String, after: String, first: Int, last: Int): PurchaseInvoiceCountableConnection!
+}

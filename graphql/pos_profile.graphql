@@ -1,0 +1,105 @@
+type POSProfile implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  company: Company!
+  company__name: String
+  customer: Customer
+  customer__name: String
+  country: String
+  disabled: Int
+  warehouse: Warehouse!
+  warehouse__name: String
+  campaign: Campaign
+  campaign__name: String
+  company_address: Address
+  company_address__name: String
+  applicable_for_users: [POSProfileUser!]!
+  payments: [POSPaymentMethod!]!
+  hide_images: Int
+  hide_unavailable_items: Int
+  auto_add_item_to_cart: Int
+  validate_stock_on_save: Int
+  print_receipt_on_order_complete: Int
+  update_stock: Int
+  ignore_pricing_rule: Int
+  allow_rate_change: Int
+  allow_discount_change: Int
+  disable_grand_total_to_default_mop: Int
+  allow_partial_payment: Int
+  item_groups: [POSItemGroup!]!
+  customer_groups: [POSCustomerGroup!]!
+  print_format: PrintFormat
+  print_format__name: String
+  letter_head: LetterHead
+  letter_head__name: String
+  tc_name: TermsandConditions
+  tc_name__name: String
+  select_print_heading: PrintHeading
+  select_print_heading__name: String
+  selling_price_list: PriceList
+  selling_price_list__name: String
+  currency: Currency!
+  currency__name: String
+  write_off_account: Account!
+  write_off_account__name: String
+  write_off_cost_center: CostCenter!
+  write_off_cost_center__name: String
+  write_off_limit: Float!
+  account_for_change_amount: Account
+  account_for_change_amount__name: String
+  disable_rounded_total: Int
+  income_account: Account
+  income_account__name: String
+  expense_account: Account
+  expense_account__name: String
+  taxes_and_charges: SalesTaxesandChargesTemplate
+  taxes_and_charges__name: String
+  tax_category: TaxCategory
+  tax_category__name: String
+  apply_discount_on: POSProfileApplyDiscountOnSelectOptions
+  cost_center: CostCenter
+  cost_center__name: String
+  project: Project
+  project__name: String
+}
+
+enum POSProfileApplyDiscountOnSelectOptions {
+  GRAND_TOTAL
+  NET_TOTAL
+}
+
+enum POSProfileSortField {
+  NAME
+  CREATION
+  MODIFIED
+}
+
+input POSProfileSortingInput {
+  direction: SortDirection!
+  field: POSProfileSortField!
+}
+
+type POSProfileCountableEdge {
+  cursor: String!
+  node: POSProfile!
+}
+
+type POSProfileCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [POSProfileCountableEdge!]!
+}
+
+extend type Query {
+  POSProfile(name: String!): POSProfile!
+  POSProfiles(filter: [DBFilterInput], sortBy: POSProfileSortingInput, before: String, after: String, first: Int, last: Int): POSProfileCountableConnection!
+}

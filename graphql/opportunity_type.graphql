@@ -1,0 +1,41 @@
+type OpportunityType implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  description: String
+}
+
+enum OpportunityTypeSortField {
+  NAME
+  CREATION
+  MODIFIED
+}
+
+input OpportunityTypeSortingInput {
+  direction: SortDirection!
+  field: OpportunityTypeSortField!
+}
+
+type OpportunityTypeCountableEdge {
+  cursor: String!
+  node: OpportunityType!
+}
+
+type OpportunityTypeCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [OpportunityTypeCountableEdge!]!
+}
+
+extend type Query {
+  OpportunityType(name: String!): OpportunityType!
+  OpportunityTypes(filter: [DBFilterInput], sortBy: OpportunityTypeSortingInput, before: String, after: String, first: Int, last: Int): OpportunityTypeCountableConnection!
+}

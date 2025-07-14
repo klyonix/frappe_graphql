@@ -1,0 +1,25 @@
+type CurrencyExchangeSettings implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  disabled: Int
+  service_provider: String!
+  api_endpoint: String!
+  use_http: Int
+  access_key: String
+  url: String
+  req_params: [CurrencyExchangeSettingsDetails!]!
+  result_key: [CurrencyExchangeSettingsResult!]!
+}
+
+extend type Query {
+  CurrencyExchangeSettings: CurrencyExchangeSettings!
+}

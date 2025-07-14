@@ -1,0 +1,24 @@
+type SalesInvoiceTimesheet implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  activity_type: ActivityType
+  activity_type__name: String
+  description: String
+  from_time: String
+  to_time: String
+  billing_hours: Float
+  billing_amount: Float
+  time_sheet: Timesheet
+  time_sheet__name: String
+  timesheet_detail: String
+  project_name: String
+}

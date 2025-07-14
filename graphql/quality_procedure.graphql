@@ -1,0 +1,52 @@
+type QualityProcedure implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  quality_procedure_name: String!
+  process_owner: User
+  process_owner__name: String
+  process_owner_full_name: String
+  processes: [QualityProcedureProcess!]!
+  parent_quality_procedure: QualityProcedure
+  parent_quality_procedure__name: String
+  is_group: Int
+  rgt: Int
+  lft: Int
+  old_parent: String
+}
+
+enum QualityProcedureSortField {
+  NAME
+  CREATION
+  MODIFIED
+  QUALITY_PROCEDURE_NAME
+}
+
+input QualityProcedureSortingInput {
+  direction: SortDirection!
+  field: QualityProcedureSortField!
+}
+
+type QualityProcedureCountableEdge {
+  cursor: String!
+  node: QualityProcedure!
+}
+
+type QualityProcedureCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [QualityProcedureCountableEdge!]!
+}
+
+extend type Query {
+  QualityProcedure(name: String!): QualityProcedure!
+  QualityProcedures(filter: [DBFilterInput], sortBy: QualityProcedureSortingInput, before: String, after: String, first: Int, last: Int): QualityProcedureCountableConnection!
+}

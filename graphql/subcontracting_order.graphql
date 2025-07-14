@@ -1,0 +1,124 @@
+type SubcontractingOrder implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  title: String
+  naming_series: String!
+  purchase_order: PurchaseOrder!
+  purchase_order__name: String
+  supplier: Supplier!
+  supplier__name: String
+  supplier_name: String!
+  supplier_warehouse: Warehouse!
+  supplier_warehouse__name: String
+  company: Company!
+  company__name: String
+  transaction_date: String!
+  schedule_date: String
+  amended_from: SubcontractingOrder
+  amended_from__name: String
+  cost_center: CostCenter
+  cost_center__name: String
+  project: Project
+  project__name: String
+  set_warehouse: Warehouse
+  set_warehouse__name: String
+  items: [SubcontractingOrderItem!]!
+  total_qty: Float
+  total: Float
+  service_items: [SubcontractingOrderServiceItem!]!
+  set_reserve_warehouse: Warehouse
+  set_reserve_warehouse__name: String
+  supplied_items: [SubcontractingOrderSuppliedItem!]!
+  supplier_address: Address
+  supplier_address__name: String
+  address_display: String
+  contact_person: Contact
+  contact_person__name: String
+  contact_display: String
+  contact_mobile: String
+  contact_email: String
+  shipping_address: Address
+  shipping_address__name: String
+  shipping_address_display: String
+  billing_address: Address
+  billing_address__name: String
+  billing_address_display: String
+  distribute_additional_costs_based_on: SubcontractingOrderDistributeAdditionalCostsBasedOnSelectOptions
+  additional_costs: [LandedCostTaxesandCharges!]!
+  total_additional_costs: Float
+  status: SubcontractingOrderStatusSelectOptions!
+  per_received: Float
+  select_print_heading: PrintHeading
+  select_print_heading__name: String
+  letter_head: LetterHead
+  letter_head__name: String
+}
+
+extend type SubcontractingOrder {
+  tax_category: TaxCategory
+  tax_category__name: String
+  taxes_and_charges: SalesTaxesandChargesTemplate
+  taxes_and_charges__name: String
+  taxes: [IndiaComplianceTaxesandCharges!]!
+  total_taxes: Float
+  base_grand_total: Float
+  supplier_gstin: String
+  gst_category: String
+  company_gstin: String
+  place_of_supply: String
+}
+
+enum SubcontractingOrderDistributeAdditionalCostsBasedOnSelectOptions {
+  QTY
+  AMOUNT
+}
+
+enum SubcontractingOrderStatusSelectOptions {
+  DRAFT
+  OPEN
+  PARTIALLY_RECEIVED
+  COMPLETED
+  MATERIAL_TRANSFERRED
+  PARTIAL_MATERIAL_TRANSFERRED
+  CANCELLED
+  CLOSED
+}
+
+enum SubcontractingOrderSortField {
+  NAME
+  CREATION
+  MODIFIED
+  SUPPLIER
+  TRANSACTION_DATE
+  STATUS
+}
+
+input SubcontractingOrderSortingInput {
+  direction: SortDirection!
+  field: SubcontractingOrderSortField!
+}
+
+type SubcontractingOrderCountableEdge {
+  cursor: String!
+  node: SubcontractingOrder!
+}
+
+type SubcontractingOrderCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [SubcontractingOrderCountableEdge!]!
+}
+
+extend type Query {
+  SubcontractingOrder(name: String!): SubcontractingOrder!
+  SubcontractingOrders(filter: [DBFilterInput], sortBy: SubcontractingOrderSortingInput, before: String, after: String, first: Int, last: Int): SubcontractingOrderCountableConnection!
+}

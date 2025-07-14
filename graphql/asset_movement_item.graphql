@@ -1,0 +1,26 @@
+type AssetMovementItem implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  company: Company
+  company__name: String
+  asset: Asset!
+  asset__name: String
+  source_location: Location
+  source_location__name: String
+  from_employee: Employee
+  from_employee__name: String
+  asset_name: String
+  target_location: Location
+  target_location__name: String
+  to_employee: Employee
+  to_employee__name: String
+}

@@ -1,0 +1,46 @@
+type AssetActivity implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  asset: Asset!
+  asset__name: String
+  date: String!
+  user: User!
+  user__name: String
+  subject: String!
+}
+
+enum AssetActivitySortField {
+  NAME
+  CREATION
+  MODIFIED
+}
+
+input AssetActivitySortingInput {
+  direction: SortDirection!
+  field: AssetActivitySortField!
+}
+
+type AssetActivityCountableEdge {
+  cursor: String!
+  node: AssetActivity!
+}
+
+type AssetActivityCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [AssetActivityCountableEdge!]!
+}
+
+extend type Query {
+  AssetActivity(name: String!): AssetActivity!
+  AssetActivitys(filter: [DBFilterInput], sortBy: AssetActivitySortingInput, before: String, after: String, first: Int, last: Int): AssetActivityCountableConnection!
+}

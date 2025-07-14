@@ -1,0 +1,119 @@
+type JobCard implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  naming_series: String!
+  work_order: WorkOrder!
+  work_order__name: String
+  bom_no: BOM
+  bom_no__name: String
+  production_item: Item
+  production_item__name: String
+  employee: [JobCardTimeLog!]!
+  posting_date: String
+  company: Company!
+  company__name: String
+  for_quantity: Float
+  total_completed_qty: Float
+  process_loss_qty: Float
+  expected_start_date: String
+  time_required: Float
+  expected_end_date: String
+  scheduled_time_logs: [JobCardScheduledTime!]!
+  time_logs: [JobCardTimeLog!]!
+  actual_start_date: String
+  total_time_in_mins: Float
+  actual_end_date: String
+  operation: Operation!
+  operation__name: String
+  wip_warehouse: Warehouse!
+  wip_warehouse__name: String
+  workstation_type: WorkstationType
+  workstation_type__name: String
+  workstation: Workstation!
+  workstation__name: String
+  quality_inspection_template: QualityInspectionTemplate
+  quality_inspection_template__name: String
+  quality_inspection: QualityInspection
+  quality_inspection__name: String
+  sub_operations: [JobCardOperation!]!
+  items: [JobCardItem!]!
+  scrap_items: [JobCardScrapItem!]!
+  for_job_card: JobCard
+  for_job_card__name: String
+  is_corrective_job_card: Int
+  hour_rate: Float
+  for_operation: Operation
+  for_operation__name: String
+  project: Project
+  project__name: String
+  item_name: String
+  transferred_qty: Float
+  requested_qty: Float
+  status: JobCardStatusSelectOptions
+  operation_row_number: String
+  operation_id: String
+  sequence_id: Int
+  remarks: String
+  serial_and_batch_bundle: SerialandBatchBundle
+  serial_and_batch_bundle__name: String
+  batch_no: Batch
+  batch_no__name: String
+  serial_no: String
+  barcode: String
+  job_started: Int
+  started_time: String
+  current_time: Int
+  amended_from: JobCard
+  amended_from__name: String
+}
+
+extend type JobCard {
+  whg_batch_no: String
+}
+
+enum JobCardStatusSelectOptions {
+  OPEN
+  WORK_IN_PROGRESS
+  MATERIAL_TRANSFERRED
+  ON_HOLD
+  SUBMITTED
+  CANCELLED
+  COMPLETED
+}
+
+enum JobCardSortField {
+  NAME
+  CREATION
+  MODIFIED
+  WORK_ORDER
+}
+
+input JobCardSortingInput {
+  direction: SortDirection!
+  field: JobCardSortField!
+}
+
+type JobCardCountableEdge {
+  cursor: String!
+  node: JobCard!
+}
+
+type JobCardCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [JobCardCountableEdge!]!
+}
+
+extend type Query {
+  JobCard(name: String!): JobCard!
+  JobCards(filter: [DBFilterInput], sortBy: JobCardSortingInput, before: String, after: String, first: Int, last: Int): JobCardCountableConnection!
+}

@@ -1,0 +1,28 @@
+type BankClearance implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  account: Account!
+  account__name: String
+  account_currency: Currency
+  account_currency__name: String
+  from_date: String!
+  to_date: String!
+  bank_account: BankAccount
+  bank_account__name: String
+  include_reconciled_entries: Int
+  include_pos_transactions: Int
+  payment_entries: [BankClearanceDetail!]!
+}
+
+extend type Query {
+  BankClearance: BankClearance!
+}

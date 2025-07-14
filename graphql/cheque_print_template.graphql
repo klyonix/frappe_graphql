@@ -1,0 +1,70 @@
+type ChequePrintTemplate implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  has_print_format: Int
+  bank_name: String!
+  cheque_size: ChequePrintTemplateChequeSizeSelectOptions
+  starting_position_from_top_edge: Float
+  cheque_width: Float
+  cheque_height: Float
+  scanned_cheque: String
+  is_account_payable: Int
+  acc_pay_dist_from_top_edge: Float
+  acc_pay_dist_from_left_edge: Float
+  message_to_show: String
+  date_dist_from_top_edge: Float
+  date_dist_from_left_edge: Float
+  payer_name_from_top_edge: Float
+  payer_name_from_left_edge: Float
+  amt_in_words_from_top_edge: Float
+  amt_in_words_from_left_edge: Float
+  amt_in_word_width: Float
+  amt_in_words_line_spacing: Float
+  amt_in_figures_from_top_edge: Float
+  amt_in_figures_from_left_edge: Float
+  acc_no_dist_from_top_edge: Float
+  acc_no_dist_from_left_edge: Float
+  signatory_from_top_edge: Float
+  signatory_from_left_edge: Float
+}
+
+enum ChequePrintTemplateChequeSizeSelectOptions {
+  REGULAR
+  A4
+}
+
+enum ChequePrintTemplateSortField {
+  NAME
+  CREATION
+  MODIFIED
+}
+
+input ChequePrintTemplateSortingInput {
+  direction: SortDirection!
+  field: ChequePrintTemplateSortField!
+}
+
+type ChequePrintTemplateCountableEdge {
+  cursor: String!
+  node: ChequePrintTemplate!
+}
+
+type ChequePrintTemplateCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [ChequePrintTemplateCountableEdge!]!
+}
+
+extend type Query {
+  ChequePrintTemplate(name: String!): ChequePrintTemplate!
+  ChequePrintTemplates(filter: [DBFilterInput], sortBy: ChequePrintTemplateSortingInput, before: String, after: String, first: Int, last: Int): ChequePrintTemplateCountableConnection!
+}

@@ -1,0 +1,75 @@
+type BuyingSettings implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  supp_master_name: BuyingSettingsSupplierNamingBySelectOptions
+  supplier_group: SupplierGroup
+  supplier_group__name: String
+  buying_price_list: PriceList
+  buying_price_list__name: String
+  maintain_same_rate_action: BuyingSettingsActionIfSameRateIsNotMaintainedSelectOptions
+  role_to_override_stop_action: Role
+  role_to_override_stop_action__name: String
+  po_required: BuyingSettingsIsPurchaseOrderRequiredForPurchaseInvoiceReceiptCreationSelectOptions
+  blanket_order_allowance: Float
+  pr_required: BuyingSettingsIsPurchaseReceiptRequiredForPurchaseInvoiceCreationSelectOptions
+  project_update_frequency: BuyingSettingsUpdateFrequencyOfProjectSelectOptions
+  set_landed_cost_based_on_purchase_invoice_rate: Int
+  allow_zero_qty_in_supplier_quotation: Int
+  use_transaction_date_exchange_rate: Int
+  allow_zero_qty_in_request_for_quotation: Int
+  maintain_same_rate: Int
+  allow_multiple_items: Int
+  bill_for_rejected_quantity_in_purchase_invoice: Int
+  set_valuation_rate_for_rejected_materials: Int
+  disable_last_purchase_rate: Int
+  show_pay_button: Int
+  allow_zero_qty_in_purchase_order: Int
+  backflush_raw_materials_of_subcontract_based_on: BuyingSettingsBackflushRawMaterialsOfSubcontractBasedOnSelectOptions
+  over_transfer_allowance: Float
+  auto_create_subcontracting_order: Int
+  auto_create_purchase_receipt: Int
+}
+
+enum BuyingSettingsSupplierNamingBySelectOptions {
+  SUPPLIER_NAME
+  NAMING_SERIES
+  AUTO_NAME
+}
+
+enum BuyingSettingsActionIfSameRateIsNotMaintainedSelectOptions {
+  STOP
+  WARN
+}
+
+enum BuyingSettingsIsPurchaseOrderRequiredForPurchaseInvoiceReceiptCreationSelectOptions {
+  NO
+  YES
+}
+
+enum BuyingSettingsIsPurchaseReceiptRequiredForPurchaseInvoiceCreationSelectOptions {
+  NO
+  YES
+}
+
+enum BuyingSettingsUpdateFrequencyOfProjectSelectOptions {
+  EACH_TRANSACTION
+  MANUAL
+}
+
+enum BuyingSettingsBackflushRawMaterialsOfSubcontractBasedOnSelectOptions {
+  BOM
+  MATERIAL_TRANSFERRED_FOR_SUBCONTRACT
+}
+
+extend type Query {
+  BuyingSettings: BuyingSettings!
+}

@@ -1,0 +1,37 @@
+type MaintenanceScheduleItem implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  item_code: Item!
+  item_code__name: String
+  item_name: String
+  description: String
+  start_date: String!
+  end_date: String!
+  periodicity: MaintenanceScheduleItemPeriodicitySelectOptions
+  no_of_visits: Int!
+  sales_person: SalesPerson
+  sales_person__name: String
+  serial_no: String
+  sales_order: SalesOrder
+  sales_order__name: String
+  serial_and_batch_bundle: SerialandBatchBundle
+  serial_and_batch_bundle__name: String
+}
+
+enum MaintenanceScheduleItemPeriodicitySelectOptions {
+  WEEKLY
+  MONTHLY
+  QUARTERLY
+  HALF_YEARLY
+  YEARLY
+  RANDOM
+}

@@ -1,0 +1,141 @@
+type Shipment implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  pickup_from_type: ShipmentPickupFromSelectOptions
+  pickup_company: Company
+  pickup_company__name: String
+  pickup_customer: Customer
+  pickup_customer__name: String
+  pickup_supplier: Supplier
+  pickup_supplier__name: String
+  pickup: String
+  pickup_address_name: Address!
+  pickup_address_name__name: String
+  pickup_address: String
+  pickup_contact_person: User
+  pickup_contact_person__name: String
+  pickup_contact_name: Contact
+  pickup_contact_name__name: String
+  pickup_contact_email: String
+  pickup_contact: String
+  delivery_to_type: ShipmentDeliveryToSelectOptions
+  delivery_company: Company
+  delivery_company__name: String
+  delivery_customer: Customer
+  delivery_customer__name: String
+  delivery_supplier: Supplier
+  delivery_supplier__name: String
+  delivery_to: String
+  delivery_address_name: Address!
+  delivery_address_name__name: String
+  delivery_address: String
+  delivery_contact_name: Contact
+  delivery_contact_name__name: String
+  delivery_contact_email: String
+  delivery_contact: String
+  shipment_parcel: [ShipmentParcel!]!
+  parcel_template: ShipmentParcelTemplate
+  parcel_template__name: String
+  total_weight: Float
+  shipment_delivery_note: [ShipmentDeliveryNote!]!
+  pallets: ShipmentPalletsSelectOptions
+  value_of_goods: Float!
+  pickup_date: String!
+  pickup_from: String!
+  pickup_to: String!
+  shipment_type: ShipmentShipmentTypeSelectOptions
+  pickup_type: ShipmentPickupTypeSelectOptions
+  incoterm: Incoterm
+  incoterm__name: String
+  description_of_content: String!
+  service_provider: String
+  shipment_id: String
+  shipment_amount: Float
+  status: ShipmentStatusSelectOptions
+  tracking_url: String
+  carrier: String
+  carrier_service: String
+  awb_number: String
+  tracking_status: ShipmentTrackingStatusSelectOptions
+  tracking_status_info: String
+  amended_from: Shipment
+  amended_from__name: String
+}
+
+enum ShipmentPickupFromSelectOptions {
+  COMPANY
+  CUSTOMER
+  SUPPLIER
+}
+
+enum ShipmentDeliveryToSelectOptions {
+  COMPANY
+  CUSTOMER
+  SUPPLIER
+}
+
+enum ShipmentPalletsSelectOptions {
+  NO
+  YES
+}
+
+enum ShipmentShipmentTypeSelectOptions {
+  GOODS
+  DOCUMENTS
+}
+
+enum ShipmentPickupTypeSelectOptions {
+  PICKUP
+  SELF_DELIVERY
+}
+
+enum ShipmentStatusSelectOptions {
+  DRAFT
+  SUBMITTED
+  BOOKED
+  CANCELLED
+  COMPLETED
+}
+
+enum ShipmentTrackingStatusSelectOptions {
+  IN_PROGRESS
+  DELIVERED
+  RETURNED
+  LOST
+}
+
+enum ShipmentSortField {
+  NAME
+  CREATION
+  MODIFIED
+}
+
+input ShipmentSortingInput {
+  direction: SortDirection!
+  field: ShipmentSortField!
+}
+
+type ShipmentCountableEdge {
+  cursor: String!
+  node: Shipment!
+}
+
+type ShipmentCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [ShipmentCountableEdge!]!
+}
+
+extend type Query {
+  Shipment(name: String!): Shipment!
+  Shipments(filter: [DBFilterInput], sortBy: ShipmentSortingInput, before: String, after: String, first: Int, last: Int): ShipmentCountableConnection!
+}

@@ -1,0 +1,90 @@
+type TaxCategory implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  title: String!
+  disabled: Int
+}
+
+extend type TaxCategory {
+  is_inter_state: Int
+  is_reverse_charge: Int
+  gst_state: TaxCategorySourceStateSelectOptions
+}
+
+enum TaxCategorySourceStateSelectOptions {
+  ANDAMAN_AND_NICOBAR_ISLANDS
+  ANDHRA_PRADESH
+  ARUNACHAL_PRADESH
+  ASSAM
+  BIHAR
+  CHANDIGARH
+  CHHATTISGARH
+  DADRA_AND_NAGAR_HAVELI_AND_DAMAN_AND_DIU
+  DELHI
+  GOA
+  GUJARAT
+  HARYANA
+  HIMACHAL_PRADESH
+  JAMMU_AND_KASHMIR
+  JHARKHAND
+  KARNATAKA
+  KERALA
+  LADAKH
+  LAKSHADWEEP_ISLANDS
+  MADHYA_PRADESH
+  MAHARASHTRA
+  MANIPUR
+  MEGHALAYA
+  MIZORAM
+  NAGALAND
+  ODISHA
+  OTHER_COUNTRIES
+  OTHER_TERRITORY
+  PUDUCHERRY
+  PUNJAB
+  RAJASTHAN
+  SIKKIM
+  TAMIL_NADU
+  TELANGANA
+  TRIPURA
+  UTTAR_PRADESH
+  UTTARAKHAND
+  WEST_BENGAL
+}
+
+enum TaxCategorySortField {
+  NAME
+  CREATION
+  MODIFIED
+  TITLE
+}
+
+input TaxCategorySortingInput {
+  direction: SortDirection!
+  field: TaxCategorySortField!
+}
+
+type TaxCategoryCountableEdge {
+  cursor: String!
+  node: TaxCategory!
+}
+
+type TaxCategoryCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [TaxCategoryCountableEdge!]!
+}
+
+extend type Query {
+  TaxCategory(name: String!): TaxCategory!
+  TaxCategorys(filter: [DBFilterInput], sortBy: TaxCategorySortingInput, before: String, after: String, first: Int, last: Int): TaxCategoryCountableConnection!
+}

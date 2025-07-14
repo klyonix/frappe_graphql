@@ -1,0 +1,82 @@
+type TaxRule implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  tax_type: TaxRuleTaxTypeSelectOptions
+  use_for_shopping_cart: Int
+  sales_tax_template: SalesTaxesandChargesTemplate
+  sales_tax_template__name: String
+  purchase_tax_template: PurchaseTaxesandChargesTemplate
+  purchase_tax_template__name: String
+  customer: Customer
+  customer__name: String
+  supplier: Supplier
+  supplier__name: String
+  item: Item
+  item__name: String
+  billing_city: String
+  billing_county: String
+  billing_state: String
+  billing_zipcode: String
+  billing_country: Country
+  billing_country__name: String
+  tax_category: TaxCategory
+  tax_category__name: String
+  customer_group: CustomerGroup
+  customer_group__name: String
+  supplier_group: SupplierGroup
+  supplier_group__name: String
+  item_group: ItemGroup
+  item_group__name: String
+  shipping_city: String
+  shipping_county: String
+  shipping_state: String
+  shipping_zipcode: String
+  shipping_country: Country
+  shipping_country__name: String
+  from_date: String
+  to_date: String
+  priority: Int
+  company: Company
+  company__name: String
+}
+
+enum TaxRuleTaxTypeSelectOptions {
+  SALES
+  PURCHASE
+}
+
+enum TaxRuleSortField {
+  NAME
+  CREATION
+  MODIFIED
+}
+
+input TaxRuleSortingInput {
+  direction: SortDirection!
+  field: TaxRuleSortField!
+}
+
+type TaxRuleCountableEdge {
+  cursor: String!
+  node: TaxRule!
+}
+
+type TaxRuleCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [TaxRuleCountableEdge!]!
+}
+
+extend type Query {
+  TaxRule(name: String!): TaxRule!
+  TaxRules(filter: [DBFilterInput], sortBy: TaxRuleSortingInput, before: String, after: String, first: Int, last: Int): TaxRuleCountableConnection!
+}

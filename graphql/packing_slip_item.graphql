@@ -1,0 +1,28 @@
+type PackingSlipItem implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  item_code: Item!
+  item_code__name: String
+  item_name: String
+  batch_no: Batch
+  batch_no__name: String
+  description: String
+  qty: Float!
+  net_weight: Float
+  stock_uom: UOM
+  stock_uom__name: String
+  weight_uom: UOM
+  weight_uom__name: String
+  page_break: Int
+  dn_detail: String
+  pi_detail: String
+}

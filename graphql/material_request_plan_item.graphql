@@ -1,0 +1,45 @@
+type MaterialRequestPlanItem implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  item_code: Item!
+  item_code__name: String
+  from_warehouse: Warehouse
+  from_warehouse__name: String
+  warehouse: Warehouse!
+  warehouse__name: String
+  item_name: String
+  material_request_type: MaterialRequestPlanItemTypeSelectOptions
+  quantity: Float!
+  required_bom_qty: Float
+  schedule_date: String
+  uom: UOM
+  uom__name: String
+  conversion_factor: Float
+  description: String
+  min_order_qty: Float
+  sales_order: SalesOrder
+  sales_order__name: String
+  actual_qty: Float
+  requested_qty: Float
+  reserved_qty_for_production: Float
+  ordered_qty: Float
+  projected_qty: Float
+  safety_stock: Float
+}
+
+enum MaterialRequestPlanItemTypeSelectOptions {
+  PURCHASE
+  MATERIAL_TRANSFER
+  MATERIAL_ISSUE
+  MANUFACTURE
+  CUSTOMER_PROVIDED
+}

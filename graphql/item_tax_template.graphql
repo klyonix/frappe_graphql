@@ -1,0 +1,50 @@
+type ItemTaxTemplate implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  title: String!
+  company: Company!
+  company__name: String
+  disabled: Int
+  taxes: [ItemTaxTemplateDetail!]!
+}
+
+extend type ItemTaxTemplate {
+  gst_treatment: String
+  gst_rate: Float
+}
+
+enum ItemTaxTemplateSortField {
+  NAME
+  CREATION
+  MODIFIED
+}
+
+input ItemTaxTemplateSortingInput {
+  direction: SortDirection!
+  field: ItemTaxTemplateSortField!
+}
+
+type ItemTaxTemplateCountableEdge {
+  cursor: String!
+  node: ItemTaxTemplate!
+}
+
+type ItemTaxTemplateCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [ItemTaxTemplateCountableEdge!]!
+}
+
+extend type Query {
+  ItemTaxTemplate(name: String!): ItemTaxTemplate!
+  ItemTaxTemplates(filter: [DBFilterInput], sortBy: ItemTaxTemplateSortingInput, before: String, after: String, first: Int, last: Int): ItemTaxTemplateCountableConnection!
+}

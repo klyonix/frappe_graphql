@@ -1,0 +1,63 @@
+type SupplierScorecard implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  supplier: Supplier
+  supplier__name: String
+  supplier_score: String
+  indicator_color: String
+  status: String
+  period: SupplierScorecardEvaluationPeriodSelectOptions!
+  weighting_function: String!
+  standings: [SupplierScorecardScoringStanding!]!
+  criteria: [SupplierScorecardScoringCriteria!]!
+  warn_rfqs: Int
+  warn_pos: Int
+  prevent_rfqs: Int
+  prevent_pos: Int
+  notify_supplier: Int
+  notify_employee: Int
+  employee: Employee
+  employee__name: String
+}
+
+enum SupplierScorecardEvaluationPeriodSelectOptions {
+  PER_WEEK
+  PER_MONTH
+  PER_YEAR
+}
+
+enum SupplierScorecardSortField {
+  NAME
+  CREATION
+  MODIFIED
+}
+
+input SupplierScorecardSortingInput {
+  direction: SortDirection!
+  field: SupplierScorecardSortField!
+}
+
+type SupplierScorecardCountableEdge {
+  cursor: String!
+  node: SupplierScorecard!
+}
+
+type SupplierScorecardCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [SupplierScorecardCountableEdge!]!
+}
+
+extend type Query {
+  SupplierScorecard(name: String!): SupplierScorecard!
+  SupplierScorecards(filter: [DBFilterInput], sortBy: SupplierScorecardSortingInput, before: String, after: String, first: Int, last: Int): SupplierScorecardCountableConnection!
+}

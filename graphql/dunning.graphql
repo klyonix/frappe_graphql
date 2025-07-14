@@ -1,0 +1,93 @@
+type Dunning implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  naming_series: String
+  customer: Customer!
+  customer__name: String
+  customer_name: String
+  company: Company!
+  company__name: String
+  posting_date: String!
+  posting_time: String
+  status: DunningStatusSelectOptions
+  currency: Currency
+  currency__name: String
+  conversion_rate: Float
+  dunning_type: DunningType
+  dunning_type__name: String
+  rate_of_interest: Float
+  overdue_payments: [OverduePayment!]!
+  total_interest: Float
+  dunning_fee: Float
+  dunning_amount: Float
+  base_dunning_amount: Float
+  spacer: String
+  total_outstanding: Float
+  grand_total: Float
+  language: Language
+  language__name: String
+  body_text: String
+  letter_head: LetterHead
+  letter_head__name: String
+  closing_text: String
+  income_account: Account
+  income_account__name: String
+  cost_center: CostCenter
+  cost_center__name: String
+  amended_from: Dunning
+  amended_from__name: String
+  customer_address: Address
+  customer_address__name: String
+  address_display: String
+  contact_person: Contact
+  contact_person__name: String
+  contact_display: String
+  contact_mobile: String
+  contact_email: String
+  company_address: Address
+  company_address__name: String
+  company_address_display: String
+}
+
+enum DunningStatusSelectOptions {
+  DRAFT
+  RESOLVED
+  UNRESOLVED
+  CANCELLED
+}
+
+enum DunningSortField {
+  NAME
+  CREATION
+  MODIFIED
+}
+
+input DunningSortingInput {
+  direction: SortDirection!
+  field: DunningSortField!
+}
+
+type DunningCountableEdge {
+  cursor: String!
+  node: Dunning!
+}
+
+type DunningCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [DunningCountableEdge!]!
+}
+
+extend type Query {
+  Dunning(name: String!): Dunning!
+  Dunnings(filter: [DBFilterInput], sortBy: DunningSortingInput, before: String, after: String, first: Int, last: Int): DunningCountableConnection!
+}

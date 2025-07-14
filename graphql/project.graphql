@@ -1,0 +1,139 @@
+type Project implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  naming_series: String!
+  project_name: String!
+  status: ProjectStatusSelectOptions
+  project_type: ProjectType
+  project_type__name: String
+  is_active: ProjectIsActiveSelectOptions
+  percent_complete_method: ProjectCompleteMethodSelectOptions
+  percent_complete: Float
+  project_template: ProjectTemplate
+  project_template__name: String
+  expected_start_date: String
+  expected_end_date: String
+  priority: ProjectPrioritySelectOptions
+  department: Department
+  department__name: String
+  customer: Customer
+  customer__name: String
+  sales_order: SalesOrder
+  sales_order__name: String
+  users: [ProjectUser!]!
+  copied_from: String
+  notes: String
+  actual_start_date: String
+  actual_time: Float
+  actual_end_date: String
+  estimated_costing: Float
+  total_costing_amount: Float
+  total_purchase_cost: Float
+  company: Company!
+  company__name: String
+  total_sales_amount: Float
+  total_billable_amount: Float
+  total_billed_amount: Float
+  total_consumed_material_cost: Float
+  cost_center: CostCenter
+  cost_center__name: String
+  gross_margin: Float
+  per_gross_margin: Float
+  collect_progress: Int
+  holiday_list: HolidayList
+  holiday_list__name: String
+  frequency: ProjectFrequencyToCollectProgressSelectOptions
+  from_time: String
+  to_time: String
+  first_email: String
+  second_email: String
+  daily_time_to_send: String
+  day_to_send: ProjectDayToSendSelectOptions
+  weekly_time_to_send: String
+  message: String
+}
+
+extend type Project {
+  total_expense_claim: Float
+}
+
+enum ProjectStatusSelectOptions {
+  OPEN
+  COMPLETED
+  CANCELLED
+}
+
+enum ProjectIsActiveSelectOptions {
+  YES
+  NO
+}
+
+enum ProjectCompleteMethodSelectOptions {
+  MANUAL
+  TASK_COMPLETION
+  TASK_PROGRESS
+  TASK_WEIGHT
+}
+
+enum ProjectPrioritySelectOptions {
+  MEDIUM
+  LOW
+  HIGH
+}
+
+enum ProjectFrequencyToCollectProgressSelectOptions {
+  HOURLY
+  TWICE_DAILY
+  DAILY
+  WEEKLY
+}
+
+enum ProjectDayToSendSelectOptions {
+  MONDAY
+  TUESDAY
+  WEDNESDAY
+  THURSDAY
+  FRIDAY
+  SATURDAY
+  SUNDAY
+}
+
+enum ProjectSortField {
+  NAME
+  CREATION
+  MODIFIED
+  PROJECT_NAME
+  STATUS
+  CUSTOMER
+  COLLECT_PROGRESS
+}
+
+input ProjectSortingInput {
+  direction: SortDirection!
+  field: ProjectSortField!
+}
+
+type ProjectCountableEdge {
+  cursor: String!
+  node: Project!
+}
+
+type ProjectCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [ProjectCountableEdge!]!
+}
+
+extend type Query {
+  Project(name: String!): Project!
+  Projects(filter: [DBFilterInput], sortBy: ProjectSortingInput, before: String, after: String, first: Int, last: Int): ProjectCountableConnection!
+}

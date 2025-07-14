@@ -1,0 +1,64 @@
+type LoyaltyProgram implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  loyalty_program_name: String!
+  loyalty_program_type: LoyaltyProgramLoyaltyProgramTypeSelectOptions
+  from_date: String!
+  to_date: String
+  customer_group: CustomerGroup
+  customer_group__name: String
+  customer_territory: Territory
+  customer_territory__name: String
+  auto_opt_in: Int
+  collection_rules: [LoyaltyProgramCollection!]!
+  conversion_factor: Float
+  expiry_duration: Int
+  expense_account: Account
+  expense_account__name: String
+  company: Company
+  company__name: String
+  cost_center: CostCenter
+  cost_center__name: String
+}
+
+enum LoyaltyProgramLoyaltyProgramTypeSelectOptions {
+  SINGLE_TIER_PROGRAM
+  MULTIPLE_TIER_PROGRAM
+}
+
+enum LoyaltyProgramSortField {
+  NAME
+  CREATION
+  MODIFIED
+  LOYALTY_PROGRAM_NAME
+}
+
+input LoyaltyProgramSortingInput {
+  direction: SortDirection!
+  field: LoyaltyProgramSortField!
+}
+
+type LoyaltyProgramCountableEdge {
+  cursor: String!
+  node: LoyaltyProgram!
+}
+
+type LoyaltyProgramCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [LoyaltyProgramCountableEdge!]!
+}
+
+extend type Query {
+  LoyaltyProgram(name: String!): LoyaltyProgram!
+  LoyaltyPrograms(filter: [DBFilterInput], sortBy: LoyaltyProgramSortingInput, before: String, after: String, first: Int, last: Int): LoyaltyProgramCountableConnection!
+}

@@ -1,0 +1,85 @@
+type AssetCapitalization implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  title: String
+  naming_series: String!
+  capitalization_method: AssetCapitalizationCapitalizationMethodSelectOptions
+  target_item_code: Item
+  target_item_code__name: String
+  target_item_name: String
+  target_asset: Asset
+  target_asset__name: String
+  target_asset_name: String
+  target_qty: Float
+  target_asset_location: Location
+  target_asset_location__name: String
+  company: Company!
+  company__name: String
+  posting_date: String!
+  posting_time: String!
+  set_posting_time: Int
+  finance_book: FinanceBook
+  finance_book__name: String
+  target_batch_no: Batch
+  target_batch_no__name: String
+  target_serial_no: String
+  amended_from: AssetCapitalization
+  amended_from__name: String
+  target_is_fixed_asset: Int
+  target_has_batch_no: Int
+  target_has_serial_no: Int
+  stock_items: [AssetCapitalizationStockItem!]!
+  stock_items_total: Float
+  asset_items: [AssetCapitalizationAssetItem!]!
+  asset_items_total: Float
+  service_items: [AssetCapitalizationServiceItem!]!
+  service_items_total: Float
+  total_value: Float
+  target_incoming_rate: Float
+  cost_center: CostCenter
+  cost_center__name: String
+  target_fixed_asset_account: Account
+  target_fixed_asset_account__name: String
+}
+
+enum AssetCapitalizationCapitalizationMethodSelectOptions {
+  CREATE_A_NEW_COMPOSITE_ASSET
+  CHOOSE_A_WIP_COMPOSITE_ASSET
+}
+
+enum AssetCapitalizationSortField {
+  NAME
+  CREATION
+  MODIFIED
+  POSTING_DATE
+}
+
+input AssetCapitalizationSortingInput {
+  direction: SortDirection!
+  field: AssetCapitalizationSortField!
+}
+
+type AssetCapitalizationCountableEdge {
+  cursor: String!
+  node: AssetCapitalization!
+}
+
+type AssetCapitalizationCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [AssetCapitalizationCountableEdge!]!
+}
+
+extend type Query {
+  AssetCapitalization(name: String!): AssetCapitalization!
+  AssetCapitalizations(filter: [DBFilterInput], sortBy: AssetCapitalizationSortingInput, before: String, after: String, first: Int, last: Int): AssetCapitalizationCountableConnection!
+}

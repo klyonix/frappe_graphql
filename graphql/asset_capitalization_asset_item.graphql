@@ -1,0 +1,27 @@
+type AssetCapitalizationAssetItem implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  asset: Asset!
+  asset__name: String
+  asset_name: String
+  finance_book: FinanceBook
+  finance_book__name: String
+  item_code: Item!
+  item_code__name: String
+  item_name: String
+  current_asset_value: Float
+  asset_value: Float
+  cost_center: CostCenter
+  cost_center__name: String
+  fixed_asset_account: Account
+  fixed_asset_account__name: String
+}

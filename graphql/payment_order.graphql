@@ -1,0 +1,60 @@
+type PaymentOrder implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  naming_series: String!
+  company: Company!
+  company__name: String
+  payment_order_type: PaymentOrderPaymentOrderTypeSelectOptions!
+  party: Supplier
+  party__name: String
+  posting_date: String
+  company_bank: Bank
+  company_bank__name: String
+  company_bank_account: BankAccount!
+  company_bank_account__name: String
+  account: String
+  references: [PaymentOrderReference!]!
+  amended_from: PaymentOrder
+  amended_from__name: String
+}
+
+enum PaymentOrderPaymentOrderTypeSelectOptions {
+  PAYMENT_REQUEST
+  PAYMENT_ENTRY
+}
+
+enum PaymentOrderSortField {
+  NAME
+  CREATION
+  MODIFIED
+}
+
+input PaymentOrderSortingInput {
+  direction: SortDirection!
+  field: PaymentOrderSortField!
+}
+
+type PaymentOrderCountableEdge {
+  cursor: String!
+  node: PaymentOrder!
+}
+
+type PaymentOrderCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [PaymentOrderCountableEdge!]!
+}
+
+extend type Query {
+  PaymentOrder(name: String!): PaymentOrder!
+  PaymentOrders(filter: [DBFilterInput], sortBy: PaymentOrderSortingInput, before: String, after: String, first: Int, last: Int): PaymentOrderCountableConnection!
+}

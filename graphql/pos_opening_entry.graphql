@@ -1,0 +1,62 @@
+type POSOpeningEntry implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  period_start_date: String!
+  period_end_date: String
+  status: POSOpeningEntryStatusSelectOptions
+  posting_date: String!
+  set_posting_date: Int
+  company: Company!
+  company__name: String
+  pos_profile: POSProfile!
+  pos_profile__name: String
+  pos_closing_entry: String
+  user: User!
+  user__name: String
+  balance_details: [POSOpeningEntryDetail!]!
+  amended_from: POSOpeningEntry
+  amended_from__name: String
+}
+
+enum POSOpeningEntryStatusSelectOptions {
+  DRAFT
+  OPEN
+  CLOSED
+  CANCELLED
+}
+
+enum POSOpeningEntrySortField {
+  NAME
+  CREATION
+  MODIFIED
+}
+
+input POSOpeningEntrySortingInput {
+  direction: SortDirection!
+  field: POSOpeningEntrySortField!
+}
+
+type POSOpeningEntryCountableEdge {
+  cursor: String!
+  node: POSOpeningEntry!
+}
+
+type POSOpeningEntryCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [POSOpeningEntryCountableEdge!]!
+}
+
+extend type Query {
+  POSOpeningEntry(name: String!): POSOpeningEntry!
+  POSOpeningEntrys(filter: [DBFilterInput], sortBy: POSOpeningEntrySortingInput, before: String, after: String, first: Int, last: Int): POSOpeningEntryCountableConnection!
+}

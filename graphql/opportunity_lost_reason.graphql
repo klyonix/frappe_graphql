@@ -1,0 +1,42 @@
+type OpportunityLostReason implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  lost_reason: String
+}
+
+enum OpportunityLostReasonSortField {
+  NAME
+  CREATION
+  MODIFIED
+  LOST_REASON
+}
+
+input OpportunityLostReasonSortingInput {
+  direction: SortDirection!
+  field: OpportunityLostReasonSortField!
+}
+
+type OpportunityLostReasonCountableEdge {
+  cursor: String!
+  node: OpportunityLostReason!
+}
+
+type OpportunityLostReasonCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [OpportunityLostReasonCountableEdge!]!
+}
+
+extend type Query {
+  OpportunityLostReason(name: String!): OpportunityLostReason!
+  OpportunityLostReasons(filter: [DBFilterInput], sortBy: OpportunityLostReasonSortingInput, before: String, after: String, first: Int, last: Int): OpportunityLostReasonCountableConnection!
+}

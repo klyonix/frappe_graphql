@@ -1,0 +1,37 @@
+type AssetMaintenanceTask implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  maintenance_task: String!
+  maintenance_type: AssetMaintenanceTaskMaintenanceTypeSelectOptions
+  maintenance_status: AssetMaintenanceTaskMaintenanceStatusSelectOptions!
+  start_date: String!
+  periodicity: String!
+  end_date: String
+  certificate_required: Int
+  assign_to: User
+  assign_to__name: String
+  assign_to_name: String
+  next_due_date: String
+  last_completion_date: String
+  description: String
+}
+
+enum AssetMaintenanceTaskMaintenanceTypeSelectOptions {
+  PREVENTIVE_MAINTENANCE
+  CALIBRATION
+}
+
+enum AssetMaintenanceTaskMaintenanceStatusSelectOptions {
+  PLANNED
+  OVERDUE
+  CANCELLED
+}

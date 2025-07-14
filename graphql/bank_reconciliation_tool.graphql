@@ -1,0 +1,30 @@
+type BankReconciliationTool implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  company: Company
+  company__name: String
+  bank_account: BankAccount
+  bank_account__name: String
+  bank_statement_from_date: String
+  bank_statement_to_date: String
+  from_reference_date: String
+  to_reference_date: String
+  filter_by_reference_date: Int
+  account_currency: Currency
+  account_currency__name: String
+  account_opening_balance: Float
+  bank_statement_closing_balance: Float
+}
+
+extend type Query {
+  BankReconciliationTool: BankReconciliationTool!
+}

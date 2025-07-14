@@ -1,0 +1,45 @@
+type ProductBundle implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  new_item_code: Item!
+  new_item_code__name: String
+  description: String
+  disabled: Int
+  items: [ProductBundleItem!]!
+}
+
+enum ProductBundleSortField {
+  NAME
+  CREATION
+  MODIFIED
+}
+
+input ProductBundleSortingInput {
+  direction: SortDirection!
+  field: ProductBundleSortField!
+}
+
+type ProductBundleCountableEdge {
+  cursor: String!
+  node: ProductBundle!
+}
+
+type ProductBundleCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [ProductBundleCountableEdge!]!
+}
+
+extend type Query {
+  ProductBundle(name: String!): ProductBundle!
+  ProductBundles(filter: [DBFilterInput], sortBy: ProductBundleSortingInput, before: String, after: String, first: Int, last: Int): ProductBundleCountableConnection!
+}

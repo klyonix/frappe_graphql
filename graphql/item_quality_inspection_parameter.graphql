@@ -1,0 +1,23 @@
+type ItemQualityInspectionParameter implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  specification: QualityInspectionParameter!
+  specification__name: String
+  parameter_group: QualityInspectionParameterGroup
+  parameter_group__name: String
+  value: String
+  numeric: Int
+  min_value: Float
+  max_value: Float
+  formula_based_criteria: Int
+  acceptance_formula: String
+}

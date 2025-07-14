@@ -1,0 +1,48 @@
+type CurrencyExchange implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  date: String!
+  from_currency: Currency!
+  from_currency__name: String
+  to_currency: Currency!
+  to_currency__name: String
+  exchange_rate: Float!
+  for_buying: Int
+  for_selling: Int
+}
+
+enum CurrencyExchangeSortField {
+  NAME
+  CREATION
+  MODIFIED
+}
+
+input CurrencyExchangeSortingInput {
+  direction: SortDirection!
+  field: CurrencyExchangeSortField!
+}
+
+type CurrencyExchangeCountableEdge {
+  cursor: String!
+  node: CurrencyExchange!
+}
+
+type CurrencyExchangeCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [CurrencyExchangeCountableEdge!]!
+}
+
+extend type Query {
+  CurrencyExchange(name: String!): CurrencyExchange!
+  CurrencyExchanges(filter: [DBFilterInput], sortBy: CurrencyExchangeSortingInput, before: String, after: String, first: Int, last: Int): CurrencyExchangeCountableConnection!
+}

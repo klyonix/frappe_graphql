@@ -1,0 +1,66 @@
+type BlanketOrder implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  naming_series: String!
+  blanket_order_type: BlanketOrderOrderTypeSelectOptions!
+  customer: Customer
+  customer__name: String
+  customer_name: String
+  supplier: Supplier
+  supplier__name: String
+  supplier_name: String
+  order_no: String
+  order_date: String
+  from_date: String!
+  to_date: String!
+  company: Company!
+  company__name: String
+  items: [BlanketOrderItem!]!
+  amended_from: BlanketOrder
+  amended_from__name: String
+  tc_name: TermsandConditions
+  tc_name__name: String
+  terms: String
+}
+
+enum BlanketOrderOrderTypeSelectOptions {
+  SELLING
+  PURCHASING
+}
+
+enum BlanketOrderSortField {
+  NAME
+  CREATION
+  MODIFIED
+  COMPANY
+}
+
+input BlanketOrderSortingInput {
+  direction: SortDirection!
+  field: BlanketOrderSortField!
+}
+
+type BlanketOrderCountableEdge {
+  cursor: String!
+  node: BlanketOrder!
+}
+
+type BlanketOrderCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [BlanketOrderCountableEdge!]!
+}
+
+extend type Query {
+  BlanketOrder(name: String!): BlanketOrder!
+  BlanketOrders(filter: [DBFilterInput], sortBy: BlanketOrderSortingInput, before: String, after: String, first: Int, last: Int): BlanketOrderCountableConnection!
+}

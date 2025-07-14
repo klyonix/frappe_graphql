@@ -1,0 +1,50 @@
+type ExchangeRateRevaluation implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  posting_date: String!
+  rounding_loss_allowance: Float
+  company: Company!
+  company__name: String
+  accounts: [ExchangeRateRevaluationAccount!]!
+  gain_loss_unbooked: Float
+  gain_loss_booked: Float
+  total_gain_loss: Float
+  amended_from: ExchangeRateRevaluation
+  amended_from__name: String
+}
+
+enum ExchangeRateRevaluationSortField {
+  NAME
+  CREATION
+  MODIFIED
+}
+
+input ExchangeRateRevaluationSortingInput {
+  direction: SortDirection!
+  field: ExchangeRateRevaluationSortField!
+}
+
+type ExchangeRateRevaluationCountableEdge {
+  cursor: String!
+  node: ExchangeRateRevaluation!
+}
+
+type ExchangeRateRevaluationCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [ExchangeRateRevaluationCountableEdge!]!
+}
+
+extend type Query {
+  ExchangeRateRevaluation(name: String!): ExchangeRateRevaluation!
+  ExchangeRateRevaluations(filter: [DBFilterInput], sortBy: ExchangeRateRevaluationSortingInput, before: String, after: String, first: Int, last: Int): ExchangeRateRevaluationCountableConnection!
+}

@@ -1,0 +1,49 @@
+type PriceList implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  enabled: Int
+  price_list_name: String!
+  currency: Currency!
+  currency__name: String
+  buying: Int
+  selling: Int
+  price_not_uom_dependent: Int
+  countries: [PriceListCountry!]!
+}
+
+enum PriceListSortField {
+  NAME
+  CREATION
+  MODIFIED
+  PRICE_LIST_NAME
+}
+
+input PriceListSortingInput {
+  direction: SortDirection!
+  field: PriceListSortField!
+}
+
+type PriceListCountableEdge {
+  cursor: String!
+  node: PriceList!
+}
+
+type PriceListCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [PriceListCountableEdge!]!
+}
+
+extend type Query {
+  PriceList(name: String!): PriceList!
+  PriceLists(filter: [DBFilterInput], sortBy: PriceListSortingInput, before: String, after: String, first: Int, last: Int): PriceListCountableConnection!
+}

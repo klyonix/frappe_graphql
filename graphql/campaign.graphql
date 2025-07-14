@@ -1,0 +1,44 @@
+type Campaign implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  campaign_name: String!
+  naming_series: String
+  campaign_schedules: [CampaignEmailSchedule!]!
+  description: String
+}
+
+enum CampaignSortField {
+  NAME
+  CREATION
+  MODIFIED
+}
+
+input CampaignSortingInput {
+  direction: SortDirection!
+  field: CampaignSortField!
+}
+
+type CampaignCountableEdge {
+  cursor: String!
+  node: Campaign!
+}
+
+type CampaignCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [CampaignCountableEdge!]!
+}
+
+extend type Query {
+  Campaign(name: String!): Campaign!
+  Campaigns(filter: [DBFilterInput], sortBy: CampaignSortingInput, before: String, after: String, first: Int, last: Int): CampaignCountableConnection!
+}

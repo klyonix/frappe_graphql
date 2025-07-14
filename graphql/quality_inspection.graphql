@@ -1,0 +1,96 @@
+type QualityInspection implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  naming_series: String!
+  company: Company
+  company__name: String
+  report_date: String!
+  status: QualityInspectionStatusSelectOptions!
+  child_row_reference: String
+  inspection_type: QualityInspectionInspectionTypeSelectOptions!
+  reference_type: QualityInspectionReferenceTypeSelectOptions!
+  reference_name: BaseDocType!
+  reference_name__name: String
+  item_code: Item!
+  item_code__name: String
+  item_serial_no: SerialNo
+  item_serial_no__name: String
+  batch_no: Batch
+  batch_no__name: String
+  sample_size: Float!
+  item_name: String
+  description: String
+  bom_no: BOM
+  bom_no__name: String
+  quality_inspection_template: QualityInspectionTemplate
+  quality_inspection_template__name: String
+  manual_inspection: Int
+  readings: [QualityInspectionReading!]!
+  inspected_by: User!
+  inspected_by__name: String
+  verified_by: String
+  remarks: String
+  amended_from: QualityInspection
+  amended_from__name: String
+  letter_head: LetterHead
+  letter_head__name: String
+}
+
+enum QualityInspectionStatusSelectOptions {
+  ACCEPTED
+  REJECTED
+}
+
+enum QualityInspectionInspectionTypeSelectOptions {
+  INCOMING
+  OUTGOING
+  IN_PROCESS
+}
+
+enum QualityInspectionReferenceTypeSelectOptions {
+  PURCHASE_RECEIPT
+  PURCHASE_INVOICE
+  SUBCONTRACTING_RECEIPT
+  DELIVERY_NOTE
+  SALES_INVOICE
+  STOCK_ENTRY
+  JOB_CARD
+}
+
+enum QualityInspectionSortField {
+  NAME
+  CREATION
+  MODIFIED
+  REPORT_DATE
+  ITEM_CODE
+}
+
+input QualityInspectionSortingInput {
+  direction: SortDirection!
+  field: QualityInspectionSortField!
+}
+
+type QualityInspectionCountableEdge {
+  cursor: String!
+  node: QualityInspection!
+}
+
+type QualityInspectionCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [QualityInspectionCountableEdge!]!
+}
+
+extend type Query {
+  QualityInspection(name: String!): QualityInspection!
+  QualityInspections(filter: [DBFilterInput], sortBy: QualityInspectionSortingInput, before: String, after: String, first: Int, last: Int): QualityInspectionCountableConnection!
+}

@@ -1,0 +1,44 @@
+type PaymentTermsTemplate implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  template_name: String
+  allocate_payment_based_on_payment_terms: Int
+  terms: [PaymentTermsTemplateDetail!]!
+}
+
+enum PaymentTermsTemplateSortField {
+  NAME
+  CREATION
+  MODIFIED
+  TEMPLATE_NAME
+}
+
+input PaymentTermsTemplateSortingInput {
+  direction: SortDirection!
+  field: PaymentTermsTemplateSortField!
+}
+
+type PaymentTermsTemplateCountableEdge {
+  cursor: String!
+  node: PaymentTermsTemplate!
+}
+
+type PaymentTermsTemplateCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [PaymentTermsTemplateCountableEdge!]!
+}
+
+extend type Query {
+  PaymentTermsTemplate(name: String!): PaymentTermsTemplate!
+  PaymentTermsTemplates(filter: [DBFilterInput], sortBy: PaymentTermsTemplateSortingInput, before: String, after: String, first: Int, last: Int): PaymentTermsTemplateCountableConnection!
+}

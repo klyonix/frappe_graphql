@@ -1,0 +1,18 @@
+type MaintenanceTeamMember implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  team_member: User!
+  team_member__name: String
+  full_name: String
+  maintenance_role: Role!
+  maintenance_role__name: String
+}

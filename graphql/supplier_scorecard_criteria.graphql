@@ -1,0 +1,45 @@
+type SupplierScorecardCriteria implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  criteria_name: String!
+  max_score: Float!
+  formula: String!
+  weight: Float
+}
+
+enum SupplierScorecardCriteriaSortField {
+  NAME
+  CREATION
+  MODIFIED
+  CRITERIA_NAME
+}
+
+input SupplierScorecardCriteriaSortingInput {
+  direction: SortDirection!
+  field: SupplierScorecardCriteriaSortField!
+}
+
+type SupplierScorecardCriteriaCountableEdge {
+  cursor: String!
+  node: SupplierScorecardCriteria!
+}
+
+type SupplierScorecardCriteriaCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [SupplierScorecardCriteriaCountableEdge!]!
+}
+
+extend type Query {
+  SupplierScorecardCriteria(name: String!): SupplierScorecardCriteria!
+  SupplierScorecardCriterias(filter: [DBFilterInput], sortBy: SupplierScorecardCriteriaSortingInput, before: String, after: String, first: Int, last: Int): SupplierScorecardCriteriaCountableConnection!
+}

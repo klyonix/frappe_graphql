@@ -1,0 +1,61 @@
+type CouponCode implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  coupon_name: String!
+  coupon_type: CouponCodeCouponTypeSelectOptions!
+  customer: Customer
+  customer__name: String
+  coupon_code: String
+  pricing_rule: PricingRule!
+  pricing_rule__name: String
+  valid_from: String
+  valid_upto: String
+  maximum_use: Int
+  used: Int
+  description: String
+  amended_from: CouponCode
+  amended_from__name: String
+}
+
+enum CouponCodeCouponTypeSelectOptions {
+  PROMOTIONAL
+  GIFT_CARD
+}
+
+enum CouponCodeSortField {
+  NAME
+  CREATION
+  MODIFIED
+  COUPON_NAME
+  COUPON_CODE
+}
+
+input CouponCodeSortingInput {
+  direction: SortDirection!
+  field: CouponCodeSortField!
+}
+
+type CouponCodeCountableEdge {
+  cursor: String!
+  node: CouponCode!
+}
+
+type CouponCodeCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [CouponCodeCountableEdge!]!
+}
+
+extend type Query {
+  CouponCode(name: String!): CouponCode!
+  CouponCodes(filter: [DBFilterInput], sortBy: CouponCodeSortingInput, before: String, after: String, first: Int, last: Int): CouponCodeCountableConnection!
+}

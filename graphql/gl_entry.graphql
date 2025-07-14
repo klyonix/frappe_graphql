@@ -1,0 +1,109 @@
+type GLEntry implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  posting_date: String
+  transaction_date: String
+  fiscal_year: FiscalYear
+  fiscal_year__name: String
+  due_date: String
+  account: Account
+  account__name: String
+  account_currency: Currency
+  account_currency__name: String
+  against: String
+  party_type: DocType
+  party_type__name: String
+  party: BaseDocType
+  party__name: String
+  voucher_type: DocType
+  voucher_type__name: String
+  voucher_no: BaseDocType
+  voucher_no__name: String
+  voucher_subtype: String
+  transaction_currency: Currency
+  transaction_currency__name: String
+  against_voucher_type: DocType
+  against_voucher_type__name: String
+  against_voucher: BaseDocType
+  against_voucher__name: String
+  voucher_detail_no: String
+  transaction_exchange_rate: Float
+  debit_in_account_currency: Float
+  debit: Float
+  debit_in_transaction_currency: Float
+  credit_in_account_currency: Float
+  credit: Float
+  credit_in_transaction_currency: Float
+  cost_center: CostCenter
+  cost_center__name: String
+  project: Project
+  project__name: String
+  finance_book: FinanceBook
+  finance_book__name: String
+  company: Company
+  company__name: String
+  is_opening: GLEntryIsOpeningSelectOptions
+  is_advance: GLEntryIsAdvanceSelectOptions
+  to_rename: Int
+  is_cancelled: Int
+  remarks: String
+}
+
+extend type GLEntry {
+  company_gstin: String
+}
+
+enum GLEntryIsOpeningSelectOptions {
+  NO
+  YES
+}
+
+enum GLEntryIsAdvanceSelectOptions {
+  NO
+  YES
+}
+
+enum GLEntrySortField {
+  NAME
+  CREATION
+  MODIFIED
+  POSTING_DATE
+  ACCOUNT
+  PARTY_TYPE
+  PARTY
+  VOUCHER_NO
+  AGAINST_VOUCHER
+  VOUCHER_DETAIL_NO
+  COMPANY
+  TO_RENAME
+}
+
+input GLEntrySortingInput {
+  direction: SortDirection!
+  field: GLEntrySortField!
+}
+
+type GLEntryCountableEdge {
+  cursor: String!
+  node: GLEntry!
+}
+
+type GLEntryCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [GLEntryCountableEdge!]!
+}
+
+extend type Query {
+  GLEntry(name: String!): GLEntry!
+  GLEntrys(filter: [DBFilterInput], sortBy: GLEntrySortingInput, before: String, after: String, first: Int, last: Int): GLEntryCountableConnection!
+}

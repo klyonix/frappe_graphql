@@ -1,0 +1,53 @@
+type PaymentGatewayAccount implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  payment_gateway: PaymentGateway!
+  payment_gateway__name: String
+  payment_channel: PaymentGatewayAccountPaymentChannelSelectOptions
+  is_default: Int
+  payment_account: Account!
+  payment_account__name: String
+  currency: String
+  message: String
+}
+
+enum PaymentGatewayAccountPaymentChannelSelectOptions {
+  EMAIL
+  PHONE
+}
+
+enum PaymentGatewayAccountSortField {
+  NAME
+  CREATION
+  MODIFIED
+}
+
+input PaymentGatewayAccountSortingInput {
+  direction: SortDirection!
+  field: PaymentGatewayAccountSortField!
+}
+
+type PaymentGatewayAccountCountableEdge {
+  cursor: String!
+  node: PaymentGatewayAccount!
+}
+
+type PaymentGatewayAccountCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [PaymentGatewayAccountCountableEdge!]!
+}
+
+extend type Query {
+  PaymentGatewayAccount(name: String!): PaymentGatewayAccount!
+  PaymentGatewayAccounts(filter: [DBFilterInput], sortBy: PaymentGatewayAccountSortingInput, before: String, after: String, first: Int, last: Int): PaymentGatewayAccountCountableConnection!
+}

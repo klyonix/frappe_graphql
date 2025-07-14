@@ -1,0 +1,64 @@
+type AccountClosingBalance implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  closing_date: String
+  account: Account
+  account__name: String
+  cost_center: CostCenter
+  cost_center__name: String
+  debit: Float
+  credit: Float
+  account_currency: Currency
+  account_currency__name: String
+  debit_in_account_currency: Float
+  credit_in_account_currency: Float
+  project: Project
+  project__name: String
+  company: Company
+  company__name: String
+  finance_book: FinanceBook
+  finance_book__name: String
+  period_closing_voucher: PeriodClosingVoucher
+  period_closing_voucher__name: String
+  is_period_closing_voucher_entry: Int
+}
+
+enum AccountClosingBalanceSortField {
+  NAME
+  CREATION
+  MODIFIED
+  CLOSING_DATE
+  ACCOUNT
+  COMPANY
+  PERIOD_CLOSING_VOUCHER
+}
+
+input AccountClosingBalanceSortingInput {
+  direction: SortDirection!
+  field: AccountClosingBalanceSortField!
+}
+
+type AccountClosingBalanceCountableEdge {
+  cursor: String!
+  node: AccountClosingBalance!
+}
+
+type AccountClosingBalanceCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [AccountClosingBalanceCountableEdge!]!
+}
+
+extend type Query {
+  AccountClosingBalance(name: String!): AccountClosingBalance!
+  AccountClosingBalances(filter: [DBFilterInput], sortBy: AccountClosingBalanceSortingInput, before: String, after: String, first: Int, last: Int): AccountClosingBalanceCountableConnection!
+}

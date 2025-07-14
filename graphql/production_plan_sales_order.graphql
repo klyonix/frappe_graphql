@@ -1,0 +1,19 @@
+type ProductionPlanSalesOrder implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  sales_order: SalesOrder!
+  sales_order__name: String
+  sales_order_date: String
+  customer: Customer
+  customer__name: String
+  grand_total: Float
+}

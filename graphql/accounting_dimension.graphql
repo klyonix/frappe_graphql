@@ -1,0 +1,48 @@
+type AccountingDimension implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  document_type: DocType!
+  document_type__name: String
+  label: String
+  fieldname: String
+  dimension_defaults: [AccountingDimensionDetail!]!
+  disabled: Int
+}
+
+enum AccountingDimensionSortField {
+  NAME
+  CREATION
+  MODIFIED
+  DOCUMENT_TYPE
+  LABEL
+}
+
+input AccountingDimensionSortingInput {
+  direction: SortDirection!
+  field: AccountingDimensionSortField!
+}
+
+type AccountingDimensionCountableEdge {
+  cursor: String!
+  node: AccountingDimension!
+}
+
+type AccountingDimensionCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [AccountingDimensionCountableEdge!]!
+}
+
+extend type Query {
+  AccountingDimension(name: String!): AccountingDimension!
+  AccountingDimensions(filter: [DBFilterInput], sortBy: AccountingDimensionSortingInput, before: String, after: String, first: Int, last: Int): AccountingDimensionCountableConnection!
+}

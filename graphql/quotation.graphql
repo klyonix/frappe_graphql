@@ -1,0 +1,185 @@
+type Quotation implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  title: String
+  naming_series: String!
+  quotation_to: DocType!
+  quotation_to__name: String
+  party_name: BaseDocType
+  party_name__name: String
+  customer_name: String
+  transaction_date: String!
+  valid_till: String
+  order_type: QuotationOrderTypeSelectOptions!
+  company: Company!
+  company__name: String
+  has_unit_price_items: Int
+  amended_from: Quotation
+  amended_from__name: String
+  currency: Currency!
+  currency__name: String
+  conversion_rate: Float!
+  selling_price_list: PriceList!
+  selling_price_list__name: String
+  price_list_currency: Currency!
+  price_list_currency__name: String
+  plc_conversion_rate: Float!
+  ignore_pricing_rule: Int
+  scan_barcode: String
+  items: [QuotationItem!]!
+  total_qty: Float
+  total_net_weight: Float
+  base_total: Float
+  base_net_total: Float
+  total: Float
+  net_total: Float
+  tax_category: TaxCategory
+  tax_category__name: String
+  taxes_and_charges: SalesTaxesandChargesTemplate
+  taxes_and_charges__name: String
+  shipping_rule: ShippingRule
+  shipping_rule__name: String
+  incoterm: Incoterm
+  incoterm__name: String
+  named_place: String
+  taxes: [SalesTaxesandCharges!]!
+  base_total_taxes_and_charges: Float
+  total_taxes_and_charges: Float
+  base_grand_total: Float
+  base_rounding_adjustment: Float
+  base_rounded_total: Float
+  base_in_words: String
+  grand_total: Float
+  rounding_adjustment: Float
+  rounded_total: Float
+  disable_rounded_total: Int
+  in_words: String
+  apply_discount_on: QuotationApplyAdditionalDiscountOnSelectOptions
+  base_discount_amount: Float
+  coupon_code: CouponCode
+  coupon_code__name: String
+  additional_discount_percentage: Float
+  discount_amount: Float
+  referral_sales_partner: SalesPartner
+  referral_sales_partner__name: String
+  other_charges_calculation: String
+  packed_items: [PackedItem!]!
+  pricing_rules: [PricingRuleDetail!]!
+  customer_address: Address
+  customer_address__name: String
+  address_display: String
+  contact_person: Contact
+  contact_person__name: String
+  contact_display: String
+  contact_mobile: String
+  contact_email: String
+  shipping_address_name: Address
+  shipping_address_name__name: String
+  shipping_address: String
+  company_address: Address
+  company_address__name: String
+  company_address_display: String
+  company_contact_person: Contact
+  company_contact_person__name: String
+  payment_terms_template: PaymentTermsTemplate
+  payment_terms_template__name: String
+  payment_schedule: [PaymentSchedule!]!
+  tc_name: TermsandConditions
+  tc_name__name: String
+  terms: String
+  auto_repeat: AutoRepeat
+  auto_repeat__name: String
+  letter_head: LetterHead
+  letter_head__name: String
+  group_same_items: Int
+  select_print_heading: PrintHeading
+  select_print_heading__name: String
+  language: String
+  lost_reasons: [QuotationLostReasonDetail!]!
+  competitors: [CompetitorDetail!]!
+  order_lost_reason: String
+  status: QuotationStatusSelectOptions!
+  customer_group: CustomerGroup
+  customer_group__name: String
+  territory: Territory
+  territory__name: String
+  campaign: Campaign
+  campaign__name: String
+  source: LeadSource
+  source__name: String
+  opportunity: Opportunity
+  opportunity__name: String
+  supplier_quotation: SupplierQuotation
+  supplier_quotation__name: String
+  enq_det: String
+}
+
+extend type Quotation {
+  is_reverse_charge: Int
+  is_export_with_gst: Int
+  gst_breakup_table: String
+  billing_address_gstin: String
+  gst_category: String
+  place_of_supply: String
+  company_gstin: String
+}
+
+enum QuotationOrderTypeSelectOptions {
+  SALES
+  MAINTENANCE
+  SHOPPING_CART
+}
+
+enum QuotationApplyAdditionalDiscountOnSelectOptions {
+  GRAND_TOTAL
+  NET_TOTAL
+}
+
+enum QuotationStatusSelectOptions {
+  DRAFT
+  OPEN
+  REPLIED
+  PARTIALLY_ORDERED
+  ORDERED
+  LOST
+  CANCELLED
+  EXPIRED
+}
+
+enum QuotationSortField {
+  NAME
+  CREATION
+  MODIFIED
+  PARTY_NAME
+  TRANSACTION_DATE
+}
+
+input QuotationSortingInput {
+  direction: SortDirection!
+  field: QuotationSortField!
+}
+
+type QuotationCountableEdge {
+  cursor: String!
+  node: Quotation!
+}
+
+type QuotationCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [QuotationCountableEdge!]!
+}
+
+extend type Query {
+  Quotation(name: String!): Quotation!
+  Quotations(filter: [DBFilterInput], sortBy: QuotationSortingInput, before: String, after: String, first: Int, last: Int): QuotationCountableConnection!
+}

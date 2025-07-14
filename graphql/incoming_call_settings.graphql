@@ -1,0 +1,50 @@
+type IncomingCallSettings implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  call_routing: IncomingCallSettingsCallRoutingSelectOptions
+  greeting_message: String
+  agent_busy_message: String
+  agent_unavailable_message: String
+  call_handling_schedule: [IncomingCallHandlingSchedule!]!
+}
+
+enum IncomingCallSettingsCallRoutingSelectOptions {
+  SEQUENTIAL
+  SIMULTANEOUS
+}
+
+enum IncomingCallSettingsSortField {
+  NAME
+  CREATION
+  MODIFIED
+}
+
+input IncomingCallSettingsSortingInput {
+  direction: SortDirection!
+  field: IncomingCallSettingsSortField!
+}
+
+type IncomingCallSettingsCountableEdge {
+  cursor: String!
+  node: IncomingCallSettings!
+}
+
+type IncomingCallSettingsCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [IncomingCallSettingsCountableEdge!]!
+}
+
+extend type Query {
+  IncomingCallSettings(name: String!): IncomingCallSettings!
+  IncomingCallSettingss(filter: [DBFilterInput], sortBy: IncomingCallSettingsSortingInput, before: String, after: String, first: Int, last: Int): IncomingCallSettingsCountableConnection!
+}

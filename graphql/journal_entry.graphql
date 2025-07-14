@@ -1,0 +1,139 @@
+type JournalEntry implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  is_system_generated: Int
+  title: String
+  voucher_type: JournalEntryEntryTypeSelectOptions!
+  naming_series: String!
+  finance_book: FinanceBook
+  finance_book__name: String
+  process_deferred_accounting: ProcessDeferredAccounting
+  process_deferred_accounting__name: String
+  reversal_of: JournalEntry
+  reversal_of__name: String
+  tax_withholding_category: TaxWithholdingCategory
+  tax_withholding_category__name: String
+  from_template: JournalEntryTemplate
+  from_template__name: String
+  company: Company!
+  company__name: String
+  posting_date: String!
+  apply_tds: Int
+  accounts: [JournalEntryAccount!]!
+  cheque_no: String
+  cheque_date: String
+  user_remark: String
+  total_debit: Float
+  total_credit: Float
+  difference: Float
+  multi_currency: Int
+  total_amount_currency: Currency
+  total_amount_currency__name: String
+  total_amount: Float
+  total_amount_in_words: String
+  clearance_date: String
+  remark: String
+  paid_loan: String
+  inter_company_journal_entry_reference: JournalEntry
+  inter_company_journal_entry_reference__name: String
+  bill_no: String
+  bill_date: String
+  due_date: String
+  write_off_based_on: JournalEntryWriteOffBasedOnSelectOptions
+  write_off_amount: Float
+  pay_to_recd_from: String
+  letter_head: LetterHead
+  letter_head__name: String
+  select_print_heading: PrintHeading
+  select_print_heading__name: String
+  mode_of_payment: ModeofPayment
+  mode_of_payment__name: String
+  payment_order: PaymentOrder
+  payment_order__name: String
+  is_opening: JournalEntryIsOpeningSelectOptions
+  stock_entry: StockEntry
+  stock_entry__name: String
+  auto_repeat: AutoRepeat
+  auto_repeat__name: String
+  amended_from: JournalEntry
+  amended_from__name: String
+}
+
+extend type JournalEntry {
+  ineligibility_reason: String
+  company_gstin: String
+}
+
+enum JournalEntryEntryTypeSelectOptions {
+  JOURNAL_ENTRY
+  INTER_COMPANY_JOURNAL_ENTRY
+  BANK_ENTRY
+  CASH_ENTRY
+  CREDIT_CARD_ENTRY
+  DEBIT_NOTE
+  CREDIT_NOTE
+  CONTRA_ENTRY
+  EXCISE_ENTRY
+  WRITE_OFF_ENTRY
+  OPENING_ENTRY
+  DEPRECIATION_ENTRY
+  EXCHANGE_RATE_REVALUATION
+  EXCHANGE_GAIN_OR_LOSS
+  DEFERRED_REVENUE
+  DEFERRED_EXPENSE
+  REVERSAL_OF_ITC
+  RECLAIM_OF_ITC_REVERSAL
+}
+
+enum JournalEntryWriteOffBasedOnSelectOptions {
+  ACCOUNTS_RECEIVABLE
+  ACCOUNTS_PAYABLE
+}
+
+enum JournalEntryIsOpeningSelectOptions {
+  NO
+  YES
+}
+
+enum JournalEntrySortField {
+  NAME
+  CREATION
+  MODIFIED
+  VOUCHER_TYPE
+  COMPANY
+  POSTING_DATE
+  CHEQUE_NO
+  CHEQUE_DATE
+  CLEARANCE_DATE
+  IS_OPENING
+}
+
+input JournalEntrySortingInput {
+  direction: SortDirection!
+  field: JournalEntrySortField!
+}
+
+type JournalEntryCountableEdge {
+  cursor: String!
+  node: JournalEntry!
+}
+
+type JournalEntryCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [JournalEntryCountableEdge!]!
+}
+
+extend type Query {
+  JournalEntry(name: String!): JournalEntry!
+  JournalEntrys(filter: [DBFilterInput], sortBy: JournalEntrySortingInput, before: String, after: String, first: Int, last: Int): JournalEntryCountableConnection!
+}

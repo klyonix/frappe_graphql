@@ -1,0 +1,45 @@
+type FinanceBook implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  finance_book_name: String
+}
+
+extend type FinanceBook {
+  for_income_tax: Int
+}
+
+enum FinanceBookSortField {
+  NAME
+  CREATION
+  MODIFIED
+}
+
+input FinanceBookSortingInput {
+  direction: SortDirection!
+  field: FinanceBookSortField!
+}
+
+type FinanceBookCountableEdge {
+  cursor: String!
+  node: FinanceBook!
+}
+
+type FinanceBookCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [FinanceBookCountableEdge!]!
+}
+
+extend type Query {
+  FinanceBook(name: String!): FinanceBook!
+  FinanceBooks(filter: [DBFilterInput], sortBy: FinanceBookSortingInput, before: String, after: String, first: Int, last: Int): FinanceBookCountableConnection!
+}

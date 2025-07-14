@@ -1,0 +1,154 @@
+type SubcontractingReceipt implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  title: String
+  naming_series: String!
+  supplier: Supplier!
+  supplier__name: String
+  supplier_name: String
+  supplier_delivery_note: String
+  company: Company!
+  company__name: String
+  posting_date: String!
+  posting_time: String!
+  set_posting_time: Int
+  is_return: Int
+  return_against: SubcontractingReceipt
+  return_against__name: String
+  cost_center: CostCenter
+  cost_center__name: String
+  project: Project
+  project__name: String
+  set_warehouse: Warehouse
+  set_warehouse__name: String
+  rejected_warehouse: Warehouse
+  rejected_warehouse__name: String
+  supplier_warehouse: Warehouse
+  supplier_warehouse__name: String
+  items: [SubcontractingReceiptItem!]!
+  total_qty: Float
+  total: Float
+  supplied_items: [SubcontractingReceiptSuppliedItem!]!
+  in_words: String
+  bill_no: String
+  bill_date: String
+  supplier_address: Address
+  supplier_address__name: String
+  contact_person: Contact
+  contact_person__name: String
+  address_display: String
+  contact_display: String
+  contact_mobile: String
+  contact_email: String
+  shipping_address: Address
+  shipping_address__name: String
+  shipping_address_display: String
+  billing_address: Address
+  billing_address__name: String
+  billing_address_display: String
+  distribute_additional_costs_based_on: SubcontractingReceiptDistributeAdditionalCostsBasedOnSelectOptions
+  additional_costs: [LandedCostTaxesandCharges!]!
+  total_additional_costs: Float
+  amended_from: SubcontractingReceipt
+  amended_from__name: String
+  range: String
+  represents_company: Company
+  represents_company__name: String
+  status: SubcontractingReceiptStatusSelectOptions!
+  per_returned: Float
+  auto_repeat: AutoRepeat
+  auto_repeat__name: String
+  letter_head: LetterHead
+  letter_head__name: String
+  language: String
+  instructions: String
+  select_print_heading: PrintHeading
+  select_print_heading__name: String
+  remarks: String
+  transporter_name: String
+  lr_no: String
+  lr_date: String
+}
+
+extend type SubcontractingReceipt {
+  ewaybill: String
+  tax_category: TaxCategory
+  tax_category__name: String
+  taxes_and_charges: SalesTaxesandChargesTemplate
+  taxes_and_charges__name: String
+  taxes: [IndiaComplianceTaxesandCharges!]!
+  total_taxes: Float
+  base_grand_total: Float
+  doc_references: [DynamicLink!]!
+  supplier_gstin: String
+  gst_category: String
+  company_gstin: String
+  place_of_supply: String
+  transporter: Supplier
+  transporter__name: String
+  gst_transporter_id: String
+  vehicle_no: String
+  distance: Int
+  gst_vehicle_type: String
+  mode_of_transport: SubcontractingReceiptModeOfTransportSelectOptions
+}
+
+enum SubcontractingReceiptDistributeAdditionalCostsBasedOnSelectOptions {
+  QTY
+  AMOUNT
+}
+
+enum SubcontractingReceiptStatusSelectOptions {
+  DRAFT
+  COMPLETED
+  RETURN
+  RETURN_ISSUED
+  CANCELLED
+  CLOSED
+}
+
+enum SubcontractingReceiptModeOfTransportSelectOptions {
+  ROAD
+  AIR
+  RAIL
+  SHIP
+}
+
+enum SubcontractingReceiptSortField {
+  NAME
+  CREATION
+  MODIFIED
+  SUPPLIER
+  POSTING_DATE
+  STATUS
+}
+
+input SubcontractingReceiptSortingInput {
+  direction: SortDirection!
+  field: SubcontractingReceiptSortField!
+}
+
+type SubcontractingReceiptCountableEdge {
+  cursor: String!
+  node: SubcontractingReceipt!
+}
+
+type SubcontractingReceiptCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [SubcontractingReceiptCountableEdge!]!
+}
+
+extend type Query {
+  SubcontractingReceipt(name: String!): SubcontractingReceipt!
+  SubcontractingReceipts(filter: [DBFilterInput], sortBy: SubcontractingReceiptSortingInput, before: String, after: String, first: Int, last: Int): SubcontractingReceiptCountableConnection!
+}

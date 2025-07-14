@@ -1,0 +1,49 @@
+type CommonCode implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  code_list: CodeList!
+  code_list__name: String
+  title: String!
+  common_code: String!
+  description: String
+  additional_data: String
+  applies_to: [DynamicLink!]!
+}
+
+enum CommonCodeSortField {
+  NAME
+  CREATION
+  MODIFIED
+  CODE_LIST
+  COMMON_CODE
+}
+
+input CommonCodeSortingInput {
+  direction: SortDirection!
+  field: CommonCodeSortField!
+}
+
+type CommonCodeCountableEdge {
+  cursor: String!
+  node: CommonCode!
+}
+
+type CommonCodeCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [CommonCodeCountableEdge!]!
+}
+
+extend type Query {
+  CommonCode(name: String!): CommonCode!
+  CommonCodes(filter: [DBFilterInput], sortBy: CommonCodeSortingInput, before: String, after: String, first: Int, last: Int): CommonCodeCountableConnection!
+}

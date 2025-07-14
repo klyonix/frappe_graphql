@@ -1,0 +1,46 @@
+type AdvanceTaxesandCharges implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  add_deduct_tax: AdvanceTaxesandChargesAddOrDeductSelectOptions!
+  charge_type: AdvanceTaxesandChargesTypeSelectOptions!
+  row_id: String
+  account_head: Account!
+  account_head__name: String
+  description: String!
+  included_in_paid_amount: Int
+  cost_center: CostCenter
+  cost_center__name: String
+  rate: Float
+  currency: Currency
+  currency__name: String
+  tax_amount: Float
+  total: Float
+  allocated_amount: Float
+  base_tax_amount: Float
+  base_total: Float
+}
+
+extend type AdvanceTaxesandCharges {
+  gst_tax_type: String
+}
+
+enum AdvanceTaxesandChargesAddOrDeductSelectOptions {
+  ADD
+  DEDUCT
+}
+
+enum AdvanceTaxesandChargesTypeSelectOptions {
+  ACTUAL
+  ON_PAID_AMOUNT
+  ON_PREVIOUS_ROW_AMOUNT
+  ON_PREVIOUS_ROW_TOTAL
+}

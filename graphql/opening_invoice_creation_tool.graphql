@@ -1,0 +1,29 @@
+type OpeningInvoiceCreationTool implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  company: Company!
+  company__name: String
+  create_missing_party: Int
+  invoice_type: OpeningInvoiceCreationToolInvoiceTypeSelectOptions!
+  cost_center: CostCenter
+  cost_center__name: String
+  invoices: [OpeningInvoiceCreationToolItem!]!
+}
+
+enum OpeningInvoiceCreationToolInvoiceTypeSelectOptions {
+  SALES
+  PURCHASE
+}
+
+extend type Query {
+  OpeningInvoiceCreationTool: OpeningInvoiceCreationTool!
+}

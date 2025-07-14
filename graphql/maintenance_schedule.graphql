@@ -1,0 +1,71 @@
+type MaintenanceSchedule implements BaseDocType {
+  doctype: String
+  name: String
+  owner: User!
+  creation: String
+  modified: String
+  modified_by: User!
+  docstatus: Int
+  idx: Int
+  owner__name: String!
+  modified_by__name: String!
+  parent__name: String
+  naming_series: String!
+  customer: Customer
+  customer__name: String
+  status: MaintenanceScheduleStatusSelectOptions!
+  transaction_date: String!
+  items: [MaintenanceScheduleItem!]!
+  schedules: [MaintenanceScheduleDetail!]!
+  customer_name: String
+  contact_person: Contact
+  contact_person__name: String
+  contact_mobile: String
+  contact_email: String
+  contact_display: String
+  customer_address: Address
+  customer_address__name: String
+  address_display: String
+  territory: Territory
+  territory__name: String
+  customer_group: CustomerGroup
+  customer_group__name: String
+  company: Company!
+  company__name: String
+  amended_from: MaintenanceSchedule
+  amended_from__name: String
+}
+
+enum MaintenanceScheduleStatusSelectOptions {
+  DRAFT
+  SUBMITTED
+  CANCELLED
+}
+
+enum MaintenanceScheduleSortField {
+  NAME
+  CREATION
+  MODIFIED
+  CUSTOMER
+}
+
+input MaintenanceScheduleSortingInput {
+  direction: SortDirection!
+  field: MaintenanceScheduleSortField!
+}
+
+type MaintenanceScheduleCountableEdge {
+  cursor: String!
+  node: MaintenanceSchedule!
+}
+
+type MaintenanceScheduleCountableConnection {
+  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [MaintenanceScheduleCountableEdge!]!
+}
+
+extend type Query {
+  MaintenanceSchedule(name: String!): MaintenanceSchedule!
+  MaintenanceSchedules(filter: [DBFilterInput], sortBy: MaintenanceScheduleSortingInput, before: String, after: String, first: Int, last: Int): MaintenanceScheduleCountableConnection!
+}
